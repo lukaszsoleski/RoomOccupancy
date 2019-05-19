@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{429D2EB8-3DD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Common", "RoomOccupancy.Common\RoomOccupancy.Common.csproj", "{F9AA39D3-BAB8-4A1D-8C46-354CA445C9FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Application", "RoomOccupancy.Application\RoomOccupancy.Application.csproj", "{F738CBBF-6199-4CE6-B385-22148824E8EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{F9AA39D3-BAB8-4A1D-8C46-354CA445C9FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9AA39D3-BAB8-4A1D-8C46-354CA445C9FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9AA39D3-BAB8-4A1D-8C46-354CA445C9FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F738CBBF-6199-4CE6-B385-22148824E8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F738CBBF-6199-4CE6-B385-22148824E8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F738CBBF-6199-4CE6-B385-22148824E8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F738CBBF-6199-4CE6-B385-22148824E8EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{883D9EC9-9726-4EE1-8ABF-616BE3FB8B6C} = {429D2EB8-3DDD-4FFE-9C98-6A56B2EDCB44}
 		{A1029B2F-F312-4197-B2A5-98AFA072EA82} = {0ACA147E-D78D-4483-A1CF-FA584D8BB55E}
 		{F9AA39D3-BAB8-4A1D-8C46-354CA445C9FA} = {0ACA147E-D78D-4483-A1CF-FA584D8BB55E}
+		{F738CBBF-6199-4CE6-B385-22148824E8EE} = {0ACA147E-D78D-4483-A1CF-FA584D8BB55E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4EA4A8BE-A5A1-42CD-BD47-368B686F69CB}
