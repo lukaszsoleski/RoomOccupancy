@@ -1,10 +1,8 @@
 ﻿using System;
 
-namespace RoomOccupancy.Domain
+namespace RoomOccupancy.Common
 {
     public class Class1
     {
-
-        
     }
 }
