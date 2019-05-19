@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Common", "Roo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Application", "RoomOccupancy.Application\RoomOccupancy.Application.csproj", "{F738CBBF-6199-4CE6-B385-22148824E8EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{019CF266-90BF-4BD3-9E46-89E26C4FE959}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Application.Tests", "RoomOccupancy.Application.Tests\RoomOccupancy.Application.Tests.csproj", "{E00FD9EA-4758-4651-B87C-F3367741E4B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,10 @@ Global
 		{F738CBBF-6199-4CE6-B385-22148824E8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F738CBBF-6199-4CE6-B385-22148824E8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F738CBBF-6199-4CE6-B385-22148824E8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E00FD9EA-4758-4651-B87C-F3367741E4B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E00FD9EA-4758-4651-B87C-F3367741E4B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E00FD9EA-4758-4651-B87C-F3367741E4B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E00FD9EA-4758-4651-B87C-F3367741E4B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +54,7 @@ Global
 		{A1029B2F-F312-4197-B2A5-98AFA072EA82} = {0ACA147E-D78D-4483-A1CF-FA584D8BB55E}
 		{F9AA39D3-BAB8-4A1D-8C46-354CA445C9FA} = {0ACA147E-D78D-4483-A1CF-FA584D8BB55E}
 		{F738CBBF-6199-4CE6-B385-22148824E8EE} = {0ACA147E-D78D-4483-A1CF-FA584D8BB55E}
+		{E00FD9EA-4758-4651-B87C-F3367741E4B8} = {019CF266-90BF-4BD3-9E46-89E26C4FE959}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4EA4A8BE-A5A1-42CD-BD47-368B686F69CB}
