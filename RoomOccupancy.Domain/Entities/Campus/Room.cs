@@ -9,7 +9,7 @@ namespace RoomOccupancy.Domain.Entities.Campus
     {
         public Room()
         {
-            RoomDisponents = new List<Disponent>();
+            Disponents = new List<RoomDisponent>();
             Equipment = new List<Equipment>();
         }
         public int Id { get; set; }
@@ -29,7 +29,7 @@ namespace RoomOccupancy.Domain.Entities.Campus
         public int? FacultyId { get; set; }
         public virtual Faculty Faculty { get; set; }
 
-        public virtual ICollection<Disponent> RoomDisponents { get; private set; }
+        public virtual ICollection<RoomDisponent> Disponents { get; private set; }
 
         public virtual ICollection<Equipment> Equipment { get; private set; }
     }

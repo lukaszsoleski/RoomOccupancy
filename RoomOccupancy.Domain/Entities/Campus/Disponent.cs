@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace RoomOccupancy.Domain.Entities.Campus
 {
     public class Disponent : IEntity
     {
+        public Disponent()
+        {
+            Rooms = new List<RoomDisponent>(); 
+        }
         public int Id { get; set; }
         /// <summary>
         /// Optional name if other disponent. 
@@ -17,7 +22,9 @@ namespace RoomOccupancy.Domain.Entities.Campus
         /// </summary>
         public int? RelatedEntityId { get; set; }
         public DisponentEntityType DisponentType { get; set; }
-        
+
+        public ICollection<RoomDisponent> Rooms { get; private set; }
+
         public Type GetDisponentType()
         {
             Type type = null; 
