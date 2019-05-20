@@ -1,7 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoomOccupancy.Application\RoomOccupancy.Application.csproj" />
+    <ProjectReference Include="..\RoomOccupancy.Common\RoomOccupancy.Common.csproj" />
+    <ProjectReference Include="..\RoomOccupancy.Domain\RoomOccupancy.Domain.csproj" />
+  </ItemGroup>
 
 </Project>
