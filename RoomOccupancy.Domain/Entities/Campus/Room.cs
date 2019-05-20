@@ -25,6 +25,9 @@ namespace RoomOccupancy.Domain.Entities.Campus
         public int? BuildingWindId { get; set; }
         public virtual BuildingWing BuildingWing { get; set; }
 
+        public int? FacultyId { get; set; }
+        public virtual Faculty Faculty { get; set; }
+
         public virtual ICollection<Disponent> RoomDisponents { get; private set; }
     }
 }
