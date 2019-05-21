@@ -28,7 +28,7 @@ namespace RoomOccupancy.Persistence
         public DbSet<DegreeProgramme> DegreeProgrammes { get; set; }
         public DbSet<Lecturer> Lecturers { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<BuildingWing> BuildingWings { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

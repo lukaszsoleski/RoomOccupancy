@@ -9,7 +9,7 @@ namespace RoomOccupancy.Application.Interfaces
 {
     public interface IReservationDbContext
     {
-        #region 
+        #region Tables
         DbSet<Building> Buildings { get; set; }
         DbSet<Department> Departments { get; set; }
         DbSet<Disponent> Disponents { get; set; }
@@ -22,7 +22,6 @@ namespace RoomOccupancy.Application.Interfaces
         DbSet<DegreeProgramme> DegreeProgrammes { get; set; }
         DbSet<Lecturer> Lecturers { get; set; }
         DbSet<Schedule> Schedules { get; set; }
-        DbSet<BuildingWing> BuildingWings { get; set; }
         #endregion
         #region EF Core methods 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
