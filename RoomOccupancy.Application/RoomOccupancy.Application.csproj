@@ -13,4 +13,15 @@
     <ProjectReference Include="..\RoomOccupancy.Domain\RoomOccupancy.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+    <Folder Include="Infrastructure\Mapping\" />
+    <Folder Include="Infrastructure\Behaviour\" />
+    <Folder Include="Campus\" />
+    <Folder Include="Schedule\" />
+    <Folder Include="Users\" />
+    <Folder Include="Reservations\Commands\" />
+    <Folder Include="Reservations\Queries\" />
+  </ItemGroup>
+
 </Project>

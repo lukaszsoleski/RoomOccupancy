@@ -10,4 +10,10 @@
     <ProjectReference Include="..\RoomOccupancy.Domain\RoomOccupancy.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Notifications\" />
+    <Folder Include="SystemClock\" />
+    <Folder Include="Security\" />
+  </ItemGroup>
+
 </Project>
