@@ -23,7 +23,7 @@ namespace RoomOccupancy.Domain.Entities.Campus
         public int BuildingId { get; set; }
         public virtual Building Building { get; set; }
 
-        public int? BuildingWindId { get; set; }
+        public int? BuildingWingId { get; set; }
         public virtual BuildingWing BuildingWing { get; set; }
 
         public int? FacultyId { get; set; }
