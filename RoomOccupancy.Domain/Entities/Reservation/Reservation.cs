@@ -12,6 +12,7 @@ namespace RoomOccupancy.Domain.Entities.Reservation
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public bool IsCyclical { get; set; }
+        public bool IsActive { get; set; }
         public int RoomId { get; set; }
         public Room Room { get; set; }
 
