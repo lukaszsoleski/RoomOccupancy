@@ -1,9 +1,13 @@
+import { BuildingComponent } from './building/building.component';
 import { CampusComponent } from './campus/campus.component';
 import { Routes } from '@angular/router';
 
 export const appRoutes: Routes = [
   {
-    path: '/campus', component: CampusComponent,
+    path: 'campus', component: CampusComponent,
+  },
+  {
+    path: 'building/:id', component: BuildingComponent
   },
   {
     path: '',

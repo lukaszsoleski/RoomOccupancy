@@ -4,11 +4,13 @@ import { AppComponent } from './app.component';
 import { CampusComponent } from './campus/campus.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
+import { BuildingComponent } from './building/building.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CampusComponent
+    CampusComponent,
+    BuildingComponent
   ],
   imports: [
     BrowserModule,
