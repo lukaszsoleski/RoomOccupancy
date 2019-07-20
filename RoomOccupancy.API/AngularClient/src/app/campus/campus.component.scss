@@ -1,46 +1,5 @@
 .campus {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  background: #eee;
-  font-size: 12px;
-  text-align: center;
-}
-
-.mapify-popOver strong {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1em;
-  display: block;
-  margin-bottom: 10px;
-  color: #000;
-}
-
-.mapify-popOver {
-  color: #999;
-  font-size: 12px;
-  height: 130px;
-}
-
-.mapify-popOver-content {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-}
-
-.mapify-popOver.customPopOver {
-  background: #09f;
-}
-
-/* Custom hovering style */
-.mapify-hover {
-  fill: rgba(0,0,0,0.15);
-  stroke: #fff;
-  stroke-width: 2;
-}
-
-.customHover {
-  fill: #09f;
-  stroke: #fff;
-  stroke-width: 2;
-}
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+  }
