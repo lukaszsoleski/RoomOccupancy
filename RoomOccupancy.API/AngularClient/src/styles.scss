@@ -11,11 +11,12 @@ body{
 }
 
         
-.flex-container {
+.flex-col-fluid {
     display: flex;
     flex-direction: column;
+    * {
+      width: 100%;
+    }
   }
+
   
-  .flex-container > * {
-    width: 100%;
-  }
