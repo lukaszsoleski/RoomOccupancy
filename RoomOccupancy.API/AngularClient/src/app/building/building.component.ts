@@ -11,5 +11,4 @@ export class BuildingComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
