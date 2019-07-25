@@ -39,12 +39,14 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CampusComponent,
-    BuildingComponent
+    BuildingComponent,
+    ReservationFormComponent
   ],
   imports: [
     BrowserModule,

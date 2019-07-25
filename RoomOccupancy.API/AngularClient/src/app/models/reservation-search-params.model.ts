@@ -3,9 +3,11 @@ import { Building } from './building.model';
 import { Faculty } from './faculty.model';
 import { Equipment } from './equipment.model';
 export class ReservationSearchParams {
-    building: Building;
-    date: Date;
-    faculty: Faculty;
-    roomType: RoomType;
-    equipment: Equipment;
+    public building: Building;
+    public isAnyBuilding: boolean;
+    public date: Date;
+    public faculty: Faculty;
+    public roomType: RoomType;
+    public equipment: Equipment;
+    public seats: number;
 }
