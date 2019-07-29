@@ -5,7 +5,7 @@ import { CampusComponent } from './campus/campus.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { BuildingComponent } from './building/building.component';
-
+import { HttpClientModule } from '@angular/common/http';
 //Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
@@ -40,16 +40,19 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
+import { RoomComponent } from './room/room.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CampusComponent,
     BuildingComponent,
-    ReservationFormComponent
+    ReservationFormComponent,
+    RoomComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }), // <-- debugging purposes only),
 
     //Angular Material Components
