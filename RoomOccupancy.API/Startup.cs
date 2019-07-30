@@ -30,7 +30,7 @@ namespace RoomOccupancy.API
         {
             // Configure DB Context. Add EbookShop context to dependency injection container and set database provider and also connection string. 
             services.AddDbContext<IReservationDbContext,ReservationDbContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("RoomOccupancyDatabase")));
+            options.UseSqlServer(connectionString: Configuration.GetConnectionString("RoomOccupancyDatabase")));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
