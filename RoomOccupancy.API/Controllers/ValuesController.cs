@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom;
 
 namespace RoomOccupancy.API.Controllers
 {
@@ -10,10 +13,20 @@ namespace RoomOccupancy.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly IMediator mediator;
+
+        public ValuesController(IMediator mediator)
+        {
+            this.mediator = mediator;
+        }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
+
+
+            await mediator.Send(new CreateRoomCommand()); 
+
             return new string[] { "value1", "value2" };
         }
 
