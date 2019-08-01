@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Application.Notifications;
+using RoomOccupancy.Domain.Entities.Campus;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,9 +12,26 @@ using System.Threading.Tasks;
 namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
 {
     //INotification - This is only an indicator interface. It does not force us to implement any special method.
-    public class RoomCreated : INotification
+    public class RoomCreated : INotification, IHaveCustomMapping
     {
         public int RoomId { get; set; }
+        public string Name { get; set; }
+        public string ActualUse { get; set; }
+        public string BuildingNumber { get; set; }
+
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<Room, RoomCreated>()
+
+                .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.BuildingNumber, opt =>
+                {
+                    opt.Condition(r => r.Building != null);
+                    opt.MapFrom(src => src.Building.Number);
+                });
+                    
+        }
+
         // Next, we move on to the implementation of the class that will support the above written Event.
         // Class must implement INotificationHandler, where as a T parameter we have to specify which event we want to support in this class.
         public class RoomCreatedHandler : INotificationHandler<RoomCreated>

@@ -5,7 +5,9 @@ using FluentValidation.Results;
 
 namespace RoomOccupancy.Application.Exceptions
 {
+#pragma warning disable RCS1194 // Implement exception constructors.
     public class ValidationException : Exception
+#pragma warning restore RCS1194 // Implement exception constructors.
     {
         public ValidationException()
             : base("One or more validation failures have occurred.")

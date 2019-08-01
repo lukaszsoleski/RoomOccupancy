@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace RoomOccupancy.Application.Campus.Rooms
-{ 
+{
     public class UpdateRoomCommand : IRequest
     {
         public int Id { get; set; }

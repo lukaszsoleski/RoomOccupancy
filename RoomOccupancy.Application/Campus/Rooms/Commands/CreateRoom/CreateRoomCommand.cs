@@ -8,6 +8,8 @@ using AutoMapper;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using RoomOccupancy.Application.Exceptions;
 
 namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
 {
@@ -18,13 +20,13 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
     RequestValidationBehaviour ctor
     RequestLogger Process
     RequestPerformanceBehaviour Handle => await next()
-	    RequestValidationBehaviour Handle
-	    MappingProfile ctor
-	    CreateRoomCommandHandler
+        RequestValidationBehaviour Handle
+        MappingProfile ctor
+        CreateRoomCommandHandler
             RoomCreated
             NotificationService
          */
-    public class CreateRoomCommand : IRequest
+    public class CreateRoomCommand : IRequest, IMapFrom<Room>
     {
         public string Name { get; set; }
         public float? Space { get; set; }
@@ -38,7 +40,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
 
         public override string ToString() =>  JsonConvert.SerializeObject(this);
 
-        public class Handler : IRequestHandler<CreateRoomCommand, Unit>
+        public class Handler : IRequestHandler<CreateRoomCommand>
         {
             private readonly IMapper _mapper;
             private readonly IMediator _mediator;
@@ -54,11 +56,14 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
             {
                 var room = _mapper.Map<Room>(request);
 
-               // _dbContext.Rooms.Add(room);
+                room.Building = await _dbContext.Buildings.FindAsync(room.BuildingId)
+                    ?? throw new NotFoundException(typeof(Building).Name,room.BuildingId);
+
+                _dbContext.Rooms.Add(room);
 
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
-                await _mediator.Publish(new RoomCreated{ RoomId = 1 });
+                await _mediator.Publish(_mapper.Map<RoomCreated>(room));
 
                 return Unit.Value;
             }

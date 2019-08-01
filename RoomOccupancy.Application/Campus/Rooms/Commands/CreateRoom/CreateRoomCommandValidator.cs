@@ -9,9 +9,11 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
     {
         public CreateRoomCommandValidator()
         {
-           // RuleFor(x => x.BuildingId).NotEmpty();
-           // RuleFor(x => x.Name).NotEmpty();
-           // RuleFor(x => x.ActualUse).NotEmpty();
+            RuleFor(x => x.BuildingId).NotEmpty();
+            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.ActualUse).NotEmpty();
+            RuleFor(x => x.Floor).NotEmpty();
+            
         }
     }
 }

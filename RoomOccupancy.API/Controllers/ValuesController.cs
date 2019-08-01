@@ -25,7 +25,8 @@ namespace RoomOccupancy.API.Controllers
         {
 
 
-            await mediator.Send(new CreateRoomCommand()); 
+
+            await mediator.Send(new CreateRoomCommand() {  ActualUse = "Lab",BuildingId = 1}); 
 
             return new string[] { "value1", "value2" };
         }
