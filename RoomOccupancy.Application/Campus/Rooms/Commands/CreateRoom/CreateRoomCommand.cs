@@ -13,20 +13,7 @@ using RoomOccupancy.Application.Exceptions;
 
 namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
 {
-    /* 
-     callstack: 
-
-    CreateRoomCommandValidator ctor
-    RequestValidationBehaviour ctor
-    RequestLogger Process
-    RequestPerformanceBehaviour Handle => await next()
-        RequestValidationBehaviour Handle
-        MappingProfile ctor
-        CreateRoomCommandHandler
-            RoomCreated
-            NotificationService
-         */
-    public class CreateRoomCommand : IRequest, IMapFrom<Room>
+    public class CreateRoomCommand : IRequest, IMapTo<Room>
     {
         public string Name { get; set; }
         public float? Space { get; set; }
@@ -58,12 +45,20 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
 
                 room.Building = await _dbContext.Buildings.FindAsync(room.BuildingId)
                     ?? throw new NotFoundException(typeof(Building).Name,room.BuildingId);
+                // optional check if faculty is assigned and exists in db
+                if (room.FacultyId.HasValue)
+                {
+                    room.Faculty = await _dbContext.Faculties.FindAsync(room.FacultyId)
+                        ?? throw new NotFoundException(typeof(Faculty).Name, room.FacultyId);
+                }
 
                 _dbContext.Rooms.Add(room);
 
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
-                await _mediator.Publish(_mapper.Map<RoomCreated>(room));
+                var roomCreatedEvent = _mapper.Map<RoomCreated>(room); 
+
+                await _mediator.Publish(roomCreatedEvent);
 
                 return Unit.Value;
             }
