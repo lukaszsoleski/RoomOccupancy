@@ -23,11 +23,8 @@ namespace RoomOccupancy.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-
-
-
-            await mediator.Send(new CreateRoomCommand() {  ActualUse = "Lab",BuildingId = 1}); 
-
+            await mediator.Send(new CreateRoomCommand() {  ActualUse = "Lab",BuildingId = 1, FacultyId = 1, Name = "IT", Floor = 1}); 
+            
             return new string[] { "value1", "value2" };
         }
 

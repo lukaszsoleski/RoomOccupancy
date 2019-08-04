@@ -17,19 +17,14 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
         public int RoomId { get; set; }
         public string Name { get; set; }
         public string ActualUse { get; set; }
-        public string BuildingNumber { get; set; }
+        public int BuildingNumber { get; set; }
 
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Room, RoomCreated>()
 
-                .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.BuildingNumber, opt =>
-                {
-                    opt.Condition(r => r.Building != null);
-                    opt.MapFrom(src => src.Building.Number);
-                });
-                    
+                .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.Id));
+
         }
 
         // Next, we move on to the implementation of the class that will support the above written Event.

@@ -42,13 +42,7 @@ namespace RoomOccupancy.API
             RegisterFrameworkServices(services);
             //Add AutoMapper
             // Configure AutoMapper: 
-            //var config = new MapperConfiguration(cfg =>
-            //{
-            //    cfg.AddProfile<AutoMapperProfile>();
-            //});
-            //services.AddSingleton(config.CreateMapper());
-            
-            services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
+         
             // Add MediatR
             services.AddMediatR(typeof(CreateRoomCommand).GetTypeInfo().Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));

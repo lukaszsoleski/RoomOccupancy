@@ -24,7 +24,7 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
 
             foreach (var map in mapsFrom)
             {
-                CreateMap(map.Source, map.Destination).ReverseMap();
+                CreateMap(map.Source, map.Destination);
             }
         }
 
@@ -37,5 +37,6 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
                 map.CreateMappings(this);
             }
         }
+
     }
 }
