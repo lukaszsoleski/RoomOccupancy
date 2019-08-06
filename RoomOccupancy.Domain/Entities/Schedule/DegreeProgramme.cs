@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Principal;
-using System.Text;
-
-namespace RoomOccupancy.Domain.Entities.Schedule
+﻿namespace RoomOccupancy.Domain.Entities.Schedule
 {
     public class DegreeProgramme : IEntity
     {

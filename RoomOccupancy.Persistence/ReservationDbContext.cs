@@ -19,7 +19,6 @@ namespace RoomOccupancy.Persistence
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Disponent> Disponents { get; set; }
-        public DbSet<RoomDisponent> RoomDisponents { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Faculty> Faculties { get; set; }

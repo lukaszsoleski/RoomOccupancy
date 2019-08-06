@@ -13,7 +13,6 @@ namespace RoomOccupancy.Application.Interfaces
         DbSet<Building> Buildings { get; set; }
         DbSet<Department> Departments { get; set; }
         DbSet<Disponent> Disponents { get; set; }
-        DbSet<RoomDisponent> RoomDisponents { get; set; }
         DbSet<Room> Rooms { get; set; }
         DbSet<Equipment> Equipment { get; set; }
         DbSet<Faculty> Faculties { get; set; }

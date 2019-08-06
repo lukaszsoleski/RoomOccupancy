@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace RoomOccupancy.Domain.Entities.Campus
 {
@@ -12,9 +9,10 @@ namespace RoomOccupancy.Domain.Entities.Campus
     {
         public Department()
         {
-            Faculties = new List<Faculty>(); 
+            Faculties = new List<Faculty>();
         }
-        public int Id { get; set ; }
+
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Faculty> Faculties { get; set; }

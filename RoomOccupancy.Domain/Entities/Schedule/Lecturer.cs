@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RoomOccupancy.Domain.Entities.Campus;
 
 namespace RoomOccupancy.Domain.Entities.Schedule
 {
@@ -8,5 +6,7 @@ namespace RoomOccupancy.Domain.Entities.Schedule
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int? DisponentId { get; set; }
+        public virtual Disponent Disponent { get; set; }
     }
 }

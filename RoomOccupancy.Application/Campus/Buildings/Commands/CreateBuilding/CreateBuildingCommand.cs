@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Ganss.Excel;
 using MediatR;
+using RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
 using System;
@@ -15,6 +17,9 @@ namespace RoomOccupancy.Application.Campus.Buildings.Commands.CreateBuilding
     {
         public string Name { get; set; }
         public int Number { get; set; }
+
+       
+
         public class Handler : IRequestHandler<CreateBuildingCommand, Unit>
         {
             private readonly IMapper _mapper;

@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using RoomOccupancy.Application.Interfaces;
+using RoomOccupancy.Common.Extentions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,17 +49,8 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
 
         public static IEnumerable<IHaveCustomMapping> LoadCustomMappings(Assembly rootAssembly)
         {
-            var types = rootAssembly.GetExportedTypes()
-                .Where(x => typeof(IHaveCustomMapping).IsAssignableFrom(x) 
-                    && !x.IsAbstract
-                    && !x.IsInterface
-            );
-
-            var mapSettings = types.Select(x => Activator.CreateInstance(x) as IHaveCustomMapping);
-
-            return mapSettings; 
+            return rootAssembly.ActivateInstances<IHaveCustomMapping>();
         }
 
-      
     }
 }
