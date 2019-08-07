@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
+using MoreLinq.Extensions;
+using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
 using System;
@@ -29,11 +31,12 @@ namespace RoomOccupancy.Application.Campus.Buildings.Commands.UpdateBuilding
             }
             public async Task<Unit> Handle(UpdateBuildingCommand request, CancellationToken cancellationToken)
             {
-                var building = await _context.Buildings.FindAsync();
+                var building = await _context.Buildings.FindAsync(request.Id)
+                    ?? throw new NotFoundException(typeof(Building).Name, request.Id);
 
                 _mapper.Map(request, building);
 
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
 
                 return Unit.Value;
             }

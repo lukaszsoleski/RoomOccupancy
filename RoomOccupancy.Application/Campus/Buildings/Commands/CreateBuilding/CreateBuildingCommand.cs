@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Ganss.Excel;
 using MediatR;
 using RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom;
 using RoomOccupancy.Application.Interfaces;
@@ -33,7 +32,7 @@ namespace RoomOccupancy.Application.Campus.Buildings.Commands.CreateBuilding
             public async Task<Unit> Handle(CreateBuildingCommand request, CancellationToken cancellationToken)
             {
                 var building = _mapper.Map<Building>(request);
-
+                
                 _context.Buildings.Add(building);
 
                 await _context.SaveChangesAsync();
@@ -43,9 +42,9 @@ namespace RoomOccupancy.Application.Campus.Buildings.Commands.CreateBuilding
         }
     }
 
-    public class CreateBuildingValidator : AbstractValidator<CreateBuildingCommand>
+    public class CreateBuildingCommandValidator : AbstractValidator<CreateBuildingCommand>
     {
-        public CreateBuildingValidator()
+        public CreateBuildingCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Number).NotEmpty().GreaterThan(0); 
