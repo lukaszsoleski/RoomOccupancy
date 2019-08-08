@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Disponents.Commands.CreateDisponent
 {
-    public class CreateDisponentCommand : IRequest, IMapTo<Disponent>
+    public class CreateDisponentCommand : IRequest<int>, IMapTo<Disponent>
     {
         public string Name { get; set; }
 
         public string Email { get; set; }
 
-        public class Handler : IRequestHandler<CreateDisponentCommand>
+        public class Handler : IRequestHandler<CreateDisponentCommand,int>
         {
             private readonly IReservationDbContext _context;
             private readonly IMapper _mapper;
@@ -26,14 +26,14 @@ namespace RoomOccupancy.Application.Campus.Disponents.Commands.CreateDisponent
                 _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(CreateDisponentCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateDisponentCommand request, CancellationToken cancellationToken)
             {
                 var disponent = _mapper.Map<Disponent>(request);
 
                 _context.Disponents.Add(disponent);
 
                 await _context.SaveChangesAsync();
-                return Unit.Value;
+                return disponent.Id;
             }
         }
     }

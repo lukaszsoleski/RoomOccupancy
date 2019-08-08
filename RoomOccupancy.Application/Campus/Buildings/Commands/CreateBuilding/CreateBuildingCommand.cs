@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Buildings.Commands.CreateBuilding
 {
-    public class CreateBuildingCommand : IRequest, IMapTo<Building>
+    public class CreateBuildingCommand : IRequest<int>, IMapTo<Building>
     {
         public string Name { get; set; }
         public int Number { get; set; }
 
        
-
-        public class Handler : IRequestHandler<CreateBuildingCommand, Unit>
+        public class Handler : IRequestHandler<CreateBuildingCommand,int>
         {
             private readonly IMapper _mapper;
             private readonly IReservationDbContext _context;
@@ -29,7 +28,7 @@ namespace RoomOccupancy.Application.Campus.Buildings.Commands.CreateBuilding
                 _mapper = mapper;
                 _context = context;
             }
-            public async Task<Unit> Handle(CreateBuildingCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateBuildingCommand request, CancellationToken cancellationToken)
             {
                 var building = _mapper.Map<Building>(request);
                 
@@ -37,7 +36,7 @@ namespace RoomOccupancy.Application.Campus.Buildings.Commands.CreateBuilding
 
                 await _context.SaveChangesAsync();
 
-                return Unit.Value;
+                return building.Id;
             }
         }
     }

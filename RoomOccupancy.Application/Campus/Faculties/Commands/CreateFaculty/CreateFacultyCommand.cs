@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Faculties.Commands.CreateFaculty
 {
-    public class CreateFacultyCommand : IRequest, IMapTo<Faculty>
+    public class CreateFacultyCommand : IRequest<int>, IMapTo<Faculty>
     {
         public string Name { get; set; }
 
         public int DepartmentId { get; set; }
-        public class Handler : IRequestHandler<CreateFacultyCommand>
+        public class Handler : IRequestHandler<CreateFacultyCommand,int>
         {
             private readonly IMapper _mapper;
             private readonly IReservationDbContext _context;
@@ -25,7 +25,7 @@ namespace RoomOccupancy.Application.Campus.Faculties.Commands.CreateFaculty
                 _context = dbContext;
             }
 
-            public async Task<Unit> Handle(CreateFacultyCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateFacultyCommand request, CancellationToken cancellationToken)
             {
                 var faculty = _mapper.Map<Faculty>(request);
 
@@ -36,7 +36,7 @@ namespace RoomOccupancy.Application.Campus.Faculties.Commands.CreateFaculty
 
                 await _context.SaveChangesAsync();
 
-                return Unit.Value;
+                return faculty.Id;
             }
         }
 
