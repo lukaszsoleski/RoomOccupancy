@@ -3,6 +3,10 @@ using RoomOccupancy.Application.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using NPOI;
+using NPOI.SS.UserModel;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace RoomOccupancy.Application.Infrastructure.Mapping
 {
@@ -15,11 +19,18 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
             {
                 using (var importer = new ExcelImporter(settings.File))
                 {
+                    var index = GetHeadingIndex(settings.File);
+
+                    if (index < 0)
+                        throw new InvalidDataException("The file does not contain datasheet data.");
+
                     importer.Configuration.RegisterClassMap<TConfiguration>();
 
                     var sheet = importer.ReadSheet();
 
-                    sheet.HeadingIndex = settings.HeadingIndex;
+                    sheet.HeadingIndex = index; 
+
+
 
                     entities = sheet.ReadRows<TEntity>();
                 }
@@ -32,6 +43,22 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
             }
 
             return entities;
+        }
+        private static int GetHeadingIndex(Stream file)
+        {
+            var sheet = WorkbookFactory.Create(file).GetSheetAt(0);
+            var rowIndex = 0;
+            IRow cells;
+
+            while ((cells=sheet.GetRow(rowIndex + 1))!= null)
+            {
+                if (cells.Any(x => x.CellType != CellType.Blank))
+                    return rowIndex;
+               
+                rowIndex++; 
+            }
+           
+            return -1; 
         }
 
         public class Settings
