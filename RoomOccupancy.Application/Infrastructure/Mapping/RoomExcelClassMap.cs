@@ -36,13 +36,6 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
             Map(x => x.Disponent.Name)
                 .WithColumnNameMatching(x => x.Contains("dysponent", StringComparison.OrdinalIgnoreCase))
                 .WithEmptyFallback("pow. Ogólna");
-
-            Map(x => x.Faculties)
-                .WithColumnName("Dysponent")
-                .WithSeparators(',', '/')
-                .WithElementMap(x => x.WithEmptyFallback("pow. Ogólna").WithTrim());
-                
-                
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using ExcelMapper;
+using RoomOccupancy.Application.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -9,17 +11,26 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
         public static IEnumerable<TEntity> Load<TEntity, TConfiguration>(Settings settings) where TConfiguration : ExcelClassMap<TEntity>, new()
         {
             IEnumerable<TEntity> entities;
-
-            using (var importer = new ExcelImporter(settings.File))
+            try
             {
-                importer.Configuration.RegisterClassMap<TConfiguration>();
+                using (var importer = new ExcelImporter(settings.File))
+                {
+                    importer.Configuration.RegisterClassMap<TConfiguration>();
 
-                var sheet = importer.ReadSheet();
+                    var sheet = importer.ReadSheet();
 
-                sheet.HeadingIndex = settings.HeadingIndex;
+                    sheet.HeadingIndex = settings.HeadingIndex;
 
-                entities = sheet.ReadRows<TEntity>();
+                    entities = sheet.ReadRows<TEntity>();
+                }
             }
+            catch (Exception ex)
+            {
+                var message = $"Cannot load collection of {typeof(TEntity).Name} type from the give file stream.";
+                
+                throw new ImportFormatException(message, ex);
+            }
+
             return entities;
         }
 

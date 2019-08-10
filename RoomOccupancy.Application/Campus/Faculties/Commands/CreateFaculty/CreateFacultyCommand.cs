@@ -15,6 +15,7 @@ namespace RoomOccupancy.Application.Campus.Faculties.Commands.CreateFaculty
     public class CreateFacultyCommand : IRequest<int>, IMapTo<Faculty>
     {
         public string Name { get; set; }
+        public string Acronym { get; set; }
         public IEnumerable<int> Rooms { get; set; }
         public class Handler : IRequestHandler<CreateFacultyCommand,int>
         {
@@ -51,7 +52,8 @@ namespace RoomOccupancy.Application.Campus.Faculties.Commands.CreateFaculty
     {
         public CreateFacultyCommandValidator()
         {
-            RuleFor(x => x.Name).NotEmpty(); 
+            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Acronym).NotEmpty();
         }
     }
 }
