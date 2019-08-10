@@ -7,16 +7,13 @@ namespace RoomOccupancy.Domain.Entities.Campus
         public Room()
         {
             Equipment = new List<Equipment>();
-            Faculties = new List<Faculty>();
+            Faculties = new List<FacultyRoom>();
         }
 
         public int Id { get; set; }
 
-        /// <summary>
-        /// A room label that consists of the number of the building, floor and room.
-        /// </summary>
         public string Name { get; set; }
-
+        public string Number { get; set; }
         public float? Space { get; set; }
 
         /// <summary>
@@ -42,11 +39,16 @@ namespace RoomOccupancy.Domain.Entities.Campus
         /// <summary>
         /// Assigned faculties.
         /// </summary>
-        public virtual ICollection<Faculty> Faculties { get; }
+        public virtual ICollection<FacultyRoom> Faculties { get; }
 
         /// <summary>
         /// Assigned equipment.
         /// </summary>
         public virtual ICollection<Equipment> Equipment { get; }
+
+        public override string ToString()
+        {
+            return $"{Building?.Number}/{Name}";
+        }
     }
 }

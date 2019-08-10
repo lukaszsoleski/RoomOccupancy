@@ -33,6 +33,7 @@ namespace RoomOccupancy.Application.Campus.Disponents.Commands.CreateDisponent
                 _context.Disponents.Add(disponent);
 
                 await _context.SaveChangesAsync();
+
                 return disponent.Id;
             }
         }

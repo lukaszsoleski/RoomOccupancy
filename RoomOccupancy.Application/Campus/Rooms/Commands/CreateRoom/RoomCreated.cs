@@ -15,10 +15,10 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
     public class RoomCreated : INotification, IHaveCustomMapping
     {
         public int RoomId { get; set; }
+        public string Number { get; set; }
         public string Name { get; set; }
         public string ActualUse { get; set; }
         public int BuildingNumber { get; set; }
-
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Room, RoomCreated>()

@@ -20,7 +20,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
         {
             Faculties = new List<int>();
         }
-
+        public string Number { get; set; }
         public string Name { get; set; }
         public float? Space { get; set; }
         public int? Seats { get; set; }
@@ -54,12 +54,12 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
                 room.Building = await _dbContext.Buildings.FindAsync(room.BuildingId)
                     ?? throw new NotFoundException(typeof(Building).Name, room.BuildingId);
 
-                if (room.Faculties.Any())
+                if (request.Faculties != null && room.Faculties.Any())
                 {
                     var faculties = await _dbContext.Faculties
-                        .Where(x => room.Faculties.Select(i => i.Id).Contains(x.Id))
+                        .Where(x => request.Faculties.Contains(x.Id))
                         .ToListAsync();
-                    faculties.ForEach(x => room.Faculties.Add(x));
+                    faculties.ForEach(x => _dbContext.FacultyRooms.Add(new FacultyRoom() { Faculty = x, Room = room }));
                 }
                 if (room.DisponentId.HasValue)
                 {

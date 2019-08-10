@@ -13,7 +13,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.ActualUse).NotEmpty();
             RuleFor(x => x.Floor).NotEmpty();
-            
+            RuleFor(x => x.Number).NotEmpty(); 
         }
     }
 }

@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Campus\Rooms\Query\" />
     <Folder Include="Schedule\" />
     <Folder Include="Users\" />
     <Folder Include="Reservations\Commands\" />

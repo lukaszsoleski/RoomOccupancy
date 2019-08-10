@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,8 +15,7 @@ namespace RoomOccupancy.Application.Campus.Faculties.Commands.CreateFaculty
     public class CreateFacultyCommand : IRequest<int>, IMapTo<Faculty>
     {
         public string Name { get; set; }
-
-        public int DepartmentId { get; set; }
+        public IEnumerable<int> Rooms { get; set; }
         public class Handler : IRequestHandler<CreateFacultyCommand,int>
         {
             private readonly IMapper _mapper;
@@ -29,11 +31,14 @@ namespace RoomOccupancy.Application.Campus.Faculties.Commands.CreateFaculty
             {
                 var faculty = _mapper.Map<Faculty>(request);
 
-                faculty.Department = await _context.Departments.FindAsync(request.DepartmentId)
-                    ?? throw new NotFoundException(typeof(Department).Name, request.DepartmentId);
-
                 _context.Faculties.Add(faculty);
 
+                if (request.Rooms != null && request.Rooms.Any())
+                {
+                    var rooms = await _context.Rooms.Where(x => request.Rooms.Contains(x.Id)).ToListAsync();
+
+                    rooms.ForEach(x => _context.FacultyRooms.Add(new FacultyRoom() { Faculty = faculty, Room = x }));
+                }
                 await _context.SaveChangesAsync();
 
                 return faculty.Id;
@@ -46,7 +51,6 @@ namespace RoomOccupancy.Application.Campus.Faculties.Commands.CreateFaculty
     {
         public CreateFacultyCommandValidator()
         {
-            RuleFor(x => x.DepartmentId).NotEmpty();
             RuleFor(x => x.Name).NotEmpty(); 
         }
     }

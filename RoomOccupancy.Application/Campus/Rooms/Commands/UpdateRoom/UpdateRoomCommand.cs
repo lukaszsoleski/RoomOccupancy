@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -25,6 +26,7 @@ namespace RoomOccupancy.Application.Campus.Rooms
         public ICollection<int> Faculties { get; set; }
         public int? DisponentId { get; set; }
 
+        public bool ShouldUpdateFaculties { get; set; }
         public class Handler : IRequestHandler<UpdateRoomCommand, Unit>
         {
             private readonly IReservationDbContext _context;
@@ -44,14 +46,21 @@ namespace RoomOccupancy.Application.Campus.Rooms
                 _mapper.Map(request, room);
 
                 #region TODO: [Faculties] compare collections and decide if update is required
+                if(request.ShouldUpdateFaculties)
+                {
+                    room.Faculties.Clear();
+                    //todo check FacultyRoom entity behavior
+                    var roomFaculty = await _context.FacultyRooms
+                        .Where(x => request.Faculties.Contains(x.FacultyId))
+                        .ToListAsync();
 
-                room.Faculties.Clear();
+                    _context.FacultyRooms.RemoveRange(roomFaculty);
 
-                var faculties = await _context.Faculties
-                    .Where(x => request.Faculties.Contains(x.Id))
-                    .ToListAsync();
+                    var faculties = await _context.Faculties.Where(x => request.Faculties.Contains(x.Id)).ToListAsync();
 
-                faculties.ForEach(x => room.Faculties.Add(x));
+                    faculties.ForEach(x => room.Faculties.Add(new FacultyRoom() { Faculty = x, Room = room }));
+
+                }
 
                 #endregion TODO: [Faculties] compare collections and decide if update is required
 
