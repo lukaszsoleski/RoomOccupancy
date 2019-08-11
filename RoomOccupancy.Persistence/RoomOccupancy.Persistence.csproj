@@ -23,4 +23,19 @@
     <ProjectReference Include="..\RoomOccupancy.Domain\RoomOccupancy.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Initializer\Files\Bydynki.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Initializer\Files\Tst1_Zajetosc_sal_WZIM_2018_Wiosna.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Initializer\Files\Wydziały.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Initializer\Files\Zajetosc_Sal_do_POLON_budynek_23.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

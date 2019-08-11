@@ -5,9 +5,9 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace RoomOccupancy.Application.Infrastructure.Mapping
 {
-    public class RoomExcelClassMap : ExcelClassMap<Room>
+    public class RoomClassMap : ExcelClassMap<Room>
     {
-        public RoomExcelClassMap()
+        public RoomClassMap()
         {
             Map(x => x.Building.Number)
                 .WithColumnNameMatching(x => x.Contains("budynek", StringComparison.OrdinalIgnoreCase));

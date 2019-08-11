@@ -7,32 +7,33 @@ using NPOI;
 using NPOI.SS.UserModel;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Infrastructure.Mapping
 {
     public class ExcelHelper
     {
-        public static IEnumerable<TEntity> Load<TEntity, TConfiguration>(Settings settings) where TConfiguration : ExcelClassMap<TEntity>, new()
+        public async static Task<IEnumerable<TEntity>> Load<TEntity, TConfiguration>(Settings settings) where TConfiguration : ExcelClassMap<TEntity>, new()
         {
             IEnumerable<TEntity> entities;
             try
             {
                 using (var importer = new ExcelImporter(settings.File))
                 {
-                    var index = GetHeadingIndex(settings.File);
+                    var index = await GetHeadingIndex(settings.File);
 
                     if (index < 0)
                         throw new InvalidDataException("The file does not contain datasheet data.");
 
                     importer.Configuration.RegisterClassMap<TConfiguration>();
-
+                    
                     var sheet = importer.ReadSheet();
 
+                    //sheet.HasHeading = false;
                     sheet.HeadingIndex = index; 
 
 
-
-                    entities = sheet.ReadRows<TEntity>();
+                    entities = sheet.ReadRows<TEntity>().ToList();
                 }
             }
             catch (Exception ex)
@@ -44,13 +45,17 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
 
             return entities;
         }
-        private static int GetHeadingIndex(Stream file)
+        private async static Task<int> GetHeadingIndex(Stream file)
         {
-            var sheet = WorkbookFactory.Create(file).GetSheetAt(0);
+            var fileContent = new MemoryStream();
+            await file.CopyToAsync(fileContent);
+            // The stream must be copied because it is closed by the next line
+            var sheet = WorkbookFactory.Create(fileContent).GetSheetAt(0);
+
             var rowIndex = 0;
             IRow cells;
 
-            while ((cells=sheet.GetRow(rowIndex + 1))!= null)
+            while ((cells=sheet.GetRow(rowIndex))!= null)
             {
                 if (cells.Any(x => x.CellType != CellType.Blank))
                     return rowIndex;
@@ -64,7 +69,6 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
         public class Settings
         {
             public Stream File { get; set; }
-            public int HeadingIndex { get; set; } = 0;
         }
     }
 }

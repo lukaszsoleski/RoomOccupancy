@@ -34,7 +34,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
 
             public async Task<Unit> Handle(ImportRoomsCommand request, CancellationToken cancellationToken)
             {
-                var importedRooms = ExcelHelper.Load<Room, RoomExcelClassMap>(new ExcelHelper.Settings() { File = request.File, HeadingIndex = 1 });
+                var importedRooms = await ExcelHelper.Load<Room, RoomClassMap>(new ExcelHelper.Settings() { File = request.File});
 
                 // load cache
                 var buildingsCache = await dbContext.Buildings.ToListAsync();
