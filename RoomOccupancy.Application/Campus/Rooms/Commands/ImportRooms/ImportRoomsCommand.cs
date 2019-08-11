@@ -5,6 +5,7 @@ using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Infrastructure.Mapping;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,15 +30,13 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
             public Handler(IReservationDbContext dbContext, IMediator mediator)
             {
                 this.dbContext = dbContext;
-
             }
 
             public async Task<Unit> Handle(ImportRoomsCommand request, CancellationToken cancellationToken)
             {
-
                 var importedRooms = ExcelHelper.Load<Room, RoomExcelClassMap>(new ExcelHelper.Settings() { File = request.File, HeadingIndex = 1 });
 
-                // load cache 
+                // load cache
                 var buildingsCache = await dbContext.Buildings.ToListAsync();
 
                 var disponentsCache = await dbContext.Disponents.ToListAsync();
@@ -55,7 +54,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
             {
                 foreach (var room in importedRooms)
                 {
-                    // building should be in database 
+                    // building should be in database
                     room.Building = buildingsCache.FirstOrDefault(x => x.Number == room.Building.Number)
                         ?? throw new NotFoundException($"{typeof(Building)} with property {nameof(room.Building.Number)}", room.Building.Number);
 
@@ -67,13 +66,13 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
 
             private Disponent AssignDisponent(List<Disponent> disponentsCache, Room room)
             {
-                var disponent = disponentsCache.FirstOrDefault(x => x.Name == room.Disponent.Name);
+                var disponent = disponentsCache.FirstOrDefault(x => x.Name.Equals(room.Disponent.Name, StringComparison.OrdinalIgnoreCase));
 
                 if (disponent is null)
                 {
                     disponent = room.Disponent;
 
-                    // change object state to added. 
+                    // change object state to added.
                     dbContext.Disponents.Add(disponent);
 
                     // update cache
@@ -91,8 +90,10 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
 
                 foreach (var facultyName in importedFaculties)
                 {
-                    var faculty = facultiesCache.FirstOrDefault(x => x.Name == facultyName || x.Acronym == facultyName);
-
+                    var faculty = facultiesCache.
+                             FirstOrDefault(x => x.Name.Equals(facultyName,StringComparison.OrdinalIgnoreCase) 
+                                || x.Acronym.Equals(facultyName,StringComparison.OrdinalIgnoreCase));
+                        
                     if (faculty is null)
                     {
                         faculty = new Faculty() { Acronym = facultyName, Name = facultyName };
