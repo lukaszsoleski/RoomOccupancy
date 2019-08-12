@@ -11,10 +11,10 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping.Excel
         public FacultyClassMap()
         {
             Map(x => x.Name)
-               .WithColumnNameMatching(x => x.Equals("nazwa",StringComparison.OrdinalIgnoreCase));
+               .WithColumnNameMatching(x => x.Trim().Equals("nazwa",StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.Acronym)
-                .WithColumnNameMatching(x => x.Contains("skrócona", StringComparison.OrdinalIgnoreCase));
+                .WithColumnNameMatching(x => x.Trim().Contains("skrócona", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

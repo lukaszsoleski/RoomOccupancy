@@ -1,37 +1,35 @@
 ﻿using ExcelMapper;
+using Microsoft.EntityFrameworkCore.Internal;
+using NPOI.SS.UserModel;
 using RoomOccupancy.Application.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI;
-using NPOI.SS.UserModel;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
-using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Infrastructure.Mapping
 {
-    public class ExcelHelper
+    public static class ExcelHelper
     {
-        public async static Task<IEnumerable<TEntity>> Load<TEntity, TConfiguration>(Settings settings) where TConfiguration : ExcelClassMap<TEntity>, new()
+        public static IEnumerable<TEntity> Load<TEntity, TConfiguration>(byte[] content) where TConfiguration : ExcelClassMap<TEntity>, new()
         {
             IEnumerable<TEntity> entities;
             try
             {
-                using (var importer = new ExcelImporter(settings.File))
+                using (var ms = new MemoryStream(content))
+                using (var importer = new ExcelImporter(ms))
                 {
-                    var index = await GetHeadingIndex(settings.File);
+                    var index = GetHeadingIndex(content);
 
                     if (index < 0)
-                        throw new InvalidDataException("The file does not contain datasheet data.");
+                        throw new InvalidDataException("The file does not contain data-sheet data.");
 
                     importer.Configuration.RegisterClassMap<TConfiguration>();
-                    
+
                     var sheet = importer.ReadSheet();
 
                     //sheet.HasHeading = false;
-                    sheet.HeadingIndex = index; 
-
+                    sheet.HeadingIndex = index;
 
                     entities = sheet.ReadRows<TEntity>().ToList();
                 }
@@ -39,36 +37,35 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
             catch (Exception ex)
             {
                 var message = $"Cannot load collection of {typeof(TEntity).Name} type from the give file stream.";
-                
+
                 throw new ImportFormatException(message, ex);
             }
 
             return entities;
         }
-        private async static Task<int> GetHeadingIndex(Stream file)
+
+        private static int GetHeadingIndex(byte[] file)
         {
-            var fileContent = new MemoryStream();
-            await file.CopyToAsync(fileContent);
+            ISheet sheet;
+            using (var ms = new MemoryStream(file))
+            {
+                sheet = WorkbookFactory.Create(ms).GetSheetAt(0);
+            }
+
             // The stream must be copied because it is closed by the next line
-            var sheet = WorkbookFactory.Create(fileContent).GetSheetAt(0);
 
             var rowIndex = 0;
             IRow cells;
 
-            while ((cells=sheet.GetRow(rowIndex))!= null)
+            while ((cells = sheet.GetRow(rowIndex)) != null)
             {
                 if (cells.Any(x => x.CellType != CellType.Blank))
                     return rowIndex;
-               
-                rowIndex++; 
-            }
-           
-            return -1; 
-        }
 
-        public class Settings
-        {
-            public Stream File { get; set; }
+                rowIndex++;
+            }
+
+            return -1;
         }
     }
 }

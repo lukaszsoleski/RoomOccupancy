@@ -48,7 +48,7 @@ namespace RoomOccupancy.Domain.Entities.Campus
 
         public override string ToString()
         {
-            return $"{Building?.Number}/{Name}";
+            return $"{Building?.Number}/{Number} {ActualUse}";
         }
     }
 }

@@ -16,7 +16,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
 {
     public class ImportRoomsCommand : IRequest
     {
-        public Stream File { get; set; }
+        public byte[] File { get; set; }
 
         public class Handler : IRequestHandler<ImportRoomsCommand, Unit>
         {
@@ -34,7 +34,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
 
             public async Task<Unit> Handle(ImportRoomsCommand request, CancellationToken cancellationToken)
             {
-                var importedRooms = await ExcelHelper.Load<Room, RoomClassMap>(new ExcelHelper.Settings() { File = request.File});
+                var importedRooms = ExcelHelper.Load<Room, RoomClassMap>(request.File);
 
                 // load cache
                 var buildingsCache = await dbContext.Buildings.ToListAsync();

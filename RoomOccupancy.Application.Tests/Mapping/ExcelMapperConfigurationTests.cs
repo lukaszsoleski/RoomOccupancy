@@ -1,39 +1,47 @@
-﻿using System;
+﻿using FluentAssertions;
+using NPOI.SS.Formula.Functions;
+using RoomOccupancy.Application.Infrastructure.Mapping;
+using RoomOccupancy.Application.Infrastructure.Mapping.Excel;
+using RoomOccupancy.Domain.Entities.Campus;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using Xunit;
-using Moq;
-using FluentAssertions;
-using System.IO;
-using RoomOccupancy.Application.Infrastructure.Mapping;
-using RoomOccupancy.Domain.Entities.Campus;
-using System.Collections;
-using System.Linq;
-using NPOI.SS.Formula.Functions;
-using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Tests.Mapping
 {
     public class ExcelMapperConfigurationTests
     {
-        [Fact]
-        public async Task RoomsClassMap_MappingReturnsNotEmptyObjects()
+        public ExcelMapperConfigurationTests()
         {
-            //fix .net core unsuported encoding issues
+            //fix .net core unsupported encoding issues
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
 
+        [Fact]
+        public void RoomsClassMap_MappingReturnsNotEmptyCollection()
+        {
             var path = Path.Combine(Directory.GetCurrentDirectory(), @"Initializer\Files\Zajetosc_Sal_do_POLON_budynek_23.xlsx");
             IEnumerable<Room> rooms;
+            var bytes = File.ReadAllBytes(path);
 
-            using (var stream = new MemoryStream(File.ReadAllBytes(path), true))
-            {
-                rooms = await ExcelHelper.Load<Room, RoomClassMap>(new ExcelHelper.Settings() { File = stream });
-            }
+            rooms = ExcelHelper.Load<Room, RoomClassMap>(bytes);
 
             rooms.Should().NotBeEmpty();
             rooms.ToList().ForEach(x => x.Name.Should().NotBeEmpty());
-
         }
-        
+
+        [Fact]
+        public void FacultyClassMap_MappingReturnsNotEmptyCollection()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), @"Initializer\Files\Wydziały.xlsx");
+            IEnumerable<Faculty> faculties;
+            var bytes = File.ReadAllBytes(path);
+            faculties = ExcelHelper.Load<Faculty, FacultyClassMap>(bytes);
+
+            faculties.Should().NotBeEmpty();
+            faculties.ToList().ForEach(x => x.Name.Should().NotBeEmpty());
+        }
     }
 }
