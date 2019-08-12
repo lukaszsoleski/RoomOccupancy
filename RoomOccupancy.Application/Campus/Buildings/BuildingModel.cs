@@ -9,9 +9,12 @@ namespace RoomOccupancy.Application.Campus.Buildings
 {
     public class BuildingModel : IHaveCustomMapping
     {
+        public int Id { get; set; }
+        public int Number { get; set; }
+
         public void CreateMappings(Profile configuration)
         {
-            configuration.CreateMap<Room, BuildingModel>().ReverseMap();
+            configuration.CreateMap<Building, BuildingModel>().ReverseMap();
         }
     }
 }

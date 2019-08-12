@@ -2,23 +2,22 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RoomOccupancy.Application.Campus.Rooms.Queries.GetRoomsList;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Rooms.Queries
 {
-    public class GetRoomsQuery : IRequest<IEnumerable<RoomModel>>
+    public class GetRoomsQuery : IRequest<RoomsListViewModel>
     {
-        public Expression<Func<Room,bool>> Expression { get; set; }
+        public Expression<Func<Room, bool>> ValuePropertyFilter { get; set; }
 
-        public class Handler : IRequestHandler<GetRoomsQuery, IEnumerable<RoomModel>>
+        public class Handler : IRequestHandler<GetRoomsQuery, RoomsListViewModel>
         {
             private readonly IMapper _mapper;
             private readonly IReservationDbContext _context;
@@ -28,18 +27,20 @@ namespace RoomOccupancy.Application.Campus.Rooms.Queries
                 _mapper = mapper;
                 _context = context;
             }
-            public async Task<IEnumerable<RoomModel>> Handle(GetRoomsQuery request, CancellationToken cancellationToken)
-            {
-                if (request.Expression == null)
-                    throw new ArgumentNullException($"Expression {request.Expression.Type.Name} cannot be null.");
 
-                return await _context.Rooms.Where(request.Expression)
-                    .ProjectTo<RoomModel>()
+            public async Task<RoomsListViewModel> Handle(GetRoomsQuery request, CancellationToken cancellationToken)
+            {
+                var select = _context.Rooms.AsNoTracking();
+
+                if (request.ValuePropertyFilter != null)
+                    select = select.Where(request.ValuePropertyFilter);
+
+                var rooms = await select
+                    .ProjectTo<RoomLookupModel>()
                     .ToListAsync(cancellationToken);
 
+                return new RoomsListViewModel() { Rooms = rooms };
             }
-
-           
         }
     }
 }
