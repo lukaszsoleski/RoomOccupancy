@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RoomOccupancy.Application.Infrastructure.Mapping.Excel
+namespace RoomOccupancy.Application.Infrastructure.Mapping
 {
     public class FacultyClassMap : ExcelClassMap<Faculty>
     {
