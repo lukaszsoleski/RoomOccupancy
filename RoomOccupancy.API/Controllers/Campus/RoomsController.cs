@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RoomOccupancy.Application.Campus.Buildings.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace RoomOccupancy.API.Controllers.Campus
@@ -18,10 +19,13 @@ namespace RoomOccupancy.API.Controllers.Campus
         public async Task<IActionResult> FromBuilding(int buildingNo)
         {
             var building = await Mediator.Send(new GetBuildingQuery() { Number = buildingNo });
-
-            var rooms = await Mediator.Send(new GetRoomsQuery() { ValuePropertyFilter = x => x.BuildingId == building.Id });
-
             // TODO: Filter rooms based on user role.
+            
+            var rooms = await Mediator.Send(new GetRoomsQuery()
+            {
+                ValuePropertyFilter = x => x.BuildingId == building.Id && x.Seats.HasValue
+            });
+
 
             return Ok(rooms);
         }

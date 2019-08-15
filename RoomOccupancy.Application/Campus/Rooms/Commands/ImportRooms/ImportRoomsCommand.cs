@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using MoreLinq;
 using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Infrastructure.Mapping;
@@ -90,7 +91,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
             private void AssignFaculty(List<Faculty> facultiesCache, Room room, Disponent disponent)
             {
                 var importedFaculties = disponent.Name.Split('/').Select(x => x.Trim());
-
+                var lookupFacultyNames = new List<string>(); 
                 foreach (var facultyName in importedFaculties)
                 {
                     var faculty = facultiesCache.
@@ -105,7 +106,11 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
                     var newFacultyRoom = new FacultyRoom() { Faculty = faculty, Room = room };
 
                     room.Faculties.Add(newFacultyRoom);
+
+                    lookupFacultyNames.Add(faculty.Acronym); 
                 }
+                if(lookupFacultyNames.Any())
+                     room.FacultyLookup = string.Join(" / ", lookupFacultyNames); 
             }
         }
     }

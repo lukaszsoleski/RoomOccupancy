@@ -59,7 +59,12 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
                     var faculties = await _dbContext.Faculties
                         .Where(x => request.Faculties.Contains(x.Id))
                         .ToListAsync();
-                    faculties.ForEach(x => _dbContext.FacultyRooms.Add(new FacultyRoom() { Faculty = x, Room = room }));
+                    foreach(var faculty in faculties)
+                    {
+                        _dbContext.FacultyRooms.Add(new FacultyRoom() { Faculty = faculty, Room = room }); 
+                    }
+
+                    room.FacultyLookup = string.Join(" / ", faculties.Select(x => x.Acronym)); 
                 }
                 if (room.DisponentId.HasValue)
                 {

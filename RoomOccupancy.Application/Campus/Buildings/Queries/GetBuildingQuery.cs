@@ -32,7 +32,7 @@ namespace RoomOccupancy.Application.Campus.Buildings.Queries
             public async Task<BuildingModel> Handle(GetBuildingQuery request, CancellationToken cancellationToken)
             {
                 var building = await _context.Buildings.FirstOrDefaultAsync(x => x.Number == request.Number)
-                        ?? throw new NotFoundException($"{typeof(Building)} with property {nameof(request.Number)}", request.Number);
+                        ?? throw new NotFoundException($"{typeof(Building).Name} with property {nameof(request.Number)}", request.Number);
 
                 return _mapper.Map<BuildingModel>(building);
 

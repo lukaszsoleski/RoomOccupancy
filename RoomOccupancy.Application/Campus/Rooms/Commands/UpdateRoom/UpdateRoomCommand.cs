@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
@@ -61,6 +62,8 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.UpdateRoom
 
                     faculties.ForEach(x => room.Faculties.Add(new FacultyRoom() { Faculty = x, Room = room }));
 
+                    if(faculties.Any())
+                        room.FacultyLookup = string.Join(" / ", faculties.Select(x => x.Acronym));
                 }
 
                 #endregion TODO: [Faculties] compare collections and decide if update is required

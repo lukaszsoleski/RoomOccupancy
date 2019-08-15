@@ -32,7 +32,7 @@ namespace RoomOccupancy.API.Middleware
 
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var statusCode = HttpStatusCode.BadRequest; 
+            var statusCode = HttpStatusCode.BadRequest;
             var errorDto = new ErrorResponce();
 
             if (exception is ValidationException)
@@ -44,13 +44,25 @@ namespace RoomOccupancy.API.Middleware
                 HandleApplicationException(exception, errorDto);
             }
 
-            if(! exception.GetType().FullName.Contains("room", StringComparison.OrdinalIgnoreCase))
+            statusCode = GetResponseStatus(exception, statusCode);
+
+            await WriteResponce(errorDto, context, statusCode);
+        }
+
+        private static HttpStatusCode GetResponseStatus(Exception exception, HttpStatusCode statusCode)
+        {
+            var exType = exception.GetType();
+
+            if (!exType.FullName.Contains("Room"))
             {
                 statusCode = HttpStatusCode.InternalServerError;
             }
+            else if (exception is NotFoundException)
+            {
+                statusCode = HttpStatusCode.NotFound;
+            }
 
-            await WriteResponce(errorDto, context, statusCode); 
-
+            return statusCode;
         }
 
         private static void HandleValidationException(Exception exception, ErrorResponce errorDto)

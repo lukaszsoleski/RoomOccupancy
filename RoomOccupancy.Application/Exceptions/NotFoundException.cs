@@ -10,5 +10,8 @@ namespace RoomOccupancy.Application.Exceptions
             : base($@"Entity {name} ({key}) was not found.")
         {
         }
+        public NotFoundException(Type entity, object key) : this(entity.Name, key)
+        { }
+            
     }
 }

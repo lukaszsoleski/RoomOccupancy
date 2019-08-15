@@ -35,6 +35,11 @@ namespace RoomOccupancy.Domain.Entities.Campus
 
         public int? DisponentId { get; set; }
         public virtual Disponent Disponent { get; set; }
+        /// <summary>
+        /// Lookup property, the diffrence in table join is about 2 seconds (~200-500 items).
+        /// About 97ms with single table and 2000ms with include statement
+        /// </summary>
+        public string FacultyLookup { get; set; }
 
         /// <summary>
         /// Assigned faculties.

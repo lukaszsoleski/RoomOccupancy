@@ -30,7 +30,8 @@ namespace RoomOccupancy.Application.Campus.Rooms.Queries
 
             public async Task<RoomsListViewModel> Handle(GetRoomsQuery request, CancellationToken cancellationToken)
             {
-                var select = _context.Rooms.AsNoTracking();
+                var select = _context.Rooms
+                    .AsNoTracking();
 
                 if (request.ValuePropertyFilter != null)
                     select = select.Where(request.ValuePropertyFilter);
@@ -38,6 +39,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Queries
                 var rooms = await select
                     .ProjectTo<RoomLookupModel>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
+                
 
                 return new RoomsListViewModel() { Rooms = rooms };
             }
