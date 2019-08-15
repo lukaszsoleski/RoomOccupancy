@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RoomOccupancy.API.Middleware;
 using RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom;
 using RoomOccupancy.Application.Infrastructure;
 using RoomOccupancy.Application.Infrastructure.Behaviour;
@@ -39,26 +40,37 @@ namespace RoomOccupancy.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            RegisterFrameworkServices(services);
-            //Add AutoMapper
-            // Configure AutoMapper: 
-         
-            // Add MediatR
-            services.AddMediatR(typeof(CreateRoomCommand).GetTypeInfo().Assembly);
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehaviour<,>));
+            RegisterApplicationServices(services);
 
-            #region Add DbContext
-            // Configure DB Context. Add EbookShop context to dependency injection container and set database provider and also connection string. 
-            services.AddDbContext<IReservationDbContext,ReservationDbContext>(options => 
-                options.UseSqlServer(connectionString: Configuration.GetConnectionString("RoomOccupancyDatabase")));
-            #endregion
+            AddMediatR(services);
 
+            ConfigureDbContext(services);
+
+            AddMvc(services);
+        }
+
+        private static void AddMvc(IServiceCollection services)
+        {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateRoomCommandValidator>());
         }
 
-        private void RegisterFrameworkServices(IServiceCollection services)
+        private void ConfigureDbContext(IServiceCollection services)
+        {
+            // Configure DB Context. Add EbookShop context to dependency injection container and set database provider and also connection string. 
+            services.AddDbContext<IReservationDbContext, ReservationDbContext>(options =>
+                options.UseSqlServer(connectionString: Configuration.GetConnectionString("RoomOccupancyDatabase")));
+        }
+
+        private static void AddMediatR(IServiceCollection services)
+        {
+            // Add MediatR
+            services.AddMediatR(typeof(CreateRoomCommand).GetTypeInfo().Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehaviour<,>));
+        }
+
+        private void RegisterApplicationServices(IServiceCollection services)
         {
             services.AddTransient<IDateTime, MachineDateTime>();
             services.AddTransient<INotificationService, NotificationService>();
@@ -77,8 +89,17 @@ namespace RoomOccupancy.API
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
+
+            AddMiddleware(app);
+
             app.UseMvc();
+        }
+
+        private static void AddMiddleware(IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
         }
     }
 }

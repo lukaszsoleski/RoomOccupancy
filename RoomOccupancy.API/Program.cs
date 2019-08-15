@@ -43,14 +43,12 @@ namespace RoomOccupancy.API
 
                     context.Database.Migrate();
                     var mediatr = scope.ServiceProvider.GetService<IMediator>();
-                    var automapper = scope.ServiceProvider.GetService<IMapper>();
 
                     await new ReservationInitializer(context, mediatr).Initialize();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    //var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    //logger.LogError(ex, "An error occurred while migrating or initializing the database.");
+                    throw;
                 }
             }
         }
