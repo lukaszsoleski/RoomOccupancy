@@ -40,10 +40,13 @@ namespace RoomOccupancy.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            RegisterApplicationServices(services);
+            RegisterInfrastructureServices(services);
+           
+            // Add AutoMapper
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             AddMediatR(services);
-
+            
             ConfigureDbContext(services);
 
             AddMvc(services);
@@ -70,8 +73,10 @@ namespace RoomOccupancy.API
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehaviour<,>));
         }
 
-        private void RegisterApplicationServices(IServiceCollection services)
+        private void RegisterInfrastructureServices(IServiceCollection services)
         {
+          
+            // Add Infrastructure
             services.AddTransient<IDateTime, MachineDateTime>();
             services.AddTransient<INotificationService, NotificationService>();
         }

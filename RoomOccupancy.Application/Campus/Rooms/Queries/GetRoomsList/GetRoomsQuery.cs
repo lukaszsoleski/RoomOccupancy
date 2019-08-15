@@ -36,7 +36,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Queries
                     select = select.Where(request.ValuePropertyFilter);
 
                 var rooms = await select
-                    .ProjectTo<RoomLookupModel>()
+                    .ProjectTo<RoomLookupModel>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
                 return new RoomsListViewModel() { Rooms = rooms };

@@ -15,11 +15,8 @@ namespace RoomOccupancy.API.Controllers.Campus
         /// <param name="buildingNo">Building campus number.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetRooms(int buildingNo)
+        public async Task<IActionResult> FromBuilding(int buildingNo)
         {
-            if (buildingNo < 0)
-                return BadRequest(error: numberErrorMessage);
-
             var building = await Mediator.Send(new GetBuildingQuery() { Number = buildingNo });
 
             var rooms = await Mediator.Send(new GetRoomsQuery() { ValuePropertyFilter = x => x.BuildingId == building.Id });

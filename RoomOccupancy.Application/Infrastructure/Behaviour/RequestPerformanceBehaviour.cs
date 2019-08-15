@@ -1,21 +1,21 @@
-﻿using System.Diagnostics;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace RoomOccupancy.Application.Infrastructure
 {
     public class RequestPerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly Stopwatch _timer;
-        //private readonly ILogger<TRequest> _logger;
+        private readonly ILogger<TRequest> _logger;
 
-        public RequestPerformanceBehaviour()
+        public RequestPerformanceBehaviour(ILogger<TRequest> logger)
         {
             _timer = new Stopwatch();
 
-          //  _logger = logger;
+            _logger = logger;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -30,8 +30,8 @@ namespace RoomOccupancy.Application.Infrastructure
             {
                 var name = typeof(TRequest).Name;
 
-                // TODO: Add User Details and log warning
-
+                // TODO: Add User Details
+                _logger.LogWarning($"Long Running Request: {name} { _timer.ElapsedMilliseconds} milliseconds");
             }
 
             return response;

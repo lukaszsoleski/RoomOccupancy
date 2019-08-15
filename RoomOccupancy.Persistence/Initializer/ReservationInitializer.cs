@@ -1,10 +1,12 @@
 ﻿using ExcelMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms;
 using RoomOccupancy.Application.Infrastructure.Mapping;
 using RoomOccupancy.Domain.Entities.Campus;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace RoomOccupancy.Persistence
@@ -24,7 +26,7 @@ namespace RoomOccupancy.Persistence
 
             _context = context;
 
-            initializationDir = Path.Combine(Directory.GetCurrentDirectory(), @"Initializer\Files\");
+            initializationDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Initializer\Files\");
         }
 
         public async Task Initialize()
@@ -58,8 +60,10 @@ namespace RoomOccupancy.Persistence
         {
             var path = Path.Combine(initializationDir, filePath);
             var file = File.ReadAllBytes(path);
-            var entities = ExcelHelper.Load<TEntity, TConfiguration>(file);
-            _context.AddRange(entities);
+            var entities = ExcelHelper.Load<TEntity, TConfiguration>(file).ToList();
+
+            entities.ForEach(x => _context.Entry(x).State = EntityState.Added);
+
             await _context.SaveChangesAsync();
         }
     }

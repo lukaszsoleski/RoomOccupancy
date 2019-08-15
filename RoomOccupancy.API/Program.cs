@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Persistence;
+using System;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RoomOccupancy.API
 {
@@ -25,12 +21,25 @@ namespace RoomOccupancy.API
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             var host = CreateWebHostBuilder(args).Build();
+            var logger = host.Services.GetRequiredService<ILogger<Program>>();
+            
+            AssertMappingConfigurationIsValid(host, logger);
 
             await MigrateDatabase(host);
 
             host.Run();
+        }
 
-
+        private static void AssertMappingConfigurationIsValid(IWebHost host, ILogger<Program> logger)
+        {
+            var mapper = host.Services.GetService<IMapper>();
+            try { 
+            mapper.ConfigurationProvider.AssertConfigurationIsValid();
+            }
+            catch(AutoMapperConfigurationException ace)
+            {
+                logger.LogWarning(ace.Message);
+            }
         }
 
         private static async Task MigrateDatabase(IWebHost host)
@@ -42,12 +51,15 @@ namespace RoomOccupancy.API
                     var context = (ReservationDbContext)scope.ServiceProvider.GetService<IReservationDbContext>();
 
                     context.Database.Migrate();
+
                     var mediatr = scope.ServiceProvider.GetService<IMediator>();
 
                     await new ReservationInitializer(context, mediatr).Initialize();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while migrating or initializing the database.");
                     throw;
                 }
             }
@@ -55,8 +67,13 @@ namespace RoomOccupancy.API
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                    logging.AddDebug(); 
+                })
                 .UseStartup<Startup>();
-
-
     }
 }

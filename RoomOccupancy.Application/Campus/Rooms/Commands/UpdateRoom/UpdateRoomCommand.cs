@@ -16,6 +16,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.UpdateRoom
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Number { get; set; }
         public float? Space { get; set; }
         public int? Seats { get; set; }
         public string DesignatedUse { get; set; }

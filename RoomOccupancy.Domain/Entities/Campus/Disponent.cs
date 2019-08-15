@@ -10,5 +10,9 @@ namespace RoomOccupancy.Domain.Entities.Campus
 
         public string Email { get; set; }
 
+        //public override string ToString()
+        //{
+        //    return $"{nameof(Id)} {Id}, {nameof(Name)} {Name} "; 
+        //}
     }
 }

@@ -25,11 +25,11 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
             /// </summary>
             private int headingIndex = 1;
 
-            private readonly IReservationDbContext dbContext;
+            private readonly IReservationDbContext _context;
 
-            public Handler(IReservationDbContext dbContext, IMediator mediator)
+            public Handler(IReservationDbContext context, IMediator mediator)
             {
-                this.dbContext = dbContext;
+                _context = context;
             }
 
             public async Task<Unit> Handle(ImportRoomsCommand request, CancellationToken cancellationToken)
@@ -37,15 +37,15 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
                 var importedRooms = ExcelHelper.Load<Room, RoomClassMap>(request.File);
 
                 // load cache
-                var buildingsCache = await dbContext.Buildings.ToListAsync();
+                var buildingsCache = await _context.Buildings.ToListAsync();
 
-                var disponentsCache = await dbContext.Disponents.ToListAsync();
+                var disponentsCache = await _context.Disponents.ToListAsync();
 
-                var facultiesCache = await dbContext.Faculties.ToListAsync();
+                var facultiesCache = await _context.Faculties.ToListAsync();
 
                 ImportAll(importedRooms, buildingsCache, disponentsCache, facultiesCache);
 
-                await dbContext.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
                 return Unit.Value;
             }
@@ -61,6 +61,9 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
                     Disponent disponent = AssignDisponent(disponentsCache, room);
 
                     AssignFaculty(facultiesCache, room, disponent);
+
+                    _context.Rooms.Add(room); 
+                   
                 }
             }
 
@@ -73,7 +76,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
                     disponent = room.Disponent;
 
                     // change object state to added.
-                    dbContext.Disponents.Add(disponent);
+                    _context.Disponents.Add(disponent);
 
                     // update cache
                     disponentsCache.Add(disponent);
@@ -96,11 +99,7 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms
                         
                     if (faculty is null)
                     {
-                        faculty = new Faculty() { Acronym = facultyName, Name = facultyName };
-
-                        dbContext.Faculties.Add(faculty);
-
-                        facultiesCache.Add(faculty);
+                        continue;
                     }
 
                     var newFacultyRoom = new FacultyRoom() { Faculty = faculty, Room = room };
