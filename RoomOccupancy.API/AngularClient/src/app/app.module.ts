@@ -41,6 +41,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 import { RoomComponent } from './room/room.component';
+import { RoomLookupComponent } from './room/components/room-lookup/room-lookup.component';
 
 @NgModule({
   declarations: [
@@ -48,12 +49,13 @@ import { RoomComponent } from './room/room.component';
     CampusComponent,
     BuildingComponent,
     ReservationFormComponent,
-    RoomComponent
+    RoomComponent,
+    RoomLookupComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }), // <-- debugging purposes only),
+    RouterModule.forRoot(appRoutes),
 
     //Angular Material Components
     BrowserAnimationsModule,

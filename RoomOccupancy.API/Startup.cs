@@ -48,7 +48,8 @@ namespace RoomOccupancy.API
             AddMediatR(services);
             
             ConfigureDbContext(services);
-
+            // add CORS before MVC
+            services.AddCors();
             AddMvc(services);
         }
 
@@ -98,7 +99,7 @@ namespace RoomOccupancy.API
             app.UseHttpsRedirection();
 
             AddMiddleware(app);
-
+            app.UseCors(options => options.AllowAnyOrigin());
             app.UseMvc();
         }
 
