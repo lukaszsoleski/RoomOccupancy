@@ -11,4 +11,11 @@ export interface IRoomListViewModel{
 }
 export class RoomListViewModel implements IRoomListViewModel {
  public rooms: IRoomLookupModel[];
+ 
+ /**
+  *
+  */
+ constructor() {
+  this.rooms = [];    
+ }
 }

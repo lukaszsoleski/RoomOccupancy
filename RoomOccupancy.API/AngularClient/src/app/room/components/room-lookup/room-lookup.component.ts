@@ -1,9 +1,10 @@
-import { IRoomLookupModel } from './../../../models/campus/room-lookup.model';
+import { IRoomLookupModel, RoomListViewModel } from './../../../models/campus/room-lookup.model';
 import { RoomsService } from './../../../services/rooms.service';
 import { Component, OnInit } from '@angular/core';
 import {switchMap} from 'rxjs/operators'; 
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { MatTableDataSource } from '@angular/material';
 @Component({
   selector: 'app-room-lookup',
   templateUrl: './room-lookup.component.html',
@@ -12,14 +13,22 @@ import { Observable } from 'rxjs';
 export class RoomLookupComponent implements OnInit {
 
   private rooms: IRoomLookupModel[]; 
+
   private buildingNo: number; 
 
+  private dataSource: MatTableDataSource<IRoomLookupModel>; 
+  public displayedColumns: string[] = ['label', 'actualUse', 'facultyLookup','seats'];
+  
   constructor(
     private readonly roomsService: RoomsService,
     private readonly route : ActivatedRoute
-  ) { }
+  ) {
+     this.dataSource = new MatTableDataSource(); 
+   }
 
-
+   public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   /**
    * Download the list of rooms for building with number taken from the id route parameter.
    */
@@ -32,6 +41,7 @@ export class RoomLookupComponent implements OnInit {
       })
     ).subscribe(x => {
       this.rooms = x.rooms;
+      this.dataSource.data = this.rooms;
        console.log(`GetBuildingRooms call with ${this.buildingNo} parameter returned ${this.rooms.length} elements.`);
     });
   }
