@@ -2,29 +2,29 @@
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
   
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
   
     <!-- Position Column -->
     <ng-container matColumnDef="label">
-      <th mat-header-cell *matHeaderCellDef> Pomieszczenie </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Pomieszczenie </th>
       <td mat-cell *matCellDef="let element"> {{element.label}} </td>
     </ng-container>
   
     <!-- Name Column -->
     <ng-container matColumnDef="actualUse">
-      <th mat-header-cell *matHeaderCellDef> Rodzaj / Wykorzystanie </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rodzaj / Wykorzystanie </th>
       <td mat-cell *matCellDef="let element"> {{element.actualUse}} </td>
     </ng-container>
   
     <!-- Weight Column -->
     <ng-container matColumnDef="facultyLookup">
-      <th mat-header-cell *matHeaderCellDef> Wydział </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Wydział </th>
       <td mat-cell *matCellDef="let element"> {{element.facultyLookup}} </td>
     </ng-container>
   
     <!-- Symbol Column -->
     <ng-container matColumnDef="seats">
-      <th mat-header-cell *matHeaderCellDef> Ilość miejsc </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilość miejsc </th>
       <td mat-cell *matCellDef="let element"> {{element.seats}} </td>
     </ng-container>
   
