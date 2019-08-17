@@ -1,3 +1,4 @@
+import { HttpErrorInterceptor } from './common/interceptors/httperror-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -5,7 +6,7 @@ import { CampusComponent } from './campus/campus.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { BuildingComponent } from './building/building.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 //Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
@@ -44,6 +45,7 @@ import { RoomComponent } from './room/room.component';
 import { RoomLookupComponent } from './room/components/room-lookup/room-lookup.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
+
 
 @NgModule({
   declarations: [
@@ -98,7 +100,15 @@ import { LayoutModule } from '@angular/cdk/layout';
     //End Angular Material Imports
 
   ],
-  providers: [MatDatepickerModule],
+  providers: [
+    MatDatepickerModule,
+    { // register error interceptor
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
