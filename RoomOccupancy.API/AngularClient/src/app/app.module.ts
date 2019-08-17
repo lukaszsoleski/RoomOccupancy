@@ -42,6 +42,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 import { RoomComponent } from './room/room.component';
 import { RoomLookupComponent } from './room/components/room-lookup/room-lookup.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { RoomLookupComponent } from './room/components/room-lookup/room-lookup.c
     BuildingComponent,
     ReservationFormComponent,
     RoomComponent,
-    RoomLookupComponent
+    RoomLookupComponent,
+    MainNavComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +93,8 @@ import { RoomLookupComponent } from './room/components/room-lookup/room-lookup.c
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    LayoutModule
     //End Angular Material Imports
 
   ],

@@ -3,13 +3,17 @@
 // angular material default theme and icons
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css'; 
-
+body,html{
+    height: 100%;
+}
 body{
     margin: 0;
     padding: 0; 
     //font-family: 'Open Sans', sans-serif;
 }
-
+.hide {
+    display: none;
+}
         
 .flex-col-fluid {
     display: flex;
