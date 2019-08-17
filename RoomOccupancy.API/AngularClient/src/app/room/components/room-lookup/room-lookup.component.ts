@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild, Output } from '@angular/core';
 import {switchMap} from 'rxjs/operators'; 
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 @Component({
   selector: 'app-room-lookup',
   templateUrl: './room-lookup.component.html',
@@ -20,7 +20,7 @@ export class RoomLookupComponent implements OnInit {
   public displayedColumns: string[] = ['label', 'actualUse', 'seats','facultyLookup'];
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
     private readonly roomsService: RoomsService,
     private readonly route : ActivatedRoute
@@ -49,7 +49,7 @@ export class RoomLookupComponent implements OnInit {
   
   ngOnInit() {
     this.GetBuildingRooms();
-    
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
