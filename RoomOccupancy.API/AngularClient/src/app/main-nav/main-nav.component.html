@@ -4,14 +4,24 @@
       class="sidenav" 
       fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [mode]="(isHandset$ | async) ? 'over' : 'push'"
       
       >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+        <mat-list-item >
+            <mat-icon mat-list-icon>meeting_room</mat-icon>
+            <a href="#">Przegląd pomieszczeń</a>
+        </mat-list-item>
+        <mat-list-item >
+            <mat-icon mat-list-icon>calendar_today</mat-icon>
+            <a href="#">Rezerwacja</a>
+        </mat-list-item>
+        <h3 mat-subheader>Ustawienia</h3>
+        <mat-list-item >
+            <mat-icon mat-list-icon>account_circle</mat-icon>
+            <a href="#">Konto</a>
+        </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -24,11 +34,12 @@
         >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>AngularClient</span>
-     
+      <span>SGGW SRS</span>
+      <span class="spacer"></span>
+      <a href="#">Zaloguj się</a>
+      <a href="#">Utwórz konto</a>
     </mat-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
-      <!-- [ngClass]="{hidden: !(isHandset$ | async)}"  -->
