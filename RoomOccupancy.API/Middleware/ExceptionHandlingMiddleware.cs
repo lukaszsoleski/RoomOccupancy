@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Common.Extentions;
 using System;
@@ -94,7 +95,13 @@ namespace RoomOccupancy.API.Middleware
         {
             var response = context.Response;
 
-            var content = JsonConvert.SerializeObject(responseObj);
+            var content = JsonConvert.SerializeObject(responseObj, new JsonSerializerSettings()
+            {
+                ContractResolver = new DefaultContractResolver()
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                }
+            });
 
             response.ContentType = "application/json";
 

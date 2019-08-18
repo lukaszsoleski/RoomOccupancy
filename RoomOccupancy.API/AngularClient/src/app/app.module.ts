@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { BuildingComponent } from './building/building.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 //Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
@@ -46,7 +47,7 @@ import { RoomLookupComponent } from './room/components/room-lookup/room-lookup.c
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 
-
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     MainNavComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
@@ -96,8 +98,14 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    LayoutModule
+    LayoutModule,
     //End Angular Material Imports
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-full-width',
+      preventDuplicates: true,
+      timeOut: 6000,
+      maxOpened: 3,
+    }), // ToastrModule added
 
   ],
   providers: [
