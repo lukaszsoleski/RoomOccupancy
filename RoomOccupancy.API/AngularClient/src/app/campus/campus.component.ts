@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 declare const $:any;
 @Component({
   selector: 'app-campus',
@@ -7,14 +8,18 @@ declare const $:any;
 })
 export class CampusComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   
     this.mapSetup();
     
   }
-  
+  // Use event binding instead of using routerLink, as the page reloads when using the area marker.
+  private onBuildingSelected(event, buildingNo: number){
+    event.preventDefault();
+    this.router.navigate([`/building/${buildingNo}`]);
+  }
   private mapSetup() : void{
     $(function(){
 	
