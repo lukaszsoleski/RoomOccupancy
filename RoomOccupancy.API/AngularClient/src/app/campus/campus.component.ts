@@ -15,7 +15,7 @@ export class CampusComponent implements OnInit {
     this.mapSetup();
     
   }
-  // Use event binding instead of using routerLink, as the page reloads when using the area marker.
+  // Use event binding instead of using routerLink directly, as the page reloads when using the area marker.
   private onBuildingSelected(event, buildingNo: number){
     event.preventDefault();
     this.router.navigate([`/building/${buildingNo}`]);
@@ -37,5 +37,4 @@ export class CampusComponent implements OnInit {
       });
   });
   }
-
 }
