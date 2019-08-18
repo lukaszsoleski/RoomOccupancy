@@ -1,5 +1,22 @@
-.campus {
-    font-weight: 400;
-    font-size: 12px;
-    text-align: center;
-  }
+.campus{
+  // background: blue;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.showcase-text{
+  min-height: 300px;
+  color: #060606;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.showcase{
+  height: 90vh;
+}
+.space{
+  min-height: 500px;
+}
+

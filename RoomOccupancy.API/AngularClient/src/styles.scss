@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
+
 body,html{
     height: 100%;
-
 }
 body{
     margin: 0;
@@ -12,7 +12,12 @@ body{
 .hide {
     display: none;
 }
-        
+.center{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .flex-col-fluid {
     display: flex;
     flex-direction: column;
