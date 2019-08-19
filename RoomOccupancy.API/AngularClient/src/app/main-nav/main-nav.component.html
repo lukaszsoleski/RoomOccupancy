@@ -1,17 +1,17 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav 
-      #drawer 
-      class="sidenav" 
+  <mat-sidenav
+      #drawer
+      class="sidenav"
       fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'push'"
-      
+
       >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
         <mat-list-item >
             <mat-icon mat-list-icon>meeting_room</mat-icon>
-            <a href="#">Przegląd pomieszczeń</a>
+            <a [routerLink]="['/campus/rooms']">Przegląd pomieszczeń</a>
         </mat-list-item>
         <mat-list-item >
             <mat-icon mat-list-icon>calendar_today</mat-icon>

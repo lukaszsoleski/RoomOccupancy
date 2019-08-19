@@ -7,13 +7,16 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RoomsService {
-RoomList
+
   constructor(private httpService: HttpClientUtilsService) { }
 
   /**
    * getRoomsInBuilding
    */
-  public getBuildingRooms(buildingNo: number) : Observable<RoomListViewModel>{
+  public getBuildingRooms(buildingNo: number): Observable<RoomListViewModel> {
     return this.httpService.get<RoomListViewModel>(`rooms/frombuilding?buildingno=${buildingNo}`);
+  }
+  public getRooms(): Observable<RoomListViewModel> {
+    return this.httpService.get<RoomListViewModel>('rooms/frombuilding');
   }
 }

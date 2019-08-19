@@ -6,17 +6,34 @@
   align-items: center;
   justify-content: center;
 }
-
 .showcase-text{
   min-height: 300px;
+
+  width: 100%;
+  margin: auto;
   color: #060606;
   font-family: 'Montserrat', sans-serif;
+  // > h1:first-child{
+
+  // }
+  // h1{
+
+  // }
+}
+.flex-center-col{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.showcase{
-  height: 90vh;
-}
-.space{
-  min-height: 500px;
-}
+// bootstrap lg breakpoint
+@media (max-width: 992px) {
+  .campus{
+    margin-top: 100px;
+  }
+  .showcase-text{
+    margin-top: 50px;
+  }
 
+}

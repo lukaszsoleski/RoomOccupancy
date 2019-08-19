@@ -1,6 +1,7 @@
 import { BuildingComponent } from './building/building.component';
 import { CampusComponent } from './campus/campus.component';
 import { Routes } from '@angular/router';
+import { RoomsComponent } from './campus/rooms/rooms.component';
 
 export const appRoutes: Routes = [
   {
@@ -8,6 +9,9 @@ export const appRoutes: Routes = [
   },
   {
     path: 'building/:id', component: BuildingComponent
+  },
+  {
+    path: 'campus/rooms', component: RoomsComponent
   },
   {
     path: '',
