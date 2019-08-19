@@ -17,6 +17,11 @@ namespace RoomOccupancy.Application.Campus.Rooms.Queries
     {
         public Expression<Func<Room, bool>> ValuePropertyFilter { get; set; }
 
+        /// <summary>
+        /// Additionally adds building number to the label of the <see cref="RoomLookupModel"/>.
+        /// </summary>
+        public bool IncludeBuildingNo { get; set; }
+
         public class Handler : IRequestHandler<GetRoomsQuery, RoomsListViewModel>
         {
             private readonly IMapper _mapper;
@@ -39,9 +44,24 @@ namespace RoomOccupancy.Application.Campus.Rooms.Queries
                 var rooms = await select
                     .ProjectTo<RoomLookupModel>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
-                
+
+                await AssignBuildingNumber(request, rooms);
 
                 return new RoomsListViewModel() { Rooms = rooms };
+            }
+
+            private async Task AssignBuildingNumber(GetRoomsQuery request, System.Collections.Generic.List<RoomLookupModel> rooms)
+            {
+                if (request.IncludeBuildingNo)
+                {
+                    var buildings = await _context.Buildings.AsNoTracking().ToListAsync();
+                    rooms.ForEach(room =>
+                    {
+                        var building = buildings.FirstOrDefault(x => x.Id == room.BuildingId);
+                        if (building == null) return;
+                        room.Label = $"{room.Label} bud. {building.Number}";
+                    });
+                }
             }
         }
     }
