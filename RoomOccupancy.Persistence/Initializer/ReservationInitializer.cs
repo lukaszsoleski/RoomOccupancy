@@ -3,7 +3,10 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms;
 using RoomOccupancy.Application.Infrastructure.Mapping;
+using RoomOccupancy.Application.Infrastructure.Mapping.Excel;
 using RoomOccupancy.Domain.Entities.Campus;
+using RoomOccupancy.Domain.Entities.Reservation;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,10 +21,11 @@ namespace RoomOccupancy.Persistence
         private readonly string initializationDir;
         // TODO: Add folder scan with name conventions
         #region initialization files
-        private readonly string buldingNo23Rooms = "Zajetosc_Sal_do_POLON_budynek_23.xlsx";
+        private readonly string buildingRooms23 = "Zajetosc_Sal_do_POLON_budynek_23.xlsx";
+        private readonly string buildingRooms34 = "SaleWzim.xlsx";
         private readonly string buildingsFile = "Budynki.xlsx";
         private readonly string facultiesFile = "Wydziały.xlsx";
-        private readonly string bulding34WzimRooms = "SaleWzim.xlsx";
+        private readonly string scheduleFile = "Tst1_Zajetosc_sal_WZIM_2018_Wiosna.xlsx";
         #endregion
         public ReservationInitializer(ReservationDbContext context, IMediator mediator)
         {
@@ -34,16 +38,21 @@ namespace RoomOccupancy.Persistence
 
         public async Task Initialize()
         {
+            _context.Database.EnsureDeleted();
+            _context.Database.Migrate(); 
             _context.Database.EnsureCreated();
 
             if (_context.Rooms.Any())
                 // database has been seeded
                 return;
-
+            
             await SeedBuildings();
             await SeedFaculties();
             await SeedRooms();
+            await SeedReservations();
         }
+        // TODO: implement logic for this
+        private async Task SeedReservations() => await Task.CompletedTask;
 
         private async Task SeedFaculties() => await ExcelSeed<Faculty, FacultyClassMap>(facultiesFile);
 
@@ -51,8 +60,8 @@ namespace RoomOccupancy.Persistence
 
         private async Task SeedRooms()
         {
-            var b23Path = Path.Combine(initializationDir, buldingNo23Rooms);
-            var b34Path = Path.Combine(initializationDir, bulding34WzimRooms);
+            var b23Path = Path.Combine(initializationDir, buildingRooms23);
+            var b34Path = Path.Combine(initializationDir, buildingRooms34);
             var b23Content = File.ReadAllBytes(b23Path);
             var b34Content = File.ReadAllBytes(b34Path); 
             await _mediator.Send(new ImportRoomsCommand() { File = b23Content });

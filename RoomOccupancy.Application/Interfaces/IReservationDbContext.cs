@@ -16,10 +16,7 @@ namespace RoomOccupancy.Application.Interfaces
         DbSet<Equipment> Equipment { get; set; }
         DbSet<Faculty> Faculties { get; set; }
         DbSet<Reservation> Reservations { get; set; }
-        DbSet<Course> Courses { get; set; }
-        DbSet<DegreeProgramme> DegreeProgrammes { get; set; }
         DbSet<Lecturer> Lecturers { get; set; }
-        DbSet<Schedule> Schedules { get; set; }
         DbSet<FacultyRoom> FacultyRooms { get; set; }
         #endregion
         #region EF Core methods 
