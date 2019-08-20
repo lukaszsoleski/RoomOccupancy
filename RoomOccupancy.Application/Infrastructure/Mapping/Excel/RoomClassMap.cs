@@ -15,19 +15,22 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
             Map(x => x.Number)
                 .WithColumnNameMatching(x => x.Contains("nr pom.", StringComparison.OrdinalIgnoreCase));
             Map(x => x.Name)
-                .WithColumnNameMatching(x => x.Contains("nazwa", StringComparison.OrdinalIgnoreCase));
+                .WithColumnNameMatching(x => x.Contains("nazwa", StringComparison.OrdinalIgnoreCase))
+                .MakeOptional();
 
             Map(x => x.Floor)
                 .WithColumnNameMatching(x => x.Contains("kondygnacja", StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.DesignatedUse)
-                .WithColumnNameMatching(x => x.Contains("projekt", StringComparison.OrdinalIgnoreCase));
+                .WithColumnNameMatching(x => x.Contains("projekt", StringComparison.OrdinalIgnoreCase))
+                .MakeOptional();
 
             Map(x => x.ActualUse)
                 .WithColumnNameMatching(x => x.Contains("opis", StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.Space)
-                .WithColumnNameMatching(x => x.Contains("powierzchnia", StringComparison.OrdinalIgnoreCase));
+                .WithColumnNameMatching(x => x.Contains("powierzchnia", StringComparison.OrdinalIgnoreCase))
+                .MakeOptional();
 
             Map(x => x.Seats)
                 .WithColumnNameMatching(x => x.Contains("miejsc", StringComparison.OrdinalIgnoreCase));
