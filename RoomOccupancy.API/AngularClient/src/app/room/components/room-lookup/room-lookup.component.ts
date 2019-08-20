@@ -41,7 +41,7 @@ export class RoomLookupComponent implements OnInit {
         // get rooms for the specified building
         if (id) {
           this.buildingNo = +id;
-          return this.roomsService.getBuildingRooms(this.buildingNo);
+          return this.roomsService.getRooms(this.buildingNo);
         }
         // id is not defined so get all rooms
         return this.roomsService.getRooms();

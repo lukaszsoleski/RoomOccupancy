@@ -7,16 +7,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RoomsService {
+  
+  private getAllRoute = 'rooms/frombuilding';
 
   constructor(private httpService: HttpClientUtilsService) { }
 
-  /**
-   * getRoomsInBuilding
-   */
-  public getBuildingRooms(buildingNo: number): Observable<RoomListViewModel> {
-    return this.httpService.get<RoomListViewModel>(`rooms/frombuilding?buildingno=${buildingNo}`);
+  public getRooms(buildingNo?: number): Observable<RoomListViewModel> {
+    let route = this.getAllRoute;
+    if(buildingNo != null || buildingNo != undefined){
+      route += `?buildingno=${buildingNo}`;
+    }
+    return this.httpService.get<RoomListViewModel>(route);
   }
-  public getRooms(): Observable<RoomListViewModel> {
-    return this.httpService.get<RoomListViewModel>('rooms/frombuilding');
-  }
+  
 }

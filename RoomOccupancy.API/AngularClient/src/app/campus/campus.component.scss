@@ -11,14 +11,15 @@
 
   width: 100%;
   margin: auto;
-  color: #060606;
+  // color: #060606;
   font-family: 'Montserrat', sans-serif;
-  // > h1:first-child{
-
-  // }
-  // h1{
-
-  // }
+  h1:first-child{
+   font-weight: 400;
+  }
+  h1{
+   font-size: 100px;
+   
+  }
 }
 .flex-center-col{
   display: flex;
@@ -34,6 +35,11 @@
   }
   .showcase-text{
     margin-top: 50px;
+    // fix button 'click event' hiding under the campus image 
+    z-index: 2;
+    h1{
+      font-size: 80px;
+     }
   }
-
+ 
 }

@@ -4,7 +4,7 @@
 }
 
 .sidenav {
-  width: 350px;
+  width: 320px;
 }
 
 .sidenav .mat-toolbar {
@@ -17,10 +17,7 @@
   top: 0;
   z-index: 9999;
 }
-.spacer{
-  // takes all empty space between elements
-  flex: 1 1 auto;
-}
+
 .mat-toolbar a {
   display: inline-block;
   margin: 0 10px;

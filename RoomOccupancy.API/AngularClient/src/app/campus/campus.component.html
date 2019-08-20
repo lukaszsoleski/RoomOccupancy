@@ -9,12 +9,12 @@
     <div class="col-lg-4 mt-5">
       <div class="showcase-text center flex-center-col">
         <div>
-          <h1 class="">Sale</h1>
-          <h1 class="">SGGW</h1>
+          <h1>Sale</h1>
+          <h1>SGGW</h1>
         </div>
-        <div>
-          <button mat-raised-button color="primary" class="mr-1">Śledż zajętość</button>
-          <button mat-stroked-button color="primary">Rezerwuj</button>
+        <div class="d-flex justify-content-center">
+          <button mat-raised-button color="primary"  class="mr-1" [routerLink]="['/campus/rooms']">Śledż zajętość</button>
+          <button mat-stroked-button color="primary" class="ml-1">Rezerwuj</button>
         </div>
       </div>
     </div>
