@@ -51,7 +51,6 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.UpdateRoom
                 if(request.ShouldUpdateFaculties)
                 {
                     room.Faculties.Clear();
-                    //todo check FacultyRoom entity behavior
                     var roomFaculty = await _context.FacultyRooms
                         .Where(x => request.Faculties.Contains(x.FacultyId))
                         .ToListAsync();

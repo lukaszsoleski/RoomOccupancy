@@ -30,8 +30,7 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
                 .WithColumnNameMatching(x => x.Contains("powierzchnia", StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.Seats)
-                .WithColumnNameMatching(x => x.Contains("miejsc", StringComparison.OrdinalIgnoreCase))
-                .WithEmptyFallback(null);
+                .WithColumnNameMatching(x => x.Contains("miejsc", StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.Disponent.Name)
                 .WithColumnNameMatching(x => x.Contains("dysponent", StringComparison.OrdinalIgnoreCase))

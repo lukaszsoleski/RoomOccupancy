@@ -27,6 +27,9 @@
     <None Update="Initializer\Files\Budynki.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Initializer\Files\SaleWzim.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Initializer\Files\Tst1_Zajetosc_sal_WZIM_2018_Wiosna.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

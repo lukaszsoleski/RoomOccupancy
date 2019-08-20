@@ -16,10 +16,13 @@ namespace RoomOccupancy.Persistence
         private readonly ReservationDbContext _context;
         private readonly IMediator _mediator;
         private readonly string initializationDir;
-        private readonly string roomsFile = "Zajetosc_Sal_do_POLON_budynek_23.xlsx";
+        // TODO: Add folder scan with name conventions
+        #region initialization files
+        private readonly string buldingNo23Rooms = "Zajetosc_Sal_do_POLON_budynek_23.xlsx";
         private readonly string buildingsFile = "Budynki.xlsx";
         private readonly string facultiesFile = "Wydziały.xlsx";
-
+        private readonly string bulding34WzimRooms = "SaleWzim.xlsx";
+        #endregion
         public ReservationInitializer(ReservationDbContext context, IMediator mediator)
         {
             _mediator = mediator;
@@ -48,11 +51,15 @@ namespace RoomOccupancy.Persistence
 
         private async Task SeedRooms()
         {
-            var path = Path.Combine(initializationDir, roomsFile);
-
-            var content = File.ReadAllBytes(path);
-
-            await _mediator.Send(new ImportRoomsCommand() { File = content });
+            var b23Path = Path.Combine(initializationDir, buldingNo23Rooms);
+            var b34Path = Path.Combine(initializationDir, bulding34WzimRooms);
+            var b23Content = File.ReadAllBytes(b23Path);
+            var b34Content = File.ReadAllBytes(b34Path); 
+            await _mediator.Send(new ImportRoomsCommand() { File = b23Content });
+            //TODO: No Columns found matching predicate from ["Budynek", "Nr pom.", "Kondygnacja, na której znajduje się pomieszczenie", "Liczba miejsc (studentów)**", "Opis", "Dysponent", "nazwa", "projekt"]
+            // basically if any of the columns are missing, an exception is thrown
+            // try to just ignore it if it is nullable column or add dummy heading if library does not support it 
+            await _mediator.Send(new ImportRoomsCommand() { File = b34Content });
         }
 
         private async Task ExcelSeed<TEntity, TConfiguration>(string filePath)

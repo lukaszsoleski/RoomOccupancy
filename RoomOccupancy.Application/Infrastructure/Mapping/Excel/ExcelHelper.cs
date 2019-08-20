@@ -25,12 +25,11 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
                         throw new InvalidDataException("The file does not contain data-sheet data.");
 
                     importer.Configuration.RegisterClassMap<TConfiguration>();
-
+                    
                     var sheet = importer.ReadSheet();
-
-                    //sheet.HasHeading = false;
+                    
                     sheet.HeadingIndex = index;
-
+                    
                     entities = sheet.ReadRows<TEntity>().ToList();
                 }
             }
