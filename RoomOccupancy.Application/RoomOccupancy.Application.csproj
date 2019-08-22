@@ -23,8 +23,6 @@
   <ItemGroup>
     <Folder Include="Schedule\" />
     <Folder Include="Users\" />
-    <Folder Include="Reservations\Commands\" />
-    <Folder Include="Reservations\Queries\" />
   </ItemGroup>
 
 </Project>
