@@ -13,8 +13,10 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
                 .WithColumnNameMatching(x => x.Contains("budynek", StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.Number)
+                .WithTrim()
                 .WithColumnNameMatching(x => x.Contains("nr pom.", StringComparison.OrdinalIgnoreCase));
             Map(x => x.Name)
+                .WithTrim()
                 .WithColumnNameMatching(x => x.Contains("nazwa", StringComparison.OrdinalIgnoreCase))
                 .MakeOptional();
 
@@ -22,10 +24,12 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
                 .WithColumnNameMatching(x => x.Contains("kondygnacja", StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.DesignatedUse)
+                .WithTrim()
                 .WithColumnNameMatching(x => x.Contains("projekt", StringComparison.OrdinalIgnoreCase))
                 .MakeOptional();
 
             Map(x => x.ActualUse)
+                .WithTrim()
                 .WithColumnNameMatching(x => x.Contains("opis", StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.Space)
@@ -36,6 +40,7 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
                 .WithColumnNameMatching(x => x.Contains("miejsc", StringComparison.OrdinalIgnoreCase));
 
             Map(x => x.Disponent.Name)
+                .WithTrim()
                 .WithColumnNameMatching(x => x.Contains("dysponent", StringComparison.OrdinalIgnoreCase))
                 .WithEmptyFallback("pow. Ogólna");
         }
