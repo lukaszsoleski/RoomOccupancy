@@ -22,11 +22,12 @@ namespace RoomOccupancy.Persistence
         private readonly string initializationDir;
         // TODO: Add folder scan with name conventions
         #region initialization files
-        private readonly string buildingRooms23 = "Zajetosc_Sal_do_POLON_budynek_23.xlsx";
-        private readonly string buildingRooms34 = "SaleWzim.xlsx";
-        private readonly string buildingsFile = "Budynki.xlsx";
-        private readonly string facultiesFile = "Wydziały.xlsx";
-        private readonly string scheduleFile = "Tst1_Zajetosc_sal_WZIM_2018_Wiosna.xlsx";
+        private readonly string roomsFileName = "Pomieszczenia.xlsx";
+        private readonly string wzimRoomsFileName = "SaleWzim.xlsx";
+        private readonly string buildingsFileName = "Budynki.xlsx";
+        private readonly string facultiesFileName = "Wydziały.xlsx";
+        private readonly string scheduleFileName = "Zajętość.xlsx";
+        private readonly string equipmentFileName = "Wyposażenie.xlsx";
         #endregion
         public ReservationInitializer(ReservationDbContext context, IMediator mediator)
         {
@@ -51,23 +52,33 @@ namespace RoomOccupancy.Persistence
             await SeedFaculties();
             await SeedRooms();
             await SeedReservations();
+           // await SeedEquipment();
         }
+
+        //private async Task SeedEquipment()
+        //{
+        //    var path = Path.Combine(initializationDir, equipmentFileName);
+        //    var content = File.ReadAllBytes(path); 
+
+        //    //await _mediator.Send()
+        //}
+
         // TODO: implement logic for this
         private async Task SeedReservations()
         {
-            var path = Path.Combine(initializationDir, scheduleFile);
+            var path = Path.Combine(initializationDir, scheduleFileName);
             var content = File.ReadAllBytes(path);
             await _mediator.Send(new ImportScheduleCommand() { FileContent = content });
         }
 
-        private async Task SeedFaculties() => await ExcelSeed<Faculty, FacultyClassMap>(facultiesFile);
+        private async Task SeedFaculties() => await ExcelSeed<Faculty, FacultyClassMap>(facultiesFileName);
 
-        private async Task SeedBuildings() => await ExcelSeed<Building, BuildingClassMap>(buildingsFile);
+        private async Task SeedBuildings() => await ExcelSeed<Building, BuildingClassMap>(buildingsFileName);
 
         private async Task SeedRooms()
         {
-            var b23Path = Path.Combine(initializationDir, buildingRooms23);
-            var b34Path = Path.Combine(initializationDir, buildingRooms34);
+            var b23Path = Path.Combine(initializationDir, roomsFileName);
+            var b34Path = Path.Combine(initializationDir, wzimRoomsFileName);
             var b23Content = File.ReadAllBytes(b23Path);
             var b34Content = File.ReadAllBytes(b34Path); 
             await _mediator.Send(new ImportRoomsCommand() { File = b23Content });
