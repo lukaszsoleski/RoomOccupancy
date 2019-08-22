@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms;
 using RoomOccupancy.Application.Infrastructure.Mapping;
 using RoomOccupancy.Application.Infrastructure.Mapping.Excel;
+using RoomOccupancy.Application.Reservations.Commands.ImportSchedule;
 using RoomOccupancy.Domain.Entities.Campus;
 using RoomOccupancy.Domain.Entities.Reservation;
 using System;
@@ -52,7 +53,12 @@ namespace RoomOccupancy.Persistence
             await SeedReservations();
         }
         // TODO: implement logic for this
-        private async Task SeedReservations() => await Task.CompletedTask;
+        private async Task SeedReservations()
+        {
+            var path = Path.Combine(initializationDir, scheduleFile);
+            var content = File.ReadAllBytes(path);
+            await _mediator.Send(new ImportScheduleCommand() { FileContent = content });
+        }
 
         private async Task SeedFaculties() => await ExcelSeed<Faculty, FacultyClassMap>(facultiesFile);
 
@@ -65,9 +71,6 @@ namespace RoomOccupancy.Persistence
             var b23Content = File.ReadAllBytes(b23Path);
             var b34Content = File.ReadAllBytes(b34Path); 
             await _mediator.Send(new ImportRoomsCommand() { File = b23Content });
-            //TODO: No Columns found matching predicate from ["Budynek", "Nr pom.", "Kondygnacja, na której znajduje się pomieszczenie", "Liczba miejsc (studentów)**", "Opis", "Dysponent", "nazwa", "projekt"]
-            // basically if any of the columns are missing, an exception is thrown
-            // try to just ignore it if it is nullable column or add dummy heading if library does not support it 
             await _mediator.Send(new ImportRoomsCommand() { File = b34Content });
         }
 

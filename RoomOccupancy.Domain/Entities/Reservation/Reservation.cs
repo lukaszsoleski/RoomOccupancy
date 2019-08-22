@@ -43,5 +43,10 @@ namespace RoomOccupancy.Domain.Entities.Reservation
         /// The room where the meeting is to be held.
         /// </summary>
         public virtual Room Room { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Subject} at {Start} to {End} on days {ReservationDays}";
+        }
     }
 }

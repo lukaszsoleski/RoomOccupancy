@@ -1,23 +1,25 @@
 ﻿using ExcelMapper;
+using RoomOccupancy.Application.Reservations;
 using RoomOccupancy.Common.Extentions;
 using RoomOccupancy.Domain.Entities.Reservation;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace RoomOccupancy.Application.Infrastructure.Mapping.Excel
 {
-    public class ReservationClassMap : ExcelClassMap<Reservation>
+    public class ReservationClassMap : ExcelClassMap<ReservationImportModel>
     {
        
         public ReservationClassMap()
         {
             var startingWeek = DateTime.Now;
-            Map(x => x.Room.Building.Number)
+            Map(x => x.BuildingNumber)
                 .WithTrim()
                 .WithColumnNameMatching(x => Contains(x, "budynek"));
-            Map(x => x.Room.Number)
+            Map(x => x.RoomNumber)
                 .WithTrim()
                 .WithColumnNameMatching(x => Contains(x, "sala"));
             Map(x => x.Start)
@@ -29,29 +31,11 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping.Excel
             Map(x => x.Subject)
                 .WithTrim()
                 .WithColumnNameMatching(x => Contains(x,"nazwa p."));
-            Map(x => x.ReservationDays)
+            Map(x => x.WeekDays)
+                .WithColumnName("Nr.Dnia");
+            Map(x => x.WeeksCount)
                 .WithTrim()
-                .WithColumnNameMatching(x => Contains(x,"nr.dnia"))
-                .WithMapping(new Dictionary<string, DaysOfWeek>()
-                {
-                    { "1", DaysOfWeek.Monday } ,
-                    { "2", DaysOfWeek.Tuesday },
-                    { "3", DaysOfWeek.Wednesday },
-                    { "4", DaysOfWeek.Thursday },
-                    { "5", DaysOfWeek.Friday },
-                    { "6", DaysOfWeek.Saturday },
-                    { "7", DaysOfWeek.Sunday },
-                });
-            Map(x => x.CancelationDateTime)
-                .WithColumnNameMatching(x => Contains(x,"tyd.zakn."))
-                .WithConverter(x =>
-                {
-                    int.TryParse(x?.Trim(), out var value);
-                    if (value > 0)
-                        return default;
-
-                    return (DateTime?)startingWeek.AddDays(value * 7);
-                });
+                .WithColumnNameMatching(x => Contains(x, "tyd.zakn."));
         }
         private static bool Contains(string src, string value) => src.Contains(value, StringComparison.OrdinalIgnoreCase);
         private static DateTime ParseExact(string x)
