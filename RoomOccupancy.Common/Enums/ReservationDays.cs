@@ -7,8 +7,7 @@ namespace RoomOccupancy.Common.Extentions
 {
     [Flags]
     public enum DaysOfWeek
-    {   
-        None = 0,
+    {
         Monday = 1,
         Tuesday = 1 << 2,
         Wednesday = 1 << 3,
