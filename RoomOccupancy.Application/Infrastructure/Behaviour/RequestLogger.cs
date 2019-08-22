@@ -1,4 +1,5 @@
 ﻿using MediatR.Pipeline;
+using Microsoft.Extensions.Logging;
 using RoomOccupancy.Common;
 using System;
 using System.Collections.Generic;
@@ -15,17 +16,18 @@ namespace RoomOccupancy.Application.Infrastructure
     public class RequestLogger<T> : IRequestPreProcessor<T>
     {
         private readonly IDateTime dateTime;
+        private readonly ILogger<T> logger;
 
-        public RequestLogger(IDateTime dateTime)
+        public RequestLogger(IDateTime dateTime, ILogger<T> logger)
         {
             this.dateTime = dateTime;
+            this.logger = logger;
         }
         public async Task Process(T request, CancellationToken cancellationToken)
         {
-            var log = $"{dateTime.Now} {typeof(T).Name} {request.ToString()}"; 
+            var log = $"{dateTime.Now} {typeof(T).Name} {request.ToString()}";
 
-
-            Console.WriteLine(log);
+            logger.LogInformation(log);
 
             await Task.CompletedTask;
         }
