@@ -27,7 +27,7 @@ namespace RoomOccupancy.Common
         /// Check if the given enumeration contains any of the flags.
         /// </summary>
         public static bool HasAny(this Enum @this, Enum @enum) => @this.Intersect(@enum).Any();
-        public static DaysOfWeek GetDay (this int @this)
+        public static DaysOfWeek GetDay(this int @this)
         {
             switch (@this)
             {
@@ -53,7 +53,26 @@ namespace RoomOccupancy.Common
             dayNumbers.ForEach(x => days = days | x.GetDay());
 
             return days;
-
+        }
+        
+        public static List<int> GetDays(this DaysOfWeek @this)
+        {
+            var days = new List<int>();
+            if (@this.HasFlag(DaysOfWeek.Monday))
+                days.Add(1);
+            if (@this.HasFlag(DaysOfWeek.Tuesday))
+                days.Add(2);
+            if (@this.HasFlag(DaysOfWeek.Wednesday))
+                days.Add(3);
+            if (@this.HasFlag(DaysOfWeek.Thursday))
+                days.Add(4);
+            if (@this.HasFlag(DaysOfWeek.Friday))
+                days.Add(5);
+            if (@this.HasFlag(DaysOfWeek.Saturday))
+                days.Add(6);
+            if (@this.HasFlag(DaysOfWeek.Sunday))
+                days.Add(7);
+            return days;
         }
     }
 }

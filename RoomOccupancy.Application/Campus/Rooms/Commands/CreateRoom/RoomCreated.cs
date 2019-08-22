@@ -22,7 +22,6 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Room, RoomCreated>()
-
                 .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.Id));
 
         }
