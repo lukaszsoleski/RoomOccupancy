@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Interfaces;
@@ -10,6 +11,14 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
 {
+    public class RoomScheduleQueryValidator : AbstractValidator<GetRoomScheduleQuery>
+    {
+        public RoomScheduleQueryValidator()
+        {
+            RuleFor(x => x.Date).NotEmpty();
+            RuleFor(x => x.RoomId).NotEmpty();
+        }
+    }
     public class GetRoomScheduleQuery : IRequest<RoomScheduleViewModel>
     {
         public int RoomId { get; set; }
