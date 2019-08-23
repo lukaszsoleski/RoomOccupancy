@@ -41,8 +41,8 @@ namespace RoomOccupancy.Persistence
         public async Task Initialize()
         {
 #if DEBUG
-            _context.Database.EnsureDeleted();
-            _context.Database.Migrate();
+            //_context.Database.EnsureDeleted();
+            //_context.Database.Migrate();
 #endif
             _context.Database.EnsureCreated();
 

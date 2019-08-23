@@ -8,7 +8,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
 {
     public class RoomScheduleQueryValidator : AbstractValidator<GetRoomScheduleQuery>
@@ -22,6 +21,7 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
     public class GetRoomScheduleQuery : IRequest<RoomScheduleViewModel>
     {
         public int RoomId { get; set; }
+        
         public DateTime Date { get; set; }
 
         public class Handler : IRequestHandler<GetRoomScheduleQuery, RoomScheduleViewModel>
