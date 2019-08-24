@@ -9,10 +9,10 @@ namespace RoomOccupancy.API.Controllers.Schedule
 {
     public class ScheduleController : BaseController
     {
-        [HttpGet]
-        public async Task<IActionResult> GetSchedule(GetRoomScheduleQuery query)
+        [HttpGet("[action]/{id:int:min(1)}")]
+        public async Task<IActionResult> Room(int id)
         {
-            return Ok(await Mediator.Send(query));
+            return Ok(await Mediator.Send(new GetRoomScheduleQuery() { RoomId = id }));
         }
     }
 }

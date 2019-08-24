@@ -2,7 +2,7 @@ import { IRoomLookupModel, RoomListViewModel } from './../../../models/campus/ro
 import { RoomsService } from './../../../services/rooms.service';
 import { Component, OnInit, ViewChild, Output } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
@@ -24,8 +24,9 @@ export class RoomLookupComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
     private readonly roomsService: RoomsService,
-    private readonly route: ActivatedRoute,
-    private toastr: ToastrService
+    private readonly activeRoute: ActivatedRoute,
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -35,8 +36,8 @@ export class RoomLookupComponent implements OnInit {
   /**
    * Download the list of rooms for building with number taken from the id route parameter.
    */
-  public GetBuildingRooms() {
-    this.route.paramMap.pipe(
+  public subscribeRooms() {
+    this.activeRoute.paramMap.pipe(
       switchMap(params => {
         // (+) converts string into number
         const id =  params.get('id');
@@ -54,12 +55,15 @@ export class RoomLookupComponent implements OnInit {
       if(!x.rooms || x.rooms.length == 0){
         this.toastr.info("Brak dostępnych pomieszczeń dla podanych parametrów 🤯")
       }
-      console.log(`GetBuildingRooms call with ${this.buildingNo} parameter returned ${this.rooms.length} elements.`);
     });
   }
-
+  public showRoomDetail(event,roomId){
+    event.preventDefault();
+    this.toastr.info("Wybrano pokój z id " + roomId);
+    this.router.navigate([`/room/${roomId}`]);
+  }
   ngOnInit() {
-    this.GetBuildingRooms();
+    this.subscribeRooms();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

@@ -1,1 +1,12 @@
-<p>room works!</p>
+
+
+
+<div class="container container-md mt-5">
+  
+    <div class="row justify-content-center">
+    <h1  class="display-4 mb-4">{{room.actualUse}} bud. {{room.buildingNumber}} p. {{room.floor}} nr {{room.number}}</h1>
+      <div class="col-md-10 order-md-2 mb-4">
+        <app-schedule [roomId]='routeId'></app-schedule>
+      </div>
+    </div>
+  </div>

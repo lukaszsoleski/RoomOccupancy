@@ -14,6 +14,9 @@ namespace RoomOccupancy.Application.Campus.Rooms.Queries.GetRoomsList
         public int Id { get; set; }
 
         public string Label { get; set; }
+        /// <summary>
+        /// eg. sala ćwiczeniowa, komputerowa
+        /// </summary>
         public string ActualUse { get; set; }
         public string FacultyLookup { get; set; }
         public int? Seats { get; set; }

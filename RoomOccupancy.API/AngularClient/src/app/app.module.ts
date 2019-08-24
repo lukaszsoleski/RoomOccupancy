@@ -49,6 +49,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 
 import { ToastrModule } from 'ngx-toastr';
 import { RoomsComponent } from './campus/rooms/rooms.component';
+import { ScheduleComponent } from './room/schedule/schedule.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +59,8 @@ import { RoomsComponent } from './campus/rooms/rooms.component';
     RoomComponent,
     RoomLookupComponent,
     MainNavComponent,
-    RoomsComponent
+    RoomsComponent,
+    ScheduleComponent
   ],
   imports: [
     CommonModule,

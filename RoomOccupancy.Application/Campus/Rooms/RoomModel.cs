@@ -15,17 +15,16 @@ namespace RoomOccupancy.Application.Campus.Rooms
     {
 
         public int Id { get; set; }
+        public string ActualUse { get; set; }
         public string Number { get; set; }
+        public int Floor { get; set; }
+        public int? Seats { get; set; }
         public float? Space { get; set; }
 
-        public string ActualUse { get; set; }
-        public int Floor { get; set; }
-
-        public BuildingModel Building { get; set; }
-        public DisponentModel Disponent { get; set; }
-
-        public ICollection<EquipmentModel> Equipment { get; set; }
-        public ICollection<FacultyModel> Faculties { get; set; }
+        public int BuildingId { get; set; }
+        public int BuildingNumber { get; set; }
+        public string Description { get; set; }
+        public int DisponentId { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Room, RoomModel>().ReverseMap();

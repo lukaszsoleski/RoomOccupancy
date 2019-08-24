@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RoomOccupancy.Application.Campus.Buildings.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries;
+using RoomOccupancy.Application.Campus.Rooms.Queries.GetRoom;
 using RoomOccupancy.Domain.Entities.Campus;
 using System;
 using System.Linq.Expressions;
@@ -8,14 +9,16 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.API.Controllers.Campus
 {
-    public class RoomsController : BaseController
+    public class RoomController : BaseController
     {
+        [HttpGet("{id:int:min(1)}")]
+        public async Task<IActionResult> Get(int id) => Ok(await Mediator.Send(new GetRoomDetailQuery() { Id = id }));
+
         /// <summary>
         /// Get rooms related to the building.
         /// </summary>
-        /// <param name="number">Building campus number.</param>
-        /// <returns></returns>
-        [HttpGet]
+        /// <param name="number">Building number.</param>
+        [HttpGet("[action]")]
         public async Task<IActionResult> Building(int? number)
         {
             var query = new GetRoomsQuery();
@@ -37,6 +40,9 @@ namespace RoomOccupancy.API.Controllers.Campus
 
             return Ok(rooms);
         }
+
+        
+            
     }
 
 }

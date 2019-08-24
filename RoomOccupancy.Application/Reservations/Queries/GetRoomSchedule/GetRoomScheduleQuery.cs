@@ -4,6 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Interfaces;
+using RoomOccupancy.Common;
 using System;
 using System.Linq;
 using System.Threading;
@@ -14,7 +15,6 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
     {
         public RoomScheduleQueryValidator()
         {
-            RuleFor(x => x.Date).NotEmpty();
             RuleFor(x => x.RoomId).NotEmpty();
         }
     }
@@ -22,22 +22,25 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
     {
         public int RoomId { get; set; }
         
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         public class Handler : IRequestHandler<GetRoomScheduleQuery, RoomScheduleViewModel>
         {
             private readonly IMapper _mapper;
             private readonly IReservationDbContext _context;
+            private readonly IDateTime _dateTime;
 
-            public Handler(IMapper mapper, IReservationDbContext context)
+            public Handler(IMapper mapper, IReservationDbContext context, IDateTime dateTime)
             {
                 _mapper = mapper;
                 _context = context;
+                _dateTime = dateTime;
             }
 
             public async Task<RoomScheduleViewModel> Handle(GetRoomScheduleQuery request, CancellationToken cancellationToken)
             {
-                var schedule = new RoomScheduleViewModel();
+                if (!request.Date.HasValue)
+                    request.Date = _dateTime.Now;
 
                 var reservations = await _context.Reservations
                     .AsNoTracking()
@@ -48,6 +51,7 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
                     .ProjectTo<RoomScheduleLookupModel>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 
+                var schedule = new RoomScheduleViewModel();
                 schedule.Reservations = reservations;
 
                 return schedule;

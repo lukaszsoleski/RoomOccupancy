@@ -1,0 +1,25 @@
+// Import _variables.css to the component's sass file where you want to use it.
+@import "./_colors.scss";
+
+table {
+  cursor: pointer;
+  width: 100%;
+  
+  tr.selectable-row:hover{
+    background: $primary-light;
+    transition: 0.1s;
+    
+  }
+  tr.selectable-row{
+    transition: 0.1s;
+  }
+    
+    .mat-form-field {
+        font-size: 14px;
+        width: 100%;
+      }
+    .center-col-content{
+        display: flex;
+        justify-content: center;
+    }
+  }

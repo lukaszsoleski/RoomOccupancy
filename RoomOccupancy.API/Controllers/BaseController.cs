@@ -7,7 +7,7 @@ namespace RoomOccupancy.API.Controllers
     using Microsoft.AspNetCore.Http;
 
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     public class BaseController : Controller
     {
         private IMediator _mediator;
