@@ -10,21 +10,19 @@ namespace RoomOccupancy.API.Controllers.Campus
 {
     public class RoomsController : BaseController
     {
-        private const string numberErrorMessage = "Building number must be greater then zero.";
-
         /// <summary>
-        /// Get rooms related to this building.
+        /// Get rooms related to the building.
         /// </summary>
-        /// <param name="buildingNo">Building campus number.</param>
+        /// <param name="number">Building campus number.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> FromBuilding(int? buildingNo)
+        public async Task<IActionResult> Building(int? number)
         {
             var query = new GetRoomsQuery();
 
-            if (buildingNo.HasValue)
+            if (number.HasValue)
             {
-                var building = await Mediator.Send(new GetBuildingQuery() { Number = buildingNo.Value });
+                var building = await Mediator.Send(new GetBuildingQuery() { Number = number.Value });
                 query.ValuePropertyFilter = x => x.BuildingId == building.Id && x.Seats.HasValue;
             }
             else

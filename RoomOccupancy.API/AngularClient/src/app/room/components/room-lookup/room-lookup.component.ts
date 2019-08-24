@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-room-lookup',
   templateUrl: './room-lookup.component.html',
@@ -23,7 +24,8 @@ export class RoomLookupComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
     private readonly roomsService: RoomsService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -49,6 +51,9 @@ export class RoomLookupComponent implements OnInit {
     ).subscribe(x => {
       this.rooms = x.rooms;
       this.dataSource.data = this.rooms;
+      if(!x.rooms || x.rooms.length == 0){
+        this.toastr.info("Brak dostępnych pomieszczeń dla podanych parametrów 🤯")
+      }
       console.log(`GetBuildingRooms call with ${this.buildingNo} parameter returned ${this.rooms.length} elements.`);
     });
   }

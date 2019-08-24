@@ -28,6 +28,8 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/scss/_colors.scss",
+              "src/assets/scss/_palette.scss",
               "src/styles.scss",
               "src/theme.scss",
               "node_modules/ngx-toastr/toastr.css",

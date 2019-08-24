@@ -8,14 +8,14 @@ import { Injectable } from '@angular/core';
 })
 export class RoomsService {
   
-  private getAllRoute = 'rooms/frombuilding';
+  private getAllRoute = 'rooms/building';
 
   constructor(private httpService: HttpClientUtilsService) { }
 
   public getRooms(buildingNo?: number): Observable<RoomListViewModel> {
     let route = this.getAllRoute;
     if(buildingNo != null || buildingNo != undefined){
-      route += `?buildingno=${buildingNo}`;
+      route += `?number=${buildingNo}`;
     }
     return this.httpService.get<RoomListViewModel>(route);
   }
