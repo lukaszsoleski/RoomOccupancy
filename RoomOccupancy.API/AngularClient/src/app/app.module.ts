@@ -10,7 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-//Angular Material Components
+// Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
@@ -43,7 +43,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 import { RoomComponent } from './room/room.component';
 import { RoomLookupComponent } from './room/components/room-lookup/room-lookup.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
@@ -51,18 +50,19 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ToastrModule } from 'ngx-toastr';
 import { RoomsComponent } from './campus/rooms/rooms.component';
 import { ScheduleComponent } from './room/schedule/schedule.component';
+import {DaysOfWeekPipe} from './common/pipes/DaysOfWeekPipe';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
     AppComponent,
     CampusComponent,
     BuildingComponent,
-    ReservationFormComponent,
     RoomComponent,
     RoomLookupComponent,
     MainNavComponent,
     RoomsComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    DaysOfWeekPipe,
   ],
   imports: [
     CommonModule,
