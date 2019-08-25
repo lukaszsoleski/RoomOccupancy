@@ -1,25 +1,32 @@
 
 <div>
-  Wybierz dzień : dziś
+  <mat-form-field>
+    <input matInput [(ngModel)]="dateFilter" (dateChange)="dateFilterChanged($event)" [matDatepicker]="picker" placeholder="Wybierz dzień">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 </div>
 
 <div class="mat-elevation-z8">
-
-  <mat-expansion-panel 
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let item of dataSource; let i = index"
+  [expanded]="rowIndex === i" (opened)="setRowIndex(i)"
   >
       <mat-expansion-panel-header>
-          <mat-panel-title>item subject</mat-panel-title>
-          <mat-panel-description>15:40 - 16:50</mat-panel-description>
+          <mat-panel-title>{{item.subject}}</mat-panel-title>
+          <mat-panel-description>{{item.start | date:"HH:mm"}} - {{item.end | date:"HH:mm"}}</mat-panel-description>
       </mat-expansion-panel-header>
       <p>Dni tygodnia: Poniedziałek, Wtorek </p>
       <p>Ważna od 2019-08-25 13:40 do 2019-10-29 20:00</p>
       <p>Utworzył Jan Janusz</p>
-      
+
       <mat-action-row>
-          <button mat-button (click)="onAction(event)">Edytuj</button>
-          <button mat-button (click)="onAction(event)">Następny</button>
+          <button mat-raised-button color="primary">Edytuj</button>
+          <button (click)="setRowIndex(i-1)" *ngIf="rowIndex!=0" mat-button color="accent">Poprzedni</button>
+          <button (click)="setRowIndex(i+1)" *ngIf="(dataSource.length - 1) != rowIndex" color="primary" mat-button>Następny</button>
+
       </mat-action-row>
   </mat-expansion-panel>
 
-
+</mat-accordion>
 </div>

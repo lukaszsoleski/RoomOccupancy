@@ -8,6 +8,8 @@ import { appRoutes } from './routes';
 import { BuildingComponent } from './building/building.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 //Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
@@ -46,10 +48,10 @@ import { RoomComponent } from './room/room.component';
 import { RoomLookupComponent } from './room/components/room-lookup/room-lookup.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-
 import { ToastrModule } from 'ngx-toastr';
 import { RoomsComponent } from './campus/rooms/rooms.component';
 import { ScheduleComponent } from './room/schedule/schedule.component';
+// TODO: add separate file for imports
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,8 +69,9 @@ import { ScheduleComponent } from './room/schedule/schedule.component';
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
+    FormsModule,
 
-    //Angular Material Components
+    // Angular Material Components
     BrowserAnimationsModule,
     MatCheckboxModule,
     MatCheckboxModule,
@@ -103,7 +106,7 @@ import { ScheduleComponent } from './room/schedule/schedule.component';
     MatSortModule,
     MatPaginatorModule,
     LayoutModule,
-    //End Angular Material Imports
+    // End Angular Material Imports
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-full-width',
       preventDuplicates: true,
@@ -119,7 +122,7 @@ import { ScheduleComponent } from './room/schedule/schedule.component';
       useClass: HttpErrorInterceptor,
       multi: true
     }
-  
+
   ],
   bootstrap: [AppComponent]
 })

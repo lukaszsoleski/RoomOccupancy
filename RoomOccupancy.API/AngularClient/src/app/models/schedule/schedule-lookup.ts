@@ -1,17 +1,17 @@
 
 
-export class ScheduleLookupModel{
-    Id:number;
-    start:string;
-    end:string;
-    subject:string;
-    reservationDays: number[];
-    isCyclical: boolean;
-    cancelationDateTime: string;
-    roomId:number;
-    roomName: string;
+export class ScheduleLookupModel {
+  Id: number;
+  start: string;
+  end: Date;
+  subject: Date;
+  reservationDays: number[];
+  isCyclical: boolean;
+  cancelationDateTime: Date;
+  roomId: number;
+  roomName: string;
 }
 
-export class ScheduleViewModel{
+export class ScheduleViewModel {
   public resevations: ScheduleLookupModel[];
 }
