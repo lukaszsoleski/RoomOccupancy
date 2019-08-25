@@ -9,7 +9,7 @@ namespace RoomOccupancy.Domain.Entities.Reservation
         public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-
+        
 
         /// <summary>
         /// Name for the reservation label.

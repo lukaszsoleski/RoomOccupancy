@@ -3,6 +3,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { RoomsService } from '../../services/rooms.service';
 import { ToastrService } from 'ngx-toastr';
+import { filter } from 'minimatch';
 
 @Component({
   selector: 'app-schedule',
@@ -13,16 +14,14 @@ export class ScheduleComponent implements OnInit {
 
   private _roomId: number;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  private _schedule: ScheduleLookupModel[];
 
-  public dataSource: MatTableDataSource<ScheduleLookupModel>;
-  public displayedColumns: string[] = ['label', 'actualUse', 'seats', 'facultyLookup'];
-
+  public dataSource: ScheduleLookupModel[] = [];
+  
   constructor(
     private readonly roomsService: RoomsService,
     private toastr: ToastrService) {
-    
+     
   }
   public get roomId(): number {
     return this._roomId;
@@ -39,18 +38,16 @@ export class ScheduleComponent implements OnInit {
   private subscribeSchedule(){
      this.roomsService.getSchedule(this.roomId)
       .subscribe(x => {
-        this.dataSource.data = x.resevations;
         this.toastr.info(JSON.stringify(x));
       });
   }
 
 
   public applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource = this._schedule
+        .filter(x => x.start.indexOf(filterValue) > 0);
   }
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
     
   }
 
