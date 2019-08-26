@@ -17,7 +17,7 @@
           <mat-panel-title>{{item.subject}}</mat-panel-title>
           <mat-panel-description>
             <span *ngIf="item.isCyclical">{{item.reservationDays | daysOfWeek}}&nbsp;</span>
-            {{!item.isCyclical && dateFilter==null ?  (item.start | date:"dd/MM/yyyy HH:mm") : (item.start | date:"HH:mm")}}
+            {{!item.isCyclical && showAll ?  (item.start | date:"dd/MM/yyyy HH:mm") : (item.start | date:"HH:mm")}}
             -
             {{item.end | date:"HH:mm"}}
           </mat-panel-description>

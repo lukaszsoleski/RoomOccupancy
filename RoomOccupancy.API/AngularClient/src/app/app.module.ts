@@ -9,7 +9,7 @@ import { BuildingComponent } from './building/building.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { DatePipe } from "@angular/common";
 // Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
@@ -121,8 +121,8 @@ import {DaysOfWeekPipe} from './common/pipes/DaysOfWeekPipe';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
-    }
-
+    },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
