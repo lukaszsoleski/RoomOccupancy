@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MoreLinq;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Common;
 using System;
@@ -50,10 +51,10 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
                                 && ((x.IsCyclical && x.CancelationDateTime > request.Date) || (x.End > request.Date)))
                     .ProjectTo<RoomScheduleLookupModel>(_mapper.ConfigurationProvider)
                     .ToListAsync();
-
                 var schedule = new RoomScheduleViewModel();
-                schedule.Reservations = reservations;
-
+                schedule.Reservations = reservations.OrderBy(x => x.ReservationDays.FirstOrDefault())
+                    .ThenBy(x => x.Start)
+                    .ToList();
                 return schedule;
             }
         }

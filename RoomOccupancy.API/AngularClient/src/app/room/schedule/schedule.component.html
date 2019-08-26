@@ -8,17 +8,23 @@
 </div>
 
 <div class="mat-elevation-z8">
-<mat-accordion>
+<mat-accordion class="headers-align">
   <mat-expansion-panel *ngFor="let item of dataSource; let i = index"
   [expanded]="rowIndex === i" (opened)="setRowIndex(i)"
   >
       <mat-expansion-panel-header>
           <mat-panel-title>{{item.subject}}</mat-panel-title>
-          <mat-panel-description>{{item.start | date:"HH:mm"}} - {{item.end | date:"HH:mm"}}</mat-panel-description>
+          <mat-panel-description>
+            <span *ngIf="item.isCyclical">{{item.reservationDays | daysOfWeek}}&nbsp;</span>
+            {{!item.isCyclical && dateFilter==null ?  (item.start | date:"dd/MM/yyyy HH:mm") : (item.start | date:"HH:mm")}}
+            -
+            {{item.end | date:"HH:mm"}}
+          </mat-panel-description>
       </mat-expansion-panel-header>
-      <p>Dni tygodnia: Poniedziałek, Wtorek </p>
-      <p>Ważna od 2019-08-25 13:40 do 2019-10-29 20:00</p>
-      <p>Utworzył Jan Janusz</p>
+      <p *ngIf="item.isCyclical">Trwa: {{item.start | date:"dd/MM/yyyy"}} - {{item.cancelationDateTime | date:"dd/MM/yyyy"}}</p>
+
+
+      <p>Utworzył: {{item.createdBy ? item.createdBy : "brak danych"}}</p>
 
       <mat-action-row>
           <button mat-raised-button color="primary">Edytuj</button>

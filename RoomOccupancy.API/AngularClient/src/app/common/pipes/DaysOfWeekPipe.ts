@@ -5,7 +5,7 @@ export class DaysOfWeekPipe implements PipeTransform {
   transform(value: any, ...args: any[]) {
     const days = [];
     if (value instanceof Array) {
-     for (const item in value) {
+     for (const item of value) {
        if (!item) { continue; }
        const val = Number(item);
        if (isNaN(val)) {

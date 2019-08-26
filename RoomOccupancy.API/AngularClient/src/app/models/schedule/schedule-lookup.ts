@@ -10,8 +10,9 @@ export class ScheduleLookupModel {
   cancelationDateTime: Date;
   roomId: number;
   roomName: string;
+  createdBy: string;
 }
 
 export class ScheduleViewModel {
-  public resevations: ScheduleLookupModel[];
+  public reservations: ScheduleLookupModel[];
 }

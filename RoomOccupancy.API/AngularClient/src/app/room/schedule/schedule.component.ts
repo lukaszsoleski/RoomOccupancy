@@ -1,4 +1,4 @@
-import { ScheduleLookupModel } from './../../models/schedule/schedule-lookup';
+import { ScheduleLookupModel, ScheduleViewModel } from './../../models/schedule/schedule-lookup';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { RoomsService } from '../../services/rooms.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,11 +12,12 @@ export class ScheduleComponent implements OnInit {
 
   private _roomId: number;
 
-  private _schedule: ScheduleLookupModel[];
+  private _schedule: ScheduleViewModel;
 
   public dataSource: ScheduleLookupModel[] = [];
-  public dateFilter = new Date();
-  public rowIndex = 0;
+  public dateFilter: Date;
+  public isDateEmpty: boolean;
+  public rowIndex: number;
   constructor(
     private readonly roomsService: RoomsService,
     private toastr: ToastrService) {
@@ -30,34 +31,28 @@ export class ScheduleComponent implements OnInit {
     if (v === this._roomId) {
       return;
     }
-
     this._roomId = v;
-    this.subscribeSchedule();
+    this.getSchedule();
   }
 
-  private subscribeSchedule() {
+  private getSchedule() {
     this.roomsService.getSchedule(this.roomId)
       .subscribe(x => {
-        this.toastr.info(JSON.stringify(x));
+        this._schedule = x;
+        this.applyFilter();
       });
   }
-  public dateFilterChanged($event) {
-    this.toastr.info($event.value);
-    this.toastr.info(this.dateFilter.toDateString());
+  public dateFilterChanged(event) {
+    this.applyFilter();
   }
 
-  public applyFilter(filterValue: string) {
-    this.dataSource = this._schedule
-      .filter(x => x.start.indexOf(filterValue) > 0);
+  public applyFilter() {
+    this.dataSource = this._schedule.reservations;
   }
   public setRowIndex(i: number) {
     this.rowIndex = i;
   }
   ngOnInit() {
-    this.dataSource.push(new ScheduleLookupModel());
-    this.dataSource.push(new ScheduleLookupModel());
-    this.dataSource.push(new ScheduleLookupModel());
-    this.dataSource.push(new ScheduleLookupModel());
   }
 
 }
