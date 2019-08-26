@@ -1,4 +1,4 @@
-# RoomOccupancy
+# SGGW spaces
 Project of integrated room occupancy navigation at the Warsaw University of Life Sciences.
 
 ## Get started
