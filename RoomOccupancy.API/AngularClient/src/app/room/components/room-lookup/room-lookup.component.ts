@@ -59,7 +59,6 @@ export class RoomLookupComponent implements OnInit {
   }
   public showRoomDetail(event,roomId){
     event.preventDefault();
-    this.toastr.info("Wybrano pokój z id " + roomId);
     this.router.navigate([`/room/${roomId}`]);
   }
   ngOnInit() {

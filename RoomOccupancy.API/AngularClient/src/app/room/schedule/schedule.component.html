@@ -1,13 +1,14 @@
 
-<div>
+<div  class="d-flex align-items-center justify-content-around">
   <mat-form-field>
     <input matInput [(ngModel)]="dateFilter" (dateChange)="dateFilterChanged($event)" [matDatepicker]="picker" placeholder="Wybierz dzień">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+  <mat-checkbox color="primary" [(ngModel)]="showAll" (ngModelChange)="onShowAllClick()">Pokaż wszystkie</mat-checkbox>
 </div>
 
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8 mt-4">
 <mat-accordion class="headers-align">
   <mat-expansion-panel *ngFor="let item of dataSource; let i = index"
   [expanded]="rowIndex === i" (opened)="setRowIndex(i)"
@@ -21,7 +22,7 @@
             {{item.end | date:"HH:mm"}}
           </mat-panel-description>
       </mat-expansion-panel-header>
-      <p *ngIf="item.isCyclical">Trwa: {{item.start | date:"dd/MM/yyyy"}} - {{item.cancelationDateTime | date:"dd/MM/yyyy"}}</p>
+      <p *ngIf="item.isCyclical">Czas trwania: {{item.start | date:"dd/MM/yyyy"}} - {{item.cancelationDateTime | date:"dd/MM/yyyy"}}</p>
 
 
       <p>Utworzył: {{item.createdBy ? item.createdBy : "brak danych"}}</p>

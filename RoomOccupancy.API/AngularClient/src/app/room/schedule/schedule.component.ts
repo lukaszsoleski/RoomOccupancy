@@ -14,14 +14,15 @@ export class ScheduleComponent implements OnInit {
 
   private _schedule: ScheduleViewModel;
 
-  public dataSource: ScheduleLookupModel[] = [];
-  public dateFilter: Date;
-  public isDateEmpty: boolean;
-  public rowIndex: number;
+  protected dataSource: ScheduleLookupModel[] = [];
+  protected dateFilter: Date;
+  protected isDateEmpty: boolean;
+  protected rowIndex: number;
+  protected showAll = false;
   constructor(
     private readonly roomsService: RoomsService,
     private toastr: ToastrService) {
-
+      this.dateFilter = new Date();
   }
   public get roomId(): number {
     return this._roomId;
@@ -47,7 +48,16 @@ export class ScheduleComponent implements OnInit {
   }
 
   public applyFilter() {
+    if(this._schedule.reservations.length < 1)
+    {
+      this.toastr.info("Brak dostępnych rezerwacji.")
+    }
+
+
     this.dataSource = this._schedule.reservations;
+  }
+  public onShowAllClick(event) {
+    console.log(this.showAll);
   }
   public setRowIndex(i: number) {
     this.rowIndex = i;
