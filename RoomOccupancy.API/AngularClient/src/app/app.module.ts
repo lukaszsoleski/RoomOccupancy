@@ -9,7 +9,8 @@ import { BuildingComponent } from './building/building.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DatePipe } from "@angular/common";
+import { DatePipe } from '@angular/common';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 // Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
@@ -51,6 +52,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { RoomsComponent } from './campus/rooms/rooms.component';
 import { ScheduleComponent } from './room/schedule/schedule.component';
 import {DaysOfWeekPipe} from './common/pipes/DaysOfWeekPipe';
+import { ReservationComponent } from './room/reservation/reservation.component';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import {DaysOfWeekPipe} from './common/pipes/DaysOfWeekPipe';
     RoomsComponent,
     ScheduleComponent,
     DaysOfWeekPipe,
+    ReservationComponent,
   ],
   imports: [
     CommonModule,
@@ -70,7 +73,7 @@ import {DaysOfWeekPipe} from './common/pipes/DaysOfWeekPipe';
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-
+    NgxMaterialTimepickerModule,
     // Angular Material Components
     BrowserAnimationsModule,
     MatCheckboxModule,
