@@ -68,17 +68,21 @@ export class ScheduleComponent implements OnInit {
     }
   }
   private getFilteredReservations(selectedDate: Date): ScheduleLookupModel[] {
-
-    const reservations = [];
+    // tslint:disable-next-line:prefer-const
+    let reservations = [];
     for (const reservation of this._schedule.reservations) {
       // the selected date is within the scope of the booking period and
       // and the day of the week matches
       if (moment(selectedDate).isBetween(reservation.start, reservation.end, 'day', '[]')) {
         if (reservation.isCyclical
           && (reservation.reservationDays.indexOf(moment(selectedDate).weekday()) >= 0)) {
-          reservations.push(reservation);
-        } else {
+          // tslint:disable-next-line:no-debugger
+            // debugger;
+            reservations.push(reservation);
+        } else if (!reservation.isCyclical) {
           if (moment(reservation.start).isSame(moment(selectedDate), 'day')) {
+            // tslint:disable-next-line:no-debugger
+            // debugger;
             reservations.push(reservation);
           }
         }
