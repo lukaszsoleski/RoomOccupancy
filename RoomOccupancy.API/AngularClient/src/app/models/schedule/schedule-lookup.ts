@@ -7,7 +7,6 @@ export class ScheduleLookupModel {
   subject: Date;
   reservationDays: number[];
   isCyclical: boolean;
-  cancelationDateTime: Date;
   roomId: number;
   roomName: string;
   createdBy: string;

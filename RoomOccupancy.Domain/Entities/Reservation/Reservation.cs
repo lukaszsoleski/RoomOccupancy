@@ -29,10 +29,6 @@ namespace RoomOccupancy.Domain.Entities.Reservation
         /// Defines if this reservation is still active.
         /// </summary>
         public bool IsCancelled { get; set; }
-        /// <summary>
-        /// Date of cancellation of the cyclic reservation.
-        /// </summary>
-        public DateTime? CancelationDateTime { get; set; }
 
         /// <summary>
         /// The room where the meeting is to be held.

@@ -7,6 +7,6 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
 {
     public class RoomScheduleViewModel
     {
-        public IEnumerable<RoomScheduleLookupModel> Reservations { get; set; }
+        public IEnumerable<ReservationModel> Reservations { get; set; }
     }
 }

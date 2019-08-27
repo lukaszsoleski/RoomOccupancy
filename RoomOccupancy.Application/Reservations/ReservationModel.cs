@@ -6,11 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using RoomOccupancy.Common;
-namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
+using System.Linq;
+
+namespace RoomOccupancy.Application.Reservations
 {
-    public class RoomScheduleLookupModel : IHaveCustomMapping
+    public class ReservationModel : IHaveCustomMapping
     {
-        public RoomScheduleLookupModel()
+        public ReservationModel()
         {
             ReservationDays = new List<int>();
         }
@@ -33,11 +35,6 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
         public bool IsCyclical { get; set; }
 
         /// <summary>
-        /// Date of cancellation of the cyclic reservation.
-        /// </summary>
-        public DateTime? CancelationDateTime { get; set; }
-
-        /// <summary>
         /// The room where the meeting is to be held.
         /// </summary>
         public int RoomId { get; set; }
@@ -49,14 +46,19 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
 
         public void CreateMappings(Profile configuration)
         {
-            configuration.CreateMap<Reservation, RoomScheduleLookupModel>()
+            configuration.CreateMap<Reservation, ReservationModel>()
                 .ForMember(dest => dest.RoomName, opt => opt.MapFrom(src => $"{src.Room}"))
+                .ForMember(dest => dest.ReservationDays, opt => opt.MapFrom(src => src.ReservationDays.GetDays()));
+
+            configuration.CreateMap<ReservationModel, Reservation>()
                 .ForMember(dest => dest.ReservationDays, opt => opt.MapFrom(src => src.ReservationDays.GetDays()));
         }
 
         public override string ToString()
         {
-            return $"{Subject} at {Start} to {End} on days {ReservationDays}";
+            var format = "dd/MM/yyyy hh:mm";
+
+            return $"{Subject} at {Start.ToString(format)} to {End.ToString(format)} on days {ReservationDays.Select(x => x + " ")}";
         }
     }
 }

@@ -28,10 +28,10 @@ namespace RoomOccupancy.Application.Reservations
         {
             var reservation = new Reservation();
             reservation.Start = Start;
-            reservation.End = End;
+            reservation.End = End.AddDays(WeeksCount * 7);
             reservation.Subject = Subject;
             reservation.ReservationDays = WeekDays.GetDays();
-            reservation.CancelationDateTime = DateTime.Now.AddDays(WeeksCount * 7);
+            
             reservation.Room = new Room();
             reservation.Room.Number = RoomNumber?.Split('/').Last().Trim();
             if (RoomNumber.Contains('/'))

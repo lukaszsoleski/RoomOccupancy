@@ -9,5 +9,6 @@ namespace RoomOccupancy.Application.Interfaces
     public interface INotificationService
     {
         Task Notify(Message message);
+        Task Ask(Message message);
     }
 }

@@ -9,6 +9,11 @@ namespace RoomOccupancy.Infrastructure.Notifications
 {
     public class NotificationService : INotificationService
     {
+        public Task Ask(Message message)
+        {
+            return Task.CompletedTask;
+        }
+
         public Task Notify(Message message)
         {
             return Task.CompletedTask; 

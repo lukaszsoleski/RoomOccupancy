@@ -6,7 +6,7 @@ export interface IRoomLookupModel {
   facultyLookup: string;
   seats: number;
 }
-export interface IRoomListViewModel{
+export interface IRoomListViewModel {
   rooms: IRoomLookupModel[];
 }
 export class RoomListViewModel implements IRoomListViewModel {

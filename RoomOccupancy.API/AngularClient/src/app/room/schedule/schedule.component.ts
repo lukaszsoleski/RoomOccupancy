@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { RoomsService } from '../../services/rooms.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
-import { DatePipe } from "@angular/common";
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -11,8 +11,10 @@ import { DatePipe } from "@angular/common";
 })
 export class ScheduleComponent implements OnInit {
 
+  // tslint:disable-next-line:variable-name
   private _roomId: number;
 
+  // tslint:disable-next-line:variable-name
   private _schedule: ScheduleViewModel;
 
   protected dataSource: ScheduleLookupModel[] = [];
@@ -23,7 +25,7 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private readonly roomsService: RoomsService,
     private toastr: ToastrService,
-    private datepipe : DatePipe) {
+    private datepipe: DatePipe) {
     this.dateFilter = new Date();
   }
   public get roomId(): number {
@@ -52,41 +54,39 @@ export class ScheduleComponent implements OnInit {
     this.applyFilter();
   }
 
-  public applyFilter(){
+  public applyFilter() {
     if (this._schedule.reservations.length < 1) {
-      this.toastr.info("Brak dostępnych rezerwacji.")
+      this.toastr.info('Brak dostępnych rezerwacji.');
       return;
     }
     if (this.showAll === true) {
       this.dataSource = this._schedule.reservations;
-      this.toastr.info("Wszystkie aktywne rezerwacje.");
+      this.toastr.info('Wszystkie aktywne rezerwacje.');
       return;
-    }
-    else {
-     this.dataSource = this.getFilteredReservations(this.dateFilter);
+    } else {
+      this.dataSource = this.getFilteredReservations(this.dateFilter);
     }
   }
-  private getFilteredReservations(selectedDate : Date) : ScheduleLookupModel[]{
-    
-    let reservations = [];
+  private getFilteredReservations(selectedDate: Date): ScheduleLookupModel[] {
+
+    const reservations = [];
     for (const reservation of this._schedule.reservations) {
-      // the selected date is within the scope of the booking period and 
+      // the selected date is within the scope of the booking period and
       // and the day of the week matches
-      if (reservation.isCyclical
-         && moment(selectedDate).isBetween(reservation.start,reservation.cancelationDateTime,'day','[]') 
-          &&  (reservation.reservationDays.indexOf(moment(selectedDate).weekday()) >= 0)){ 
+      if (moment(selectedDate).isBetween(reservation.start, reservation.end, 'day', '[]')) {
+        if (reservation.isCyclical
+          && (reservation.reservationDays.indexOf(moment(selectedDate).weekday()) >= 0)) {
+          reservations.push(reservation);
+        } else {
+          if (moment(reservation.start).isSame(moment(selectedDate), 'day')) {
             reservations.push(reservation);
           }
-      else{
-        if(moment(reservation.start).isSame(moment(selectedDate),'day')){
-          reservations.push(reservation);
         }
       }
     }
-    if(reservations.length < 1)
-      {
-        this.toastr.info(`Obecnie nie ma rezerwacji w terminie ${this.datepipe.transform(selectedDate, 'dd/MM/yyyy')}`);
-      }
+    if (reservations.length < 1) {
+      this.toastr.info(`Obecnie nie ma rezerwacji w terminie ${this.datepipe.transform(selectedDate, 'dd/MM/yyyy')}`);
+    }
     return reservations;
   }
 
