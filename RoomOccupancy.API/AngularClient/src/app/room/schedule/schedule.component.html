@@ -22,7 +22,7 @@
             {{item.end | date:"HH:mm"}}
           </mat-panel-description>
       </mat-expansion-panel-header>
-      <p *ngIf="item.isCyclical">Czas trwania: {{item.start | date:"dd/MM/yyyy"}} - {{item.cancelationDateTime | date:"dd/MM/yyyy"}}</p>
+      <p *ngIf="item.isCyclical">Czas trwania: {{item.start | date:"dd/MM/yyyy"}} - {{item.end | date:"dd/MM/yyyy"}}</p>
 
 
       <p>Utworzył: {{item.createdBy ? item.createdBy : "brak danych"}}</p>
