@@ -1,10 +1,11 @@
-<mat-form-field class="example-full-width">
-  <input matInput placeholder="Godz. rozpoczęcia" [ngxTimepicker]="picker">
-</mat-form-field>
-
-<ngx-material-timepicker #picker></ngx-material-timepicker>
 
 <mat-form-field class="example-full-width">
-  <input matInput placeholder="Godz. zakończennia" [ngxTimepicker]="picker2">
+  <input matInput placeholder="Godz. rozpoczęcia" [ngxTimepicker]="startpicker">
 </mat-form-field>
-<ngx-material-timepicker #picker2></ngx-material-timepicker>
+
+<ngx-material-timepicker #startpicker></ngx-material-timepicker>
+
+<mat-form-field class="example-full-width">
+  <input matInput placeholder="Godz. zakończennia" [ngxTimepicker]="endpicker">
+</mat-form-field>
+<ngx-material-timepicker #endpicker></ngx-material-timepicker>

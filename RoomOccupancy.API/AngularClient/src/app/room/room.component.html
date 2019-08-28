@@ -1,19 +1,23 @@
-<div class="container container-md mt-5 justify-content-center">
+<div class="container container-md mt-5">
 
-  <div class="row d-flex flex-column justify-content-center">
+  <div class="row bg-danger">
+    <div class="d-flex flex-column align-content-center w-100">
 
-    <h1 class="mr-auto ml-auto display-4 mb-4">{{room.actualUse | titlecase}} {{room.floor}}/{{room.number}} bud. {{room.buildingNumber}} </h1>
+      <h1 class="mr-auto ml-auto display-4 mb-4">{{room.actualUse | titlecase}} {{room.floor}}/{{room.number}} bud.
+        {{room.buildingNumber}}
+      </h1>
 
-    <div class="col-md-10 order-md-2 mb-4">
-      <mat-tab-group mat-align-tabs="center">
-        <mat-tab label="Rezerwacje">
-          <div class="mt-5">
-            <app-schedule [roomId]='routeId'></app-schedule>
-          </div>
-        </mat-tab>
-        <mat-tab label="Wyposażenie">Wyposażenie</mat-tab>
-        <mat-tab label="Szczegóły">Szczegóły</mat-tab>
-      </mat-tab-group>
+      <div>
+        <mat-tab-group mat-align-tabs="center">
+          <mat-tab label="Rezerwacje">
+            <div class="mt-5">
+              <app-schedule [roomId]='routeId'></app-schedule>
+            </div>
+          </mat-tab>
+          <mat-tab label="Wyposażenie">Wyposażenie</mat-tab>
+          <mat-tab label="Szczegóły">Szczegóły</mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
   </div>
 </div>

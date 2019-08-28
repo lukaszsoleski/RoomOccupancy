@@ -1,12 +1,7 @@
-<div class="d-flex flex-column justify-content-center">
+<div class="d-flex flex-column align-items-center bg-info">
+    <app-reservation></app-reservation>
 
-  <div>
-    <app-reservation>
-
-    </app-reservation>
-  </div>
-
-  <div class="d-flex flex align-items-center justify-content-around">
+  <div class="d-flex justify-content-around align-items-center bg-light w-75">
     <mat-form-field>
       <input matInput [(ngModel)]="dateFilter" (dateChange)="dateFilterChanged($event)" [matDatepicker]="picker"
         placeholder="Wybierz dzień">
