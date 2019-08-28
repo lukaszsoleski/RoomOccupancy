@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap');
-@import './assets//scss//colors';
+@import './assets/scss/colors';
 body,html{
     height: 100%;
     font-size: 14px;
@@ -41,28 +41,28 @@ body{
   .timepicker {
 
     .timepicker__header {
-      background-color: $primary !important;
+      background-color: $dark-grey !important;
     }
 
     .clock-face__clock-hand {
-      background-color: $primary !important;
+      background-color: $dark-grey !important;
 
       &::after {
-        background-color: $primary !important;
+        background-color: $dark-grey !important;
       }
 
       &::before {
-        border-color: $primary !important;
+        border-color: $dark-grey !important;
       }
     }
 
     .clock-face__number {
       > span.active {
-        background-color: $primary !important;
+        background-color: $dark-grey !important;
       }
     }
 
     button:not(.timepicker-dial__item) {
-      color: $primary !important;
+      color: $dark-grey !important;
     }
   }
