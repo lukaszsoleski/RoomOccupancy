@@ -8,9 +8,10 @@ import { appRoutes } from './routes';
 import { BuildingComponent } from './building/building.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
 // Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material';
@@ -73,6 +74,7 @@ import { ReservationComponent } from './room/reservation/reservation.component';
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
+    ReactiveFormsModule,
     NgxMaterialTimepickerModule,
     // Angular Material Components
     BrowserAnimationsModule,
