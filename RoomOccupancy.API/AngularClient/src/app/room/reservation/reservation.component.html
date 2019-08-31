@@ -1,48 +1,52 @@
-
-<mat-form-field class="example-full-width">
-  <input [(ngModel)]='selectedStartTime' matInput placeholder="Godz. rozpoczęcia" [format]="24"  [ngxTimepicker]="startpicker">
-</mat-form-field>
-
-<ngx-material-timepicker #startpicker ></ngx-material-timepicker>
-
-<mat-form-field class="example-full-width">
-  <input [(ngModel)]='selectedEndTime' matInput placeholder="Godz. zakończennia" [format]="24" [ngxTimepicker]="endpicker">
-</mat-form-field>
-<ngx-material-timepicker #endpicker ></ngx-material-timepicker>
-
-
-<button mat-raised-button id="toggle-linear">
+<p>
+  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+    Toggle
   </button>
-  <mat-vertical-stepper [linear]='true' #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
+</p>
+<div id="collapseExample" [ngbCollapse]="isCollapsed">
+      <form class="mb-5 mt-5 mat-elevation-z18" [formGroup]="reservationForm">
+        <mat-horizontal-stepper linear #stepper>
+          <mat-step [stepControl]="reservationForm.get('firstFormGroup')" formGroupName="firstFormGroup">
+            <ng-template matStepLabel>Fill out your name</ng-template>
+            <mat-form-field>
+              <div>
+                <mat-form-field class>
+                  <input [(ngModel)]='selectedStartTime' matInput placeholder="Godz. rozpoczęcia" [format]="24"
+                    [ngxTimepicker]="startpicker">
+                </mat-form-field>
+
+                <ngx-material-timepicker #startpicker></ngx-material-timepicker>
+
+                <mat-form-field>
+                  <input [(ngModel)]='selectedEndTime' matInput placeholder="Godz. zakończennia" [format]="24"
+                    [ngxTimepicker]="endpicker">
+                </mat-form-field>
+                <ngx-material-timepicker #endpicker></ngx-material-timepicker>
+              </div>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </mat-step>
+          <mat-step [stepControl]="reservationForm.get('secondFormGroup')" formGroupName="secondFormGroup">
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <mat-form-field>
+              <input matInput placeholder="Address" formControlName="secondCtrl">
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            You are now done.
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
       </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Fill out your address</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Address" formControlName="secondCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-    </mat-step>
-  </mat-vertical-stepper>
+    </div>

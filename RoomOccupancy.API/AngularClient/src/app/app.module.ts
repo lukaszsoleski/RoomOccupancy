@@ -54,6 +54,7 @@ import { RoomsComponent } from './campus/rooms/rooms.component';
 import { ScheduleComponent } from './room/schedule/schedule.component';
 import {DaysOfWeekPipe} from './common/pipes/DaysOfWeekPipe';
 import { ReservationComponent } from './room/reservation/reservation.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { ReservationComponent } from './room/reservation/reservation.component';
     FormsModule,
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
+    NgbModule,
     // Angular Material Components
     BrowserAnimationsModule,
     MatCheckboxModule,
