@@ -129,7 +129,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
       useClass: HttpErrorInterceptor,
       multi: true
     },
-    DatePipe
+    DatePipe,
+    DaysOfWeekPipe
   ],
   bootstrap: [AppComponent]
 })

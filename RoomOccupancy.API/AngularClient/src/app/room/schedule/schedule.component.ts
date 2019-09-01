@@ -16,12 +16,12 @@ export class ScheduleComponent implements OnInit {
 
   // tslint:disable-next-line:variable-name
   private _schedule: ScheduleViewModel;
-
   protected dataSource: ScheduleLookupModel[] = [];
   protected dateFilter: Date;
   protected isDateEmpty: boolean;
   protected rowIndex: number;
   protected showAll = false;
+  public isCollapsed = true;
   constructor(
     private readonly roomsService: RoomsService,
     private toastr: ToastrService,

@@ -12,13 +12,13 @@
     <span class="spacer"></span>
     <mat-icon (click)="drawer.toggle()" class="pointer">clear</mat-icon>
     </mat-toolbar>
-    
+
     <mat-nav-list>
         <mat-list-item [routerLink]="['/campus/rooms']" (click)="drawer.toggle()">
             <mat-icon mat-list-icon>meeting_room</mat-icon>
             <span>Przegląd pomieszczeń</span>
         </mat-list-item>
-        <mat-list-item (click)="drawer.toggle()">
+        <mat-list-item [routerLink]="['/campus/rooms']" (click)="drawer.toggle()">
             <mat-icon mat-list-icon>calendar_today</mat-icon>
             <span >Rezerwacja</span>
         </mat-list-item>

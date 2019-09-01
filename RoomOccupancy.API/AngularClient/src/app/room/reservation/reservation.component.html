@@ -1,52 +1,99 @@
-<p>
-  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
-    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-    Toggle
-  </button>
-</p>
-<div id="collapseExample" [ngbCollapse]="isCollapsed">
-      <form class="mb-5 mt-5 mat-elevation-z18" [formGroup]="reservationForm">
-        <mat-horizontal-stepper linear #stepper>
-          <mat-step [stepControl]="reservationForm.get('firstFormGroup')" formGroupName="firstFormGroup">
-            <ng-template matStepLabel>Fill out your name</ng-template>
-            <mat-form-field>
-              <div>
-                <mat-form-field class>
-                  <input [(ngModel)]='selectedStartTime' matInput placeholder="Godz. rozpoczęcia" [format]="24"
-                    [ngxTimepicker]="startpicker">
-                </mat-form-field>
 
-                <ngx-material-timepicker #startpicker></ngx-material-timepicker>
+  <form class="mb-5 mt-5 mat-elevation-z18" [formGroup]="reservationForm">
+    <mat-vertical-stepper linear #stepper>
 
-                <mat-form-field>
-                  <input [(ngModel)]='selectedEndTime' matInput placeholder="Godz. zakończennia" [format]="24"
-                    [ngxTimepicker]="endpicker">
-                </mat-form-field>
-                <ngx-material-timepicker #endpicker></ngx-material-timepicker>
-              </div>
-            </mat-form-field>
+      <!-- Topic -->
+      <mat-step [stepControl]="reservationForm.get('topic')" formGroupName="topic">
+        <ng-template matStepLabel>Temat</ng-template>
+        <mat-form-field class="w-100">
+          <input matInput color='primary' type="text" placeholder='Nazwa rezerwacji' formControlName='subject'>
+        </mat-form-field>
+        <div>
+          <button mat-button color='primary' matStepperNext>Dalej</button>
+        </div>
+      </mat-step>
+      <!-- Day -->
+      <mat-step [stepControl]="reservationForm.get('timeframe')" formGroupName="timeframe">
+        <ng-template matStepLabel>Termin</ng-template>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Wybierz dzień" formControlName="day">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div>
+        <button mat-button matStepperPrevious>Confnij</button>
+        <button mat-button color='primary' matStepperNext>Dalej</button>
+        </div>
+      </mat-step>
+
+      <!-- Timeframe-->
+      <mat-step [stepControl]="reservationForm.get('timeframe')" formGroupName="timeframe">
+        <ng-template matStepLabel>Godzina</ng-template>
+
+        <div>
+          <mat-form-field class="pr-2">
+            <input matInput formControlName="start" placeholder="Godz. rozpoczęcia" [format]="24"
+              [ngxTimepicker]="startpicker">
+          </mat-form-field>
+          <ngx-material-timepicker #startpicker></ngx-material-timepicker>
+
+          <mat-form-field class="pl-2">
+            <input matInput formControlName="end" placeholder="Godz. zakończenia" [format]="24"
+              [ngxTimepicker]="endpicker">
+          </mat-form-field>
+          <ngx-material-timepicker #endpicker></ngx-material-timepicker>
+        </div>
+
+        <div>
+          <button mat-button matStepperPrevious>Confnij</button>
+          <button mat-button color='primary' matStepperNext>Dalej</button>
+        </div>
+      </mat-step>
+
+
+      <!-- Repeat -->
+
+      <mat-step [stepControl]="reservationForm.get('repeat')" formGroupName="repeat">
+        <ng-template matStepLabel>Powtórz</ng-template>
+        <div>
+          <mat-checkbox color='primary' formControlName="isCyclical">Rezerwacja cykliczna</mat-checkbox>
+
+          <div class='flex flex-column' *ngIf="reservationForm.get('repeat').get('isCyclical').value">
             <div>
-              <button mat-button matStepperNext>Next</button>
+              <mat-form-field class="w-100">
+                <mat-select placeholder="Dni tygodnia" formControlName="weekDays" multiple>
+                  <mat-option *ngFor="let day of daysOfWeek" [value]="day">{{day}}</mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
-          </mat-step>
-          <mat-step [stepControl]="reservationForm.get('secondFormGroup')" formGroupName="secondFormGroup">
-            <ng-template matStepLabel>Fill out your address</ng-template>
-            <mat-form-field>
-              <input matInput placeholder="Address" formControlName="secondCtrl">
-            </mat-form-field>
+
             <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Dzień zakończenia"
+                  formControlName="reservationEnd">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
             </div>
-          </mat-step>
-          <mat-step>
-            <ng-template matStepLabel>Done</ng-template>
-            You are now done.
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="stepper.reset()">Reset</button>
-            </div>
-          </mat-step>
-        </mat-horizontal-stepper>
-      </form>
-    </div>
+
+          </div>
+        </div>
+
+        <div>
+          <button mat-button matStepperPrevious>Cofnij</button>
+          <button mat-button color='primary' matStepperNext>Dalej</button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Zapisz</ng-template>
+        Wszystko gotowe?
+        <div class='mt-3'>
+          <button mat-button matStepperPrevious>Cofnij</button>
+          <button mat-raised-button color='primary' (click)="publishForm()">Zapisz</button>
+        </div>
+      </mat-step>
+
+    </mat-vertical-stepper>
+  </form>
