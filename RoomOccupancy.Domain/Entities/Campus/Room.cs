@@ -6,7 +6,7 @@ namespace RoomOccupancy.Domain.Entities.Campus
     {
         public Room()
         {
-            Equipment = new List<Equipment>();
+            Equipment = new List<RoomEquipment>();
             Faculties = new List<FacultyRoom>();
         }
 
@@ -49,7 +49,7 @@ namespace RoomOccupancy.Domain.Entities.Campus
         /// <summary>
         /// Assigned equipment.
         /// </summary>
-        public virtual ICollection<Equipment> Equipment { get; }
+        public virtual ICollection<RoomEquipment> Equipment { get; }
 
         public override string ToString()
         {
