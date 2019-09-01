@@ -4,6 +4,7 @@ import { RoomsService } from '../../services/rooms.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { Reservation } from 'src/app/models/schedule/reservation';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -77,8 +78,8 @@ export class ScheduleComponent implements OnInit {
         if (reservation.isCyclical
           && (reservation.reservationDays.indexOf(moment(selectedDate).weekday()) >= 0)) {
           // tslint:disable-next-line:no-debugger
-            // debugger;
-            reservations.push(reservation);
+          // debugger;
+          reservations.push(reservation);
         } else if (!reservation.isCyclical) {
           if (moment(reservation.start).isSame(moment(selectedDate), 'day')) {
             // tslint:disable-next-line:no-debugger
@@ -92,6 +93,16 @@ export class ScheduleComponent implements OnInit {
       this.toastr.info(`Obecnie nie ma rezerwacji w terminie ${this.datepipe.transform(selectedDate, 'dd/MM/yyyy')}`);
     }
     return reservations;
+  }
+
+  public postReservation(e: Reservation) {
+    let reservation = e;
+    reservation.roomId = this.roomId;
+    this.roomsService.postReservation(reservation).subscribe(x => {
+      this.toastr.success('Dodano rezerwacje!');
+      this.getSchedule();
+      this.isCollapsed = true;
+    });
   }
 
   public onShowAllClick(event) {

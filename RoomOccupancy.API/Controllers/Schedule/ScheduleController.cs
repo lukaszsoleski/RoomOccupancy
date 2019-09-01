@@ -14,5 +14,6 @@ namespace RoomOccupancy.API.Controllers.Schedule
         {
             return Ok(await Mediator.Send(new GetRoomScheduleQuery() { RoomId = id }));
         }
+        
     }
 }

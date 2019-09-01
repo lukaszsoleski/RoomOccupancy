@@ -41,12 +41,12 @@ namespace RoomOccupancy.API
         public void ConfigureServices(IServiceCollection services)
         {
             RegisterInfrastructureServices(services);
-           
+
             // Add AutoMapper
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             AddMediatR(services);
-            
+
             ConfigureDbContext(services);
             // add CORS before MVC
             services.AddCors();
@@ -77,7 +77,7 @@ namespace RoomOccupancy.API
 
         private void RegisterInfrastructureServices(IServiceCollection services)
         {
-          
+
             // Add Infrastructure
             services.AddTransient<IDateTime, MachineDateTime>();
             services.AddTransient<INotificationService, NotificationService>();
@@ -100,7 +100,13 @@ namespace RoomOccupancy.API
             app.UseHttpsRedirection();
 
             AddMiddleware(app);
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+                
+            });
             app.UseMvc();
         }
 

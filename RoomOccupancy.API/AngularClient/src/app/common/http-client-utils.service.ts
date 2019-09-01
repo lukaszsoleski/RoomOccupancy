@@ -13,8 +13,8 @@ export class HttpClientUtilsService{
     return this.http.get<T>(this.createCompleteRoute(route, environment.urlAddress));
   }
 
-  public post = <T>(route: string, body) => {
-    return this.http.post<T>(this.createCompleteRoute(route, environment.urlAddress), body, this.generateHeaders());
+  public post = (route: string, body) => {
+    return this.http.post(this.createCompleteRoute(route, environment.urlAddress), JSON.stringify(body), this.generateHeaders());
   }
 
   public put = <T>(route: string, body) => {
@@ -32,6 +32,6 @@ export class HttpClientUtilsService{
   private generateHeaders = () => {
     return {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
-    }
+    };
   }
 }

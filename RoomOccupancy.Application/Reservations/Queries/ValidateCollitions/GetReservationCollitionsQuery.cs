@@ -38,7 +38,8 @@ namespace RoomOccupancy.Application.Reservations.Queries.ValidateCollitions
                     .Where(x => HasTimeCollision(x, request.RoomId, request.Reservation))
                     .ProjectTo<ReservationModel>(_mapper.ConfigurationProvider)
                     .ToListAsync();
-
+                 //TODO
+                 collitions.Clear();
                 return collitions;
             }
 

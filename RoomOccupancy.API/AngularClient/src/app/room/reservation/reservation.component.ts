@@ -1,3 +1,4 @@
+import { Reservation } from './../../models/schedule/reservation';
 import { DaysOfWeekPipe } from './../../common/pipes/DaysOfWeekPipe';
 
 import { ScheduleLookupModel } from './../../models/schedule/schedule-lookup';
@@ -20,7 +21,7 @@ export class ReservationComponent implements OnInit {
   protected defaultStartTime: string;
   // get names
   protected daysOfWeek = Object.values(WeekDays).filter(x => x.length > 1);
-  @Output() reservationTime = new EventEmitter<ScheduleLookupModel>();
+  @Output() reservationTime = new EventEmitter<Reservation>();
 
   constructor(private toastr: ToastrService,
               private formBuilder: FormBuilder,
@@ -45,10 +46,8 @@ export class ReservationComponent implements OnInit {
       })
     });
     this.reservationForm.get('timeframe').get('day').valueChanges.subscribe(value => {
-      this.toastr.success(JSON.stringify(value));
       const day = this.daysOfWeekPipe.transform(moment(value).isoWeekday());
-      this.toastr.success(day);
-      this.reservationForm.get('repeat').patchValue({weekDays: [day]});
+      this.reservationForm.get('repeat').patchValue({ weekDays: [day] });
     });
   }
   ngOnInit() {
@@ -58,7 +57,30 @@ export class ReservationComponent implements OnInit {
   }
   protected publishForm() {
     const formdata = Object.assign({}, this.reservationForm.value);
-    //  this.toastr.info(JSON.stringify(formdata));
-    this.toastr.success(JSON.stringify(formdata));
+    let model = new Reservation();
+    let endDay;
+    if (formdata.repeat.isCyclical === true) {
+      endDay = formdata.repeat.reservationEnd;
+    } else {
+      endDay = formdata.timeframe.day;
+    }
+    model.subject = formdata.topic.subject;
+    model.start = this.getDateTime(formdata.timeframe.start, formdata.timeframe.day);
+    model.end = this.getDateTime(formdata.timeframe.end, endDay);
+    model.isCyclical = formdata.repeat.isCyclical;
+    for (let day of formdata.repeat.weekDays) {
+      let val = parseInt(WeekDays[day], 10);
+      if (isNaN(val)) { continue; }
+      model.reservationDays.push(val);
+    }
+    this.reservationTime.emit(model);
+    return model;
+  }
+  private getDateTime(time: string, day: Date): Date {
+    let timeArr = time.split(':');
+    let hours = timeArr[0];
+    let minutes = timeArr[1];
+    let date = moment(day).add(hours, 'hours').add(minutes, 'minutes');
+    return date.toDate();
   }
 }
