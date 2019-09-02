@@ -1,4 +1,5 @@
 ﻿using RoomOccupancy.Domain.Entities.Campus;
+using RoomOccupancy.Domain.Entities.Users;
 
 namespace RoomOccupancy.Domain.Entities.Schedule
 {
@@ -8,5 +9,7 @@ namespace RoomOccupancy.Domain.Entities.Schedule
         public string Name { get; set; }
         public int? DisponentId { get; set; }
         public virtual Disponent Disponent { get; set; }
+
+        public AppUser AppUser { get; set; }
     }
 }

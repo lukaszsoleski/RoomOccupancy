@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Domain.Entities.Campus;
 using RoomOccupancy.Domain.Entities.Reservation;
 using RoomOccupancy.Domain.Entities.Schedule;
+using RoomOccupancy.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace RoomOccupancy.Persistence
 {
-    public class ReservationDbContext : DbContext, IReservationDbContext
+    public class ReservationDbContext : IdentityDbContext<AppUser>, IReservationDbContext
     {
         public ReservationDbContext(DbContextOptions<ReservationDbContext> options)
          : base(options)
@@ -27,6 +29,7 @@ namespace RoomOccupancy.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReservationDbContext).Assembly);
         }
 
