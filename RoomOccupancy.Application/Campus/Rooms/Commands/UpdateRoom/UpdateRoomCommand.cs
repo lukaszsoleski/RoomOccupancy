@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Rooms.Commands.UpdateRoom
 {
-    public class UpdateRoomCommand : IRequest, IMapTo<Room>
+    public class UpdateRoomCommand : IRequest, IHaveCustomMapping<Room>
     {
         public int Id { get; set; }
         public string Name { get; set; }

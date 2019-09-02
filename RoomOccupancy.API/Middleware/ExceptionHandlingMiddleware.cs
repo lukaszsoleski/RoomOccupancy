@@ -6,6 +6,7 @@ using RoomOccupancy.Common.Extentions;
 using System;
 using System.Linq;
 using System.Net;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 
 namespace RoomOccupancy.API.Middleware
@@ -35,10 +36,13 @@ namespace RoomOccupancy.API.Middleware
         {
             var statusCode = HttpStatusCode.BadRequest;
             var errorDto = new ErrorResponce();
-
             if (exception is ValidationException)
             {
                 HandleValidationException(exception, errorDto);
+            }
+            else if(exception is InvalidCredentialException)
+            {
+                HandleInvalidCredential(errorDto)
             }
             else
             {
@@ -48,6 +52,11 @@ namespace RoomOccupancy.API.Middleware
             statusCode = GetResponseStatus(exception, statusCode);
 
             await WriteResponce(errorDto, context, statusCode);
+        }
+
+        private void HandleInvalidCredential(ErrorResponce errorDto)
+        {
+            errorDto.Message = "Invalid username or password.";
         }
 
         private static HttpStatusCode GetResponseStatus(Exception exception, HttpStatusCode statusCode)
@@ -62,7 +71,6 @@ namespace RoomOccupancy.API.Middleware
             {
                 statusCode = HttpStatusCode.NotFound;
             }
-
             return statusCode;
         }
 

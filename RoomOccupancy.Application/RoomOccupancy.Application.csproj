@@ -22,9 +22,4 @@
     <ProjectReference Include="..\RoomOccupancy.Domain\RoomOccupancy.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\Users\" />
-    <Folder Include="Users\" />
-  </ItemGroup>
-
 </Project>

@@ -2,6 +2,7 @@
 using RoomOccupancy.Domain.Entities.Campus;
 using RoomOccupancy.Domain.Entities.Reservation;
 using RoomOccupancy.Domain.Entities.Schedule;
+using RoomOccupancy.Domain.Entities.Users;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,6 +19,8 @@ namespace RoomOccupancy.Application.Interfaces
         DbSet<Reservation> Reservations { get; set; }
         DbSet<Lecturer> Lecturers { get; set; }
         DbSet<FacultyRoom> FacultyRooms { get; set; }
+        DbSet<AppUser> Users { get; set; }
+
         #endregion
         #region EF Core methods 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));

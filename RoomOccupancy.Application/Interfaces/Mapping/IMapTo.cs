@@ -2,7 +2,7 @@
 
 namespace RoomOccupancy.Application.Interfaces
 {
-    public interface IMapTo<TEntity>
+    public interface IHaveCustomMapping<TEntity>
     {
     }
 }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
 {
-    public class CreateRoomCommand : IRequest<int>, IMapTo<Room>
+    public class CreateRoomCommand : IRequest<int>, IHaveCustomMapping<Room>
     {
         public CreateRoomCommand()
         {

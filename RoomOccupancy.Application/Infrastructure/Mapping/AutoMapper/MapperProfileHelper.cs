@@ -20,7 +20,7 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
         public static IEnumerable<Map> LoadStandardMappings(Assembly rootAssembly)
         {
             var types = rootAssembly.GetExportedTypes();
-            var markerTypes = new Type[] { typeof(IMapFrom<>), typeof(IMapTo<>) };
+            var markerTypes = new Type[] { typeof(IMapFrom<>), typeof(IHaveCustomMapping<>) };
 
             var mappings =
                     from type in types

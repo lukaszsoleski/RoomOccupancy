@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Disponents.Commands.CreateDisponent
 {
-    public class CreateDisponentCommand : IRequest<int>, IMapTo<Disponent>
+    public class CreateDisponentCommand : IRequest<int>, IHaveCustomMapping<Disponent>
     {
         public string Name { get; set; }
 

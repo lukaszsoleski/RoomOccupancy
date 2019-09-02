@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Buildings.Commands.UpdateBuilding
 {
-    public class UpdateBuildingCommand : IRequest, IMapTo<Building>
+    public class UpdateBuildingCommand : IRequest, IHaveCustomMapping<Building>
     {
         public int Id { get; set; }
         public string Name { get; set; }
