@@ -55,6 +55,8 @@ import { ScheduleComponent } from './room/schedule/schedule.component';
 import {DaysOfWeekPipe} from './common/pipes/DaysOfWeekPipe';
 import { ReservationComponent } from './room/reservation/reservation.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { RegistrationFormComponent } from './users/registration-form/registration-form.component';
+import { LoginComponent } from './users/login/login.component';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ScheduleComponent,
     DaysOfWeekPipe,
     ReservationComponent,
+    RegistrationFormComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,
