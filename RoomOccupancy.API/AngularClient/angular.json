@@ -29,6 +29,7 @@
             ],
             "styles": [
               "src/assets/scss/_colors.scss",
+              "src/assets/scss/_sizing.scss",
               "src/assets/scss/_table.scss",
               "src/assets/scss/_palette.scss",
               "src/styles.scss",

@@ -1,10 +1,9 @@
-
 <div class="container container-md mt-5">
   <div class="row justify-content-center h-80vh">
     <div class="col-md-7 mb-4">
       <mat-card class="center mat-elevation-z15">
         <form [formGroup]="loginForm">
-          <!-- email  -->
+          <!-- Email  -->
           <div>
             <mat-form-field class="w-100">
               <input matInput placeholder="Email" formControlName="emailFormControl">
@@ -16,6 +15,7 @@
               </mat-error>
             </mat-form-field>
           </div>
+         <!-- Password -->
           <div>
             <mat-form-field class="w-100">
               <input matInput placeholder='Hasło' type='password'>
@@ -23,7 +23,7 @@
           </div>
         </form>
         <mat-card-actions align='end'>
-          <button mat-raised-button color="primary" [disabled]="loginForm.invalid">Zaloguj się</button>
+          <button mat-raised-button color="primary" (onclick)='onSubmit()' [disabled]="loginForm.invalid">Zaloguj się</button>
         </mat-card-actions>
       </mat-card>
     </div>

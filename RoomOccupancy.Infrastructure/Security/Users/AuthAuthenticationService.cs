@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Infrastructure.Users;
 using RoomOccupancy.Application.Interfaces.Users;
+using RoomOccupancy.Application.Users.Queries.GetUserAuthentication;
 using RoomOccupancy.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;

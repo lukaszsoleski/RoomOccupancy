@@ -1,9 +1,36 @@
 <div class="container container-md mt-5">
   <div class="row justify-content-center h-80vh">
-    <div class="col-md-7 mb-4">
+    <div class="col-md-10 mb-4">
       <mat-card class="center mat-elevation-z15">
+        <form [formGroup]="registerForm">
+          <!--First Name -->
+          <mat-form-field class="w-50 pr-2">
+            <input matInput placeholder="Imię" formControlName="firstName">
+            <mat-error *ngIf="f['firstName'].hasError('required')">
+              Proszę wpisać imię.
+            </mat-error>
+          </mat-form-field>
+          <!-- Second Name -->
+          <mat-form-field class="w-50 pr-2">
+            <input matInput placeholder="Nazwisko" formControlName="lastName">
+            <mat-error *ngIf="f['lastName'].hasError('required')">
+              Proszę wpisać nazwisko.
+            </mat-error>
+          </mat-form-field>
+         <!-- Email -->
+          <mat-form-field class="w-100">
+              <input matInput placeholder="Email" formControlName="email">
+              <mat-error *ngIf="f['email'].hasError('email') && !f['email'].hasError('required')">
+                Proszę wpisać prawidłowy adres e-mail.
+              </mat-error>
+              <mat-error *ngIf="f['email'].hasError('required')">
+                Email jest wymagany.
+              </mat-error>
+            </mat-form-field>
+        </form>
+        <!-- Submit -->
         <mat-card-actions align='end'>
-          <button mat-raised-button color="primary" [disabled]="registrationForm.invalid">Zarejestruj się</button>
+          <button mat-raised-button color="primary" [disabled]="registerForm.invalid" (click)='onSubmit()'>Zarejestruj się</button>
         </mat-card-actions>
       </mat-card>
     </div>

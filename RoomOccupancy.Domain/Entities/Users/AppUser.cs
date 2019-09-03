@@ -7,7 +7,7 @@ namespace RoomOccupancy.Domain.Entities.Users
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public bool IsVerified { get; set; }
         public int? FacultyId { get; set; }
         public Faculty Faculty { get; set; }
     }

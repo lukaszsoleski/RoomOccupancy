@@ -1,5 +1,8 @@
+import { ToastrService } from 'ngx-toastr';
+import { UsersService } from './../../services/users.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +20,19 @@ export class LoginComponent implements OnInit {
   }
 
   protected loginForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private usersService: UsersService,
+              private router: Router)
+               { }
+  protected onSubmit(){
+    let pass = this.password.value;
+    let email = this.email.value;
 
+    this.usersService.login(email, pass).subscribe(x => {
+      this.router.navigate([`/campus`]);
+    });
+
+  }
   ngOnInit() {
 
     this.loginForm = this.formBuilder.group({
