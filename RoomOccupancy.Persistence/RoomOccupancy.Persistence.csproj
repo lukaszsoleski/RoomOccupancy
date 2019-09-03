@@ -33,7 +33,7 @@
     <None Update="Initializer\Files\SaleWzim.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Initializer\Files\SłownikWyposażenia.xlsx">
+    <None Update="Initializer\Files\Wyposażenie-słownik.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Initializer\Files\Tst1_Zajetosc_sal_WZIM_2018_Wiosna.xlsx">
