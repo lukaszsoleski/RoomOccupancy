@@ -1,0 +1,35 @@
+<div class="container container-md mt-5">
+  <div class="row justify-content-center">
+    <h1  class="display-4 mb-4"></h1>
+
+    <div class="col-md-7 mb-4">
+      <mat-card>
+        <form [formGroup]="loginForm">
+          <!-- email  -->
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Email" formControlName="emailFormControl">
+            <mat-error *ngIf="loginForm.get('emailFormControl').hasError('email')
+              && !loginForm.get('emailFormControl').hasError('required')">
+              Proszę wpisać prawidłowy adres e-mail.
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('emailFormControl').hasError('required')">
+              Email jest wymagany.
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('passwordFormControl').hasError('required')">
+              Proszę wpisać hasło
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <input matInput placeholder='hasło' type='password'>
+          </mat-form-field>
+
+        </form>
+        <mat-card-actions>
+            <button mat-button>Zaloguj się</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

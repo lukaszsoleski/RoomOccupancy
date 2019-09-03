@@ -4,6 +4,8 @@ import { CampusComponent } from './campus/campus.component';
 import { Routes } from '@angular/router';
 import { RoomsComponent } from './campus/rooms/rooms.component';
 import { RoomComponent } from './room/room.component';
+import { RegistrationFormComponent } from './users/registration-form/registration-form.component';
+import { LoginComponent } from './users/login/login.component';
 
 export const appRoutes: Routes = [
   {
@@ -17,6 +19,12 @@ export const appRoutes: Routes = [
   },
   {
     path: 'campus/rooms', component: RoomsComponent
+  },
+  {
+    path: 'register', component: RegistrationFormComponent
+  },
+  {
+    path: 'login', component: LoginComponent
   },
   {
     path: '',
