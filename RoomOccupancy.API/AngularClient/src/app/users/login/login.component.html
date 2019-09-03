@@ -1,38 +1,10 @@
-<div class="container container-md mt-5">
-  <div class="row justify-content-center">
-<<<<<<< HEAD
-    <h1  class="display-4 mb-4"></h1>
-=======
-    <h1 class="display-4 mb-4"></h1>
->>>>>>> 0822785c36c52fa308e1910c8a43379c8941e5c9
 
+<div class="container container-md mt-5">
+  <div class="row justify-content-center h-80vh">
     <div class="col-md-7 mb-4">
-      <mat-card>
+      <mat-card class="center mat-elevation-z15">
         <form [formGroup]="loginForm">
           <!-- email  -->
-<<<<<<< HEAD
-          <mat-form-field class="w-100">
-            <input matInput placeholder="Email" formControlName="emailFormControl">
-            <mat-error *ngIf="loginForm.get('emailFormControl').hasError('email')
-              && !loginForm.get('emailFormControl').hasError('required')">
-              Proszę wpisać prawidłowy adres e-mail.
-            </mat-error>
-            <mat-error *ngIf="loginForm.get('emailFormControl').hasError('required')">
-              Email jest wymagany.
-            </mat-error>
-            <mat-error *ngIf="loginForm.get('passwordFormControl').hasError('required')">
-              Proszę wpisać hasło
-              </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="w-100">
-            <input matInput placeholder='hasło' type='password'>
-          </mat-form-field>
-
-        </form>
-        <mat-card-actions>
-            <button mat-button>Zaloguj się</button>
-=======
           <div>
             <mat-form-field class="w-100">
               <input matInput placeholder="Email" formControlName="emailFormControl">
@@ -52,7 +24,6 @@
         </form>
         <mat-card-actions align='end'>
           <button mat-raised-button color="primary" [disabled]="loginForm.invalid">Zaloguj się</button>
->>>>>>> 0822785c36c52fa308e1910c8a43379c8941e5c9
         </mat-card-actions>
       </mat-card>
     </div>
