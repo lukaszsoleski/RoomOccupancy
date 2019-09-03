@@ -43,7 +43,7 @@ body{
   .timepicker {
 
     .timepicker__header {
-      background-color: #555 !important;
+      background-color: $primary !important;
     }
 
     .clock-face__clock-hand {
@@ -65,6 +65,6 @@ body{
     }
 
     button:not(.timepicker-dial__item) {
-      color: $accent !important;
+      color: $primary !important;
     }
   }

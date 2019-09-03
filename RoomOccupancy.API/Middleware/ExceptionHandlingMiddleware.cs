@@ -42,7 +42,7 @@ namespace RoomOccupancy.API.Middleware
             }
             else if(exception is InvalidCredentialException)
             {
-                HandleInvalidCredential(errorDto)
+                HandleInvalidCredential(errorDto);
             }
             else
             {
