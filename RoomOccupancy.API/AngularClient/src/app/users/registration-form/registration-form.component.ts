@@ -19,10 +19,10 @@ export class RegistrationFormComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required],
-      // password: ['', [Validators.required, Validators.minLength(6)]],
-      // confirmPassword: ['']
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['']
     }, {
-      // validator: MustMatch('password', 'confirmPassword')
+      validator: MustMatch('password', 'confirmPassword')
     });
   }
   protected onSubmit() {

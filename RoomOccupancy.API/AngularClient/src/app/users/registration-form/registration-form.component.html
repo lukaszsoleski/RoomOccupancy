@@ -17,16 +17,33 @@
               Proszę wpisać nazwisko.
             </mat-error>
           </mat-form-field>
-         <!-- Email -->
+          <!-- Email -->
           <mat-form-field class="w-100">
-              <input matInput placeholder="Email" formControlName="email">
-              <mat-error *ngIf="f['email'].hasError('email') && !f['email'].hasError('required')">
-                Proszę wpisać prawidłowy adres e-mail.
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="f['email'].hasError('email') && !f['email'].hasError('required')">
+              Proszę wpisać prawidłowy adres e-mail.
+            </mat-error>
+            <mat-error *ngIf="f['email'].hasError('required')">
+              Email jest wymagany.
+            </mat-error>
+          </mat-form-field>
+          <!-- Password -->
+          <mat-form-field class="w-100">
+              <input type="password" matInput placeholder="Hasło" formControlName="password">
+               <mat-error *ngIf="f['password'].hasError('required')">
+                Wprowadź hasło.
               </mat-error>
-              <mat-error *ngIf="f['email'].hasError('required')">
-                Email jest wymagany.
+              <mat-error *ngIf="!f['password'].hasError('required') && f['password'].hasError('minlength')">
+                  Twoje hasło jest zbyt słabe.
               </mat-error>
             </mat-form-field>
+            <!-- Confirm Password -->
+            <mat-form-field class="w-100">
+                <input type="password" matInput placeholder="Potwierdź hasło" formControlName="confirmPassword">
+                 <mat-error *ngIf="f['confirmPassword'].hasError('mustMatch')">
+                    Hasła nie pasują do siebie.
+                </mat-error>
+              </mat-form-field>
         </form>
         <!-- Submit -->
         <mat-card-actions align='end'>
