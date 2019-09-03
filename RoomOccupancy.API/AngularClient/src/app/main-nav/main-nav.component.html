@@ -41,8 +41,8 @@
       </button>
       <a [routerLink]="['/campus']" class="cursor-link">SGGW SRS</a>
       <span class="spacer"></span>
-      <button mat-button class="mr-2">Zaloguj się</button>
-      <button mat-raised-button >Utwórz konto</button>
+      <button mat-button class="mr-2" [routerLink]="['/login']">Zaloguj się</button>
+      <button mat-raised-button [routerLink]="['/register']" >Utwórz konto</button>
     </mat-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>
