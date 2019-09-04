@@ -21,8 +21,8 @@ namespace RoomOccupancy.API.Controllers.Users
             // Catch exception thrown by registration service. 
             try
             {
-                var token = await registrationService.RegisterAsync(registrationDto);
-                return Created("default", token);
+                var userId = await registrationService.RegisterAsync(registrationDto);
+                return Created("api/register", userId);
             }
             catch (InvalidOperationException e)
             {

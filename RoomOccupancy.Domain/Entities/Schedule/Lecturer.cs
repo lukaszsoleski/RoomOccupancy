@@ -9,7 +9,7 @@ namespace RoomOccupancy.Domain.Entities.Schedule
         public string Name { get; set; }
         public int? DisponentId { get; set; }
         public virtual Disponent Disponent { get; set; }
-
+        public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
     }
 }
