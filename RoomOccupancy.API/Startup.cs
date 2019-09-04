@@ -80,7 +80,7 @@ namespace RoomOccupancy.API
             services.AddIdentity<AppUser, IdentityRole>(options =>
              {
                  // TODO: add more options
-                 options.Password.RequiredLength = 4;
+                 options.Password.RequiredLength = 6;
              }).AddDefaultTokenProviders();
         }
 
@@ -100,7 +100,7 @@ namespace RoomOccupancy.API
             services.AddTransient<INotificationService, NotificationService>();
 
             services.AddTransient<IAuthenticationService, AuthAuthenticationService>();
-            services.AddTransient<IJwtFactory, JwtFactory>();
+            services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddTransient<IUserService, UserService>();
         }

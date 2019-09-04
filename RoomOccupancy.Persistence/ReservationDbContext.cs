@@ -28,8 +28,10 @@ namespace RoomOccupancy.Persistence
         public DbSet<FacultyRoom> FacultyRooms { get; set; }
         public DbSet<BuildingFaculty> BuildingFaculties { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReservationDbContext).Assembly);
         }
