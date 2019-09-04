@@ -75,13 +75,18 @@ namespace RoomOccupancy.API
         private void ConfigureDbContext(IServiceCollection services)
         {
             // Configure DB Context. Add EbookShop context to dependency injection container and set database provider and also connection string. 
-            services.AddDbContext<IReservationDbContext, ReservationDbContext>(options =>
+            services.AddDbContext<ReservationDbContext>(options =>
                 options.UseSqlServer(connectionString: Configuration.GetConnectionString("RoomOccupancyDatabase")));
+            services.AddTransient<IReservationDbContext>(x => x.GetRequiredService<ReservationDbContext>());
+
             services.AddIdentity<AppUser, IdentityRole>(options =>
              {
                  // TODO: add more options
-                 options.Password.RequiredLength = 4;
-             }).AddDefaultTokenProviders();
+                 options.Password.RequiredLength = 6;
+             })
+                .AddEntityFrameworkStores<ReservationDbContext>()
+                .AddDefaultTokenProviders();
+
         }
 
         private static void AddMediatR(IServiceCollection services)
@@ -100,7 +105,7 @@ namespace RoomOccupancy.API
             services.AddTransient<INotificationService, NotificationService>();
 
             services.AddTransient<IAuthenticationService, AuthAuthenticationService>();
-            services.AddTransient<IJwtFactory, JwtFactory>();
+            services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddTransient<IUserService, UserService>();
         }
