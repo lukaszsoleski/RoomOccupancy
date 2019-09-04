@@ -8,7 +8,7 @@ namespace RoomOccupancy.Application.Interfaces.Users
 {
     public interface IJwtFactory
     {
-        Task<string> EncodedToken(string userName, ClaimsIdentity identity);
-        ClaimsIdentity ClaimsIdentity(string userName, string id);
+        Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity);
+        ClaimsIdentity GenerateClaimsIdentity(string userName, string id);
     }
 }

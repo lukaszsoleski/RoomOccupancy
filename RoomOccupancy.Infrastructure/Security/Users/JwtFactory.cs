@@ -26,7 +26,7 @@ namespace RoomOccupancy.Infrastructure.Security.Users
         /// <param name="userName"></param>
         /// <param name="identity"></param>
         /// <returns></returns>
-        public async Task<string> EncodedToken(string userName, ClaimsIdentity identity)
+        public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
         {
 
             //Claim: 
@@ -54,8 +54,8 @@ namespace RoomOccupancy.Infrastructure.Security.Users
             return encodedJwt;
         }
 
-        public ClaimsIdentity ClaimsIdentity(string userName, string id)
-        {
+        public ClaimsIdentity GenerateClaimsIdentity(string userName, string id)
+        {// TODO configure admin role
             return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
             {
                 new Claim(Constants.Strings.JwtClaimIdentifiers.Id, id),

@@ -20,7 +20,7 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
         public static IEnumerable<Map> LoadStandardMappings(Assembly rootAssembly)
         {
             var types = rootAssembly.GetExportedTypes();
-            var markerTypes = new Type[] { typeof(IMapFrom<>), typeof(IHaveCustomMapping<>) };
+            var markerTypes = new Type[] { typeof(IMapFrom<>), typeof(IMapTo<>) };
 
             var mappings =
                     from type in types
@@ -33,15 +33,21 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
 
             var settings = mappings.Select(type => {
             
+                Map mapSetting = null;
+
                 var intefaces = type.GetInterfaces();
 
                 var marker = intefaces.First(x => markerTypes.Any(i => i.Name == x.Name));
 
                 var targetType = marker.GetGenericArguments().First();
-                var mapSetting = (marker == typeof(IMapFrom<>)) ?
-                    new Map() { Source = targetType, Destination = type }
-                    :
-                    new Map() { Source = type, Destination = targetType };
+                if (marker.Name == typeof(IMapFrom<>).Name)
+                {
+                    mapSetting = new Map() { Source = targetType, Destination = type };
+                }
+                if(marker.Name == typeof(IMapTo<>).Name)
+                {
+                    mapSetting = new Map() { Source = type, Destination = targetType };
+                }
                 return mapSetting;
             });
             return settings;

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Infrastructure.Users;
 using RoomOccupancy.Application.Interfaces;
 using RoomOccupancy.Application.Interfaces.Users;
+using RoomOccupancy.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,9 +33,14 @@ namespace RoomOccupancy.Infrastructure.Security.Users
         public async Task<ProfileModel> GetUserProfile()
         {
             // user id claim
-            var userId = _caller.Claims.FirstOrDefault(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Id) ?? throw new InvalidCredentialException();
+            var userId = _caller.Claims.FirstOrDefault(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Id);
+            
+            if(userId == null)
+            {
+                throw new InvalidOperationException("Claim not found");
+            }
 
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId.Value) ?? throw new InvalidCredentialException();
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId.Value) ?? throw new NotFoundException(typeof(AppUser),userId);
 
             return _mapper.Map<ProfileModel>(user);
         }

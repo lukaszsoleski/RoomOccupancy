@@ -33,6 +33,9 @@ using RoomOccupancy.Infrastructure.Security.Users;
 using RoomOccupancy.Infrastructure.SystemClock;
 using RoomOccupancy.Persistence;
 using RoomOccupancy.Application.Infrastructure.Users;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Http;
+
 namespace RoomOccupancy.API
 {
     public class Startup
@@ -49,7 +52,9 @@ namespace RoomOccupancy.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            RegisterInfrastructureServices(services);
+            RegisterFrameworkServices(services);
+            // Inject current HttpContext to the service classes
+            //services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             // Add AutoMapper
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
@@ -63,6 +68,7 @@ namespace RoomOccupancy.API
             // add CORS before MVC
             services.AddCors();
             AddMvc(services);
+            services.AddHttpContextAccessor();
         }
 
         private static void AddMvc(IServiceCollection services)
@@ -97,7 +103,7 @@ namespace RoomOccupancy.API
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehaviour<,>));
         }
 
-        private void RegisterInfrastructureServices(IServiceCollection services)
+        private void RegisterFrameworkServices(IServiceCollection services)
         {
 
             // Add Infrastructure
@@ -125,14 +131,14 @@ namespace RoomOccupancy.API
 
 
             app.UseHttpsRedirection();
-
+            // enable authentication headers!!!
+            app.UseAuthentication();
             AddMiddleware(app);
             app.UseCors(options =>
             {
                 options.AllowAnyOrigin();
                 options.AllowAnyMethod();
                 options.AllowAnyHeader();
-                
             });
             app.UseMvc();
         }

@@ -57,7 +57,7 @@ namespace RoomOccupancy.Infrastructure.Security.Users
             if (!await _userManager.CheckPasswordAsync(userToVerify, password))
                 throw new InvalidCredentialException();
 
-            return _jwtFactory.ClaimsIdentity(userName, userToVerify.Id);
+            return _jwtFactory.GenerateClaimsIdentity(userName, userToVerify.Id);
         }
     }
 }

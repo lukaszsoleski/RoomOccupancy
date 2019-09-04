@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Buildings.Commands.CreateBuilding
 {
-    public class CreateBuildingCommand : IRequest<int>, IHaveCustomMapping<Building>
+    public class CreateBuildingCommand : IRequest<int>, IMapTo<Building>
     {
         public string Name { get; set; }
         public int Number { get; set; }
