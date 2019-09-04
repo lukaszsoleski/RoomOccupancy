@@ -11,4 +11,7 @@ export class UsersService {
   public login(userName: string, password: string) {
    return this.httpService.post('api/login', {userName, password});
   }
+  public register(form: any){
+    return this.httpService.post('api/register', JSON.stringify(form));
+  }
 }
