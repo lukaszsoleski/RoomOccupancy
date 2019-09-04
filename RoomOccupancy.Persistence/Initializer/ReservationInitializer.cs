@@ -55,12 +55,6 @@ namespace RoomOccupancy.Persistence
             await SeedRooms();
             await SeedReservations();
             await SeedEquipment();
-            //await SeedRoomEquipment();
-        }
-
-        private Task SeedRoomEquipment()
-        {
-            throw new NotImplementedException();
         }
 
         private async Task SeedEquipment() => await ExcelSeed<Equipment, EquipmentClassMap>(equipmentFileName);

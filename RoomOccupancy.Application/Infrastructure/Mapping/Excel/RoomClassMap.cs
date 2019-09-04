@@ -43,6 +43,8 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping
                 .WithTrim()
                 .WithColumnNameMatching(x => x.Contains("dysponent", StringComparison.OrdinalIgnoreCase))
                 .WithEmptyFallback("pow. Ogólna");
+
+
         }
     }
 }
