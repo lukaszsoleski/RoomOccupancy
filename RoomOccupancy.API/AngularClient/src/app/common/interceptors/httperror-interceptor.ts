@@ -6,52 +6,48 @@ import {
   HttpRequest,
   HttpResponse,
   HttpErrorResponse,
-} from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
-import { retry, catchError } from "rxjs/operators";
+} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 export class HttpErrorInterceptor implements HttpInterceptor {
-  
+
     /**
      *
      */
     constructor(private toastr: ToastrService) {
-        
+
     }
-  
+
     intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      retry(1),
       catchError((errorResponse: HttpErrorResponse) => {
         console.log(errorResponse);
-        let errorMessage = "";
-        let status = errorResponse.status;
-        let serverErrorCodes = [400,404,500]; 
-        let header = "I need a coffee break.. 😵"
+        let errorMessage = '';
+        const status = errorResponse.status;
+        const serverErrorCodes = [400, 404, 500];
+        let header = 'I need a coffee break.. 😵';
         // client-side error
         if (errorResponse.error instanceof ErrorEvent) {
           errorMessage = `😵 Upps unexpected error: ${errorResponse.error.message}`;
-        } else if(serverErrorCodes.indexOf(status) >= 0 ){
+        } else if (serverErrorCodes.indexOf(status) >= 0 ) {
         // server-side error
-          header = errorResponse.error.message
-          let errors = errorResponse.error.errors;
-          if(errors && errors.length > 0){
-              errorMessage = errors.join(' '); 
+          header = errorResponse.error.message;
+          const errors = errorResponse.error.errors;
+          if (errors && errors.length > 0) {
+              errorMessage = errors.join(' ');
           }
-        }// no connection to server
-        else if(status == 0)
-        {
-            errorMessage = "No connection to the server 😨";
-        }// whatever else, just default message
-        else{
-            errorMessage = errorResponse.error;
+        } else if (status === 0) {
+            errorMessage = 'No connection to the server 😨';
+        } else {
+            errorMessage = `${errorResponse.message} ${errorResponse.error.error.message}`;
         }
-       
-        this.toastr.error(errorMessage,header);
-        
+
+        this.toastr.error(errorMessage, header);
+
         return throwError(errorMessage);
       })
     );

@@ -18,12 +18,12 @@
          <!-- Password -->
           <div>
             <mat-form-field class="w-100">
-              <input matInput placeholder='Hasło' type='password'>
+              <input matInput placeholder='Hasło' type='password' formControlName="passwordFormControl">
             </mat-form-field>
           </div>
         </form>
         <mat-card-actions align='end'>
-          <button mat-raised-button color="primary" (onclick)='onSubmit()' [disabled]="loginForm.invalid">Zaloguj się</button>
+          <button mat-raised-button color="primary" (click)='onSubmit()' [disabled]="loginForm.invalid">Zaloguj się</button>
         </mat-card-actions>
       </mat-card>
     </div>

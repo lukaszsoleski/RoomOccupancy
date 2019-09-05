@@ -22,25 +22,24 @@ export class RegistrationFormComponent implements OnInit {
 
   initRegistrationForm() {
     this.registerForm =  this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['']
+      firstName: ['lukasz', Validators.required],
+      lastName: ['soles', Validators.required],
+      email: ['luk@gmail.com', Validators.required],
+      password: ['1234567aA!', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['1234567aA!']
     }, {
       validator: MustMatch('password', 'confirmPassword')
     });
   }
-  protected onSubmit() {
+  protected onSubmit(e) {
+    if (this.registerForm.invalid) { return; }
     this.userService.register(this.registerForm.value).subscribe(x => {
-      this.toast.success('Konto zostało utworzone. Sprawdź skrzynkę pocztową aby dokończyć proces rejestracji.');
-      this.userService.login(this.f.email.value, this.f.password.value).subscribe(y => {
-        //TODO: auto refresh token using interceptor
-      });
+      this.toast.success('Link aktywacyjny został przesłany pod podany adres email.');
+      this.router.navigate([`/login`]);
     });
   }
+
   ngOnInit() {
     this.initRegistrationForm();
   }
-
 }

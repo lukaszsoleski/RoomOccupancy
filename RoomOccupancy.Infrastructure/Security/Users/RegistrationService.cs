@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using RoomOccupancy.Application.Infrastructure.Users;
 using RoomOccupancy.Application.Interfaces;
@@ -7,6 +8,7 @@ using RoomOccupancy.Application.Users;
 using RoomOccupancy.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,7 +42,7 @@ namespace RoomOccupancy.Infrastructure.Security.Users
             var result = await _userManager.CreateAsync(user, registrationForm.Password);
             // If it fails throw an exception
             if (!result.Succeeded)
-                throw new InvalidOperationException(result.ErrorMessage());
+                throw new ValidationException(result.Errors.FirstOrDefault().Description ?? "");
            
             // Commit changes to database
             await _context.SaveChangesAsync();

@@ -40,7 +40,7 @@ namespace RoomOccupancy.API.Middleware
             {
                 HandleValidationException(exception, errorDto);
             }
-            else if(exception is InvalidCredentialException)
+            else if(exception is System.Security.Authentication.InvalidCredentialException)
             {
                 HandleInvalidCredential(errorDto);
             }
@@ -49,7 +49,7 @@ namespace RoomOccupancy.API.Middleware
                 HandleApplicationException(exception, errorDto);
             }
 
-            statusCode = GetResponseStatus(exception, statusCode);
+            GetResponseStatus(exception, ref statusCode);
 
             await WriteResponce(errorDto, context, statusCode);
         }
@@ -59,19 +59,22 @@ namespace RoomOccupancy.API.Middleware
             errorDto.Message = "Invalid username or password.";
         }
 
-        private static HttpStatusCode GetResponseStatus(Exception exception, HttpStatusCode statusCode)
+        private static void GetResponseStatus(Exception exception, ref HttpStatusCode statusCode)
         {
             var exType = exception.GetType();
 
-            if (!exType.FullName.Contains("Room"))
-            {
-                statusCode = HttpStatusCode.InternalServerError;
-            }
-            else if (exception is NotFoundException)
+            if (exception is NotFoundException)
             {
                 statusCode = HttpStatusCode.NotFound;
             }
-            return statusCode;
+            else if(exception is FluentValidation.ValidationException)
+            {
+                statusCode = HttpStatusCode.BadRequest;
+            }
+            else if (!exType.FullName.Contains("Room"))
+            {
+                statusCode = HttpStatusCode.InternalServerError;
+            }
         }
 
         private static void HandleValidationException(Exception exception, ErrorResponce errorDto)

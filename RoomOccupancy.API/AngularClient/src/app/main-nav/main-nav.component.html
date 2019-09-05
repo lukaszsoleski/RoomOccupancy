@@ -1,48 +1,42 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-      #drawer
-      class="sidenav"
-      fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'push'"
-
-      >
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'push'">
     <mat-toolbar>
       <span>Menu</span>
-    <span class="spacer"></span>
-    <mat-icon (click)="drawer.toggle()" class="pointer">clear</mat-icon>
+      <span class="spacer"></span>
+      <mat-icon (click)="drawer.toggle()" class="pointer">clear</mat-icon>
     </mat-toolbar>
 
     <mat-nav-list>
-        <mat-list-item [routerLink]="['/campus/rooms']" (click)="drawer.toggle()">
-            <mat-icon mat-list-icon>meeting_room</mat-icon>
-            <span>Przegląd pomieszczeń</span>
-        </mat-list-item>
-        <mat-list-item [routerLink]="['/campus/rooms']" (click)="drawer.toggle()">
-            <mat-icon mat-list-icon>calendar_today</mat-icon>
-            <span >Rezerwacja</span>
-        </mat-list-item>
-        <h3 mat-subheader>Ustawienia</h3>
-        <mat-list-item (click)="drawer.toggle()">
-            <mat-icon mat-list-icon>account_circle</mat-icon>
-            <span >Konto</span>
-        </mat-list-item>
+      <mat-list-item [routerLink]="['/campus/rooms']" (click)="drawer.toggle()">
+        <mat-icon mat-list-icon>meeting_room</mat-icon>
+        <span>Przegląd pomieszczeń</span>
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/campus/rooms']" (click)="drawer.toggle()">
+        <mat-icon mat-list-icon>calendar_today</mat-icon>
+        <span>Rezerwacja</span>
+      </mat-list-item>
+      <h3 mat-subheader>Ustawienia</h3>
+      <mat-list-item (click)="drawer.toggle()">
+        <mat-icon mat-list-icon>account_circle</mat-icon>
+        <span>Konto</span>
+      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="upper-toolbar">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        >
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <a [routerLink]="['/campus']" class="cursor-link">SGGW SRS</a>
       <span class="spacer"></span>
-      <button mat-button class="mr-2" [routerLink]="['/login']">Zaloguj się</button>
-      <button mat-raised-button [routerLink]="['/register']" >Utwórz konto</button>
+      <div *ngIf="isLoggedIn; else loggedOut" >
+          <button mat-raised-button class="mr-2" (click)="logout()">Wyloguj się</button>
+      </div>
+      <ng-template #loggedOut>
+          <button mat-button class="mr-2" [routerLink]="['/login']">Zaloguj się</button>
+          <button mat-raised-button [routerLink]="['/register']">Utwórz konto</button>
+      </ng-template>
     </mat-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>

@@ -22,29 +22,26 @@ export class LoginComponent implements OnInit {
   protected loginForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
               private usersService: UsersService,
-              private router: Router)
-               { }
+              private router: Router) { }
+
   protected onSubmit(){
-    let pass = this.password.value;
-    let email = this.email.value;
+    if (this.loginForm.invalid) {return; }
+    const pass = this.password.value;
+    const email = this.email.value;
 
     this.usersService.login(email, pass).subscribe(x => {
       this.router.navigate([`/campus`]);
     });
-
   }
-  ngOnInit() {
 
+  ngOnInit() {
+    this.usersService.isLoggedIn.subscribe(console.log);
     this.loginForm = this.formBuilder.group({
       emailFormControl: ['', [
         Validators.required,
         Validators.email,
       ]],
       passwordFormControl: ['']
-    });
-
-    this.loginForm.valueChanges.subscribe(x => {
-      console.log(this.loginForm.invalid);
     });
   }
 

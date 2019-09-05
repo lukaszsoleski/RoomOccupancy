@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Infrastructure.Security.Users
 {
+    using RoomOccupancy.Application.Exceptions;
     public class AuthAuthenticationService : IAuthenticationService
     {
         private readonly UserManager<AppUser> _userManager;
@@ -34,13 +35,7 @@ namespace RoomOccupancy.Infrastructure.Security.Users
         /// <returns></returns>
         public async Task<string> Authenticate(CredentialsDto credentials)
         {
-            //Validate credentials and generate user identity
-            ClaimsIdentity identity = null;
-            try
-            {
-                identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
-            }// rethrow exception
-            catch (InvalidOperationException) { throw; }
+            var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
 
             return await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
 
