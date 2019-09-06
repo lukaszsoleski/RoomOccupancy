@@ -5,6 +5,7 @@ import { RoomListViewModel } from './../models/campus/room-lookup.model';
 import { HttpClientUtilsService } from './../common/http-client-utils.service';
 import { Injectable } from '@angular/core';
 import { ScheduleViewModel } from '../models/schedule/schedule-lookup';
+import { Faculty } from '../models/faculty.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,10 @@ export class RoomsService {
   public getRoom(id: number): Observable<RoomDetailModel>{
     return this.httpService.get<RoomDetailModel>(`room/${id}`);
   }
-  public postReservation(reservation: Reservation): Observable<unknown>{
+  public postReservation(reservation: Reservation): Observable<unknown> {
     return this.httpService.post('reservation/', reservation);
+  }
+  public getFaculties(): Observable<Faculty[]>{
+    return this.httpService.get('faculty');
   }
 }

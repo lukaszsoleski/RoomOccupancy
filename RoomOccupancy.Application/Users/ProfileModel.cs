@@ -9,7 +9,7 @@ namespace RoomOccupancy.Application.Interfaces.Users
         public string LastName { get; set; }
 
         public string UserName { get; set; }
-
+        public string FacultyName { get; set; }
         public bool IsVerified { get; set; }
 
         public bool EmailConfirmed { get; set; }

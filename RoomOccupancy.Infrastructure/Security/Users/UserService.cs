@@ -40,7 +40,8 @@ namespace RoomOccupancy.Infrastructure.Security.Users
                 throw new InvalidOperationException("Claim not found");
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId.Value) ?? throw new NotFoundException(typeof(AppUser),userId);
+            var user = await _context.Users.Include(x => x.Faculty)
+                .FirstOrDefaultAsync(x => x.Id == userId.Value) ?? throw new NotFoundException(typeof(AppUser),userId);
 
             return _mapper.Map<ProfileModel>(user);
         }

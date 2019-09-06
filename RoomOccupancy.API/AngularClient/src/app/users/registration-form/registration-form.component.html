@@ -34,6 +34,19 @@
               Email jest wymagany.
             </mat-error>
           </mat-form-field>
+          <!-- Faculty -->
+          <mat-form-field class="w-100 mb-2">
+              <mat-label>Wybierz wydział</mat-label>
+              <mat-select formControlName="facultyId" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let faculty of faculties" [value]="faculty.id">
+                  {{faculty.acronym}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="f['facultyId'].hasError('required')">Wybierz wydział</mat-error>
+              <mat-hint >{{getSelectedFaculty?.name}}</mat-hint>
+            </mat-form-field>
+
           <!-- Password -->
           <mat-form-field class="w-100">
               <input type="password" matInput placeholder="Hasło" formControlName="password">

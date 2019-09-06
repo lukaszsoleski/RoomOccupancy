@@ -14,7 +14,7 @@ namespace RoomOccupancy.Application.Users
         public string ConfirmPassword { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public int FacultyId { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<RegistrationModel, AppUser>()

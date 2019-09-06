@@ -59,6 +59,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { RegistrationFormComponent } from './users/registration-form/registration-form.component';
 import { LoginComponent } from './users/login/login.component';
 import { TokenInterceptor } from './common/interceptors/token.interceptor';
+import { ProfileComponent } from './users/profile/profile.component';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { TokenInterceptor } from './common/interceptors/token.interceptor';
     ReservationComponent,
     RegistrationFormComponent,
     LoginComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,

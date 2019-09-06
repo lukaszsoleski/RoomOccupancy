@@ -1,3 +1,4 @@
+import { ProfileComponent } from './users/profile/profile.component';
 import { ScheduleComponent } from './room/schedule/schedule.component';
 import { BuildingComponent } from './building/building.component';
 import { CampusComponent } from './campus/campus.component';
@@ -25,6 +26,9 @@ export const appRoutes: Routes = [
   },
   {
     path: 'login', component: LoginComponent
+  },
+  {
+    path: 'profile', component: ProfileComponent
   },
   {
     path: '',

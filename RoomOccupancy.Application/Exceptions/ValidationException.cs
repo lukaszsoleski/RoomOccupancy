@@ -14,7 +14,10 @@ namespace RoomOccupancy.Application.Exceptions
         {
             Failures = new Dictionary<string, string[]>();
         }
+        public ValidationException(string failure): base(failure)
+        {
 
+        }
         public ValidationException(List<ValidationFailure> failures)
             : this()
         {

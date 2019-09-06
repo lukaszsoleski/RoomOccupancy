@@ -8,4 +8,6 @@ export class UserProfileModel{
   isVerified: boolean;
 
   emailConfirmed: boolean;
+
+  facultyName: string;
 }
