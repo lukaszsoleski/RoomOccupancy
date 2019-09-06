@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RoomOccupancy.Application.Campus.Buildings.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries.GetRoom;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.API.Controllers.Campus
 {
+    [Authorize(Policy = "ApiUser")]
     public class RoomController : BaseController
     {
         [HttpGet("{id:int:min(1)}")]

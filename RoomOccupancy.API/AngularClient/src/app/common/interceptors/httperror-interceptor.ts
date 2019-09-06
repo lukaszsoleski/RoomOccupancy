@@ -42,7 +42,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           }
         } else if (status === 0) {
             errorMessage = 'No connection to the server 😨';
-        } else {
+        } else if(status === 401) {
+          errorMessage = 'Brak dostępu [401] 😨';
+        }
+        else {
             errorMessage = `${errorResponse.message} ${errorResponse.error.error.message}`;
         }
 

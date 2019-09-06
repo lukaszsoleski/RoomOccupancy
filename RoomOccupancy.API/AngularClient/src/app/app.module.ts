@@ -57,6 +57,7 @@ import { ReservationComponent } from './room/reservation/reservation.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { RegistrationFormComponent } from './users/registration-form/registration-form.component';
 import { LoginComponent } from './users/login/login.component';
+import { TokenInterceptor } from './common/interceptors/token.interceptor';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -131,6 +132,11 @@ import { LoginComponent } from './users/login/login.component';
     { // register error interceptor
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
       multi: true
     },
     DatePipe,

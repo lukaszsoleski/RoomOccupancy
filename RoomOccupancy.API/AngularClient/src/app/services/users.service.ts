@@ -13,8 +13,11 @@ export class UsersService {
   private set setToken(v: string) {
     localStorage.setItem('auth_token', v);
   }
-  private get hasToken() {
-    return localStorage.getItem('auth_token') != 'null';
+  public get getToken() {
+    return localStorage.getItem('auth_token');
+  }
+  public get hasToken() {
+    return localStorage.getItem('auth_token') !== 'null';
   }
   constructor(private httpService: HttpClientUtilsService, private router: Router) {
     this.isLoggedIn = new BehaviorSubject<boolean>(this.hasToken);
