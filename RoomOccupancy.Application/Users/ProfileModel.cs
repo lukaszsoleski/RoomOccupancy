@@ -11,5 +11,7 @@ namespace RoomOccupancy.Application.Interfaces.Users
         public string UserName { get; set; }
 
         public bool IsVerified { get; set; }
+
+        public bool EmailConfirmed { get; set; }
     }
 }
