@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.API.Controllers.Campus
 {
-    [Authorize(Policy = "ApiUser")]
     public class RoomController : BaseController
     {
         [HttpGet("{id:int:min(1)}")]

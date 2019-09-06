@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { UsersService } from './../../services/users.service';
 import { Injectable } from '@angular/core';
 import {
@@ -33,7 +34,6 @@ export class TokenInterceptor implements HttpInterceptor {
           if (err.status === 401) {
             // redirect to the login route
             // or show a modal
-            console.log('401 zwrócone')
             this.router.navigate([`/login`]);
           }
         }

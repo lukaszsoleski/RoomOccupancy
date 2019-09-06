@@ -45,6 +45,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         } else if(status === 401) {
           errorMessage = 'Brak dostępu [401] 😨';
         }
+        else if(status === 404){
+          errorMessage = 'Strona nie istnieje. 😵';
+        }
         else {
             errorMessage = `${errorResponse.message} ${errorResponse.error.error.message}`;
         }
