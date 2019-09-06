@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 // Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -83,6 +84,7 @@ import { TokenInterceptor } from './common/interceptors/token.interceptor';
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
     NgbModule,
+    NgxSpinnerModule,
     // Angular Material Components
     BrowserAnimationsModule,
     MatCheckboxModule,
@@ -125,7 +127,6 @@ import { TokenInterceptor } from './common/interceptors/token.interceptor';
       timeOut: 6000,
       maxOpened: 3,
     }), // ToastrModule added
-
   ],
   providers: [
     MatDatepickerModule,

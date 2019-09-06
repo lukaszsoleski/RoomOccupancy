@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-room-lookup',
   templateUrl: './room-lookup.component.html',
@@ -26,7 +27,8 @@ export class RoomLookupComponent implements OnInit {
     private readonly roomsService: RoomsService,
     private readonly activeRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -42,6 +44,7 @@ export class RoomLookupComponent implements OnInit {
         // (+) converts string into number
         const id =  params.get('id');
         // get rooms for the specified building
+        this.spinner.show();
         if (id) {
           this.buildingNo = +id;
           return this.roomsService.getRooms(this.buildingNo);
@@ -50,12 +53,13 @@ export class RoomLookupComponent implements OnInit {
         return this.roomsService.getRooms();
       })
     ).subscribe(x => {
+      this.spinner.hide();
       this.rooms = x.rooms;
       this.dataSource.data = this.rooms;
-      if(!x.rooms || x.rooms.length == 0){
-        this.toastr.info("Brak dostępnych pomieszczeń dla podanych parametrów 🤯")
+      if (!x.rooms || x.rooms.length == 0){
+        this.toastr.info('Brak dostępnych pomieszczeń dla podanych parametrów 🤯')
       }
-    });
+    }, () => this.spinner.hide());
   }
   public showRoomDetail(event,roomId){
     event.preventDefault();

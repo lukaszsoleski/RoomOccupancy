@@ -41,8 +41,6 @@ namespace RoomOccupancy.API.Controllers.Campus
 
             return Ok(rooms);
         }
-
-        
             
     }
 

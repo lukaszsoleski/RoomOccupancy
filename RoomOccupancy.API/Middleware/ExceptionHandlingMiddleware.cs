@@ -71,10 +71,6 @@ namespace RoomOccupancy.API.Middleware
             {
                 statusCode = HttpStatusCode.BadRequest;
             }
-            else if(exception is Application.Exceptions.InvalidCredentialException)
-            {
-                statusCode = HttpStatusCode.Unauthorized;
-            }
             else if (!exType.FullName.Contains("Room"))
             {
                 statusCode = HttpStatusCode.InternalServerError;

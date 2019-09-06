@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { MustMatch } from 'src/app/common/validators/must-match.validator';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-registration-form',
@@ -18,7 +19,8 @@ export class RegistrationFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private userService: UsersService,
               private toast: ToastrService,
-              private router: Router) { }
+              private router: Router,
+              private spinner: NgxSpinnerService) { }
 
   initRegistrationForm() {
     this.registerForm =  this.fb.group({
@@ -31,12 +33,14 @@ export class RegistrationFormComponent implements OnInit {
       validator: MustMatch('password', 'confirmPassword')
     });
   }
-  protected onSubmit(e) {
+  protected onSubmit() {
     if (this.registerForm.invalid) { return; }
+    this.spinner.show();
     this.userService.register(this.registerForm.value).subscribe(x => {
+      this.spinner.hide();
       this.toast.success('Link aktywacyjny został przesłany pod podany adres email.');
       this.router.navigate([`/login`]);
-    });
+    }, () => this.spinner.hide());
   }
 
   ngOnInit() {

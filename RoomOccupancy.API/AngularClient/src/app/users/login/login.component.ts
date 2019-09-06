@@ -3,7 +3,7 @@ import { UsersService } from './../../services/users.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,16 +22,18 @@ export class LoginComponent implements OnInit {
   protected loginForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
               private usersService: UsersService,
-              private router: Router) { }
+              private router: Router,
+              private spinner: NgxSpinnerService) { }
 
-  protected onSubmit(){
+  protected onSubmit() {
     if (this.loginForm.invalid) {return; }
     const pass = this.password.value;
     const email = this.email.value;
-
+    this.spinner.show();
     this.usersService.login(email, pass).subscribe(x => {
+      this.spinner.hide();
       this.router.navigate([`/campus`]);
-    });
+    }, x => this.spinner.hide());
   }
 
   ngOnInit() {
