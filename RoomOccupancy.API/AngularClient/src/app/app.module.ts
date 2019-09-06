@@ -1,3 +1,4 @@
+import { AuthGuard } from './common/guard/auth.guard';
 import { HttpErrorInterceptor } from './common/interceptors/httperror-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -142,6 +143,7 @@ import { ProfileComponent } from './users/profile/profile.component';
       useClass: TokenInterceptor,
       multi: true
     },
+    AuthGuard,
     DatePipe,
     DaysOfWeekPipe
   ],

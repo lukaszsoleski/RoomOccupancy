@@ -7,6 +7,7 @@ import { RoomsComponent } from './campus/rooms/rooms.component';
 import { RoomComponent } from './room/room.component';
 import { RegistrationFormComponent } from './users/registration-form/registration-form.component';
 import { LoginComponent } from './users/login/login.component';
+import { AuthGuard } from './common/guard/auth.guard';
 
 export const appRoutes: Routes = [
   {
@@ -28,7 +29,7 @@ export const appRoutes: Routes = [
     path: 'login', component: LoginComponent
   },
   {
-    path: 'profile', component: ProfileComponent
+    path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]
   },
   {
     path: '',
