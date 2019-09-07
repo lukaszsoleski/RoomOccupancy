@@ -1,3 +1,4 @@
+import { map, tap } from 'rxjs/operators';
 import { Reservation } from './../models/schedule/reservation';
 import { RoomDetailModel } from './../models/campus/room-detail-model';
 import { Observable } from 'rxjs';
@@ -23,16 +24,16 @@ export class RoomsService {
     }
     return this.httpService.get<RoomListViewModel>(route);
   }
-  public getSchedule(roomNo: number) : Observable<ScheduleViewModel>{
-    return this.httpService.get<ScheduleViewModel>(`schedule/room/${roomNo}`);
+  public getSchedule(roomNo: number): Observable<ScheduleViewModel>{
+    return this.httpService
+      .get<ScheduleViewModel>(`schedule/room/${roomNo}`).pipe(
+        tap(x => console.log(x))
+        );
   }
   public getRoom(id: number): Observable<RoomDetailModel>{
     return this.httpService.get<RoomDetailModel>(`room/${id}`);
   }
   public postReservation(reservation: Reservation): Observable<unknown> {
-
-    console.log("Przesyłana rezerwacja: ",reservation);
-
     return this.httpService.post('reservation/', reservation);
   }
   public getFaculties(): Observable<Faculty[]>{

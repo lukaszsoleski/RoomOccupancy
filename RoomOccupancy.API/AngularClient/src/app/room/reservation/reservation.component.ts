@@ -90,9 +90,8 @@ export class ReservationComponent implements OnInit {
     const timeArr = time.split(':');
     const hours = parseInt(timeArr[0], 10);
     const minutes = parseInt(timeArr[1], 10);
-
+    
     const date = moment(day).set('hours', hours).set('minutes', minutes).toDate();
-    console.log(date.toISOString());
     return date;
   }
 }

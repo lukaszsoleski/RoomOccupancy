@@ -15,7 +15,6 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping.Excel
        
         public ReservationClassMap()
         {
-            var startingWeek = DateTime.Now;
             Map(x => x.BuildingNumber)
                 .WithTrim()
                 .WithColumnNameMatching(x => Contains(x, "budynek"));
@@ -45,10 +44,7 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping.Excel
             {
                 value = value.Insert(0, "0");
             }
-            return DateTime.ParseExact(value, "HH:mm", new CultureInfo("pl-PL"));
+            return DateTime.ParseExact(value, "HH:mm", new CultureInfo("pl-PL")).ToUniversalTime();
         }
-
-
-
     }
 }

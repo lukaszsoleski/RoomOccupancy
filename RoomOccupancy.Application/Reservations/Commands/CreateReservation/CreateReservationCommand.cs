@@ -43,9 +43,7 @@ namespace RoomOccupancy.Application.Reservations.Commands.CreateReservation
             public async Task<int?> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
             {
                 var reservation = mapper.Map<Reservation>(request.Reservation);
-
                 user = await userService.GetUser();
-
                 var conflicts = await mediator.Send(new GetReservationConflictsQuery() { Reservation = reservation, RoomId = reservation.RoomId });
 
                 if (conflicts.Any())

@@ -68,14 +68,13 @@ export class ScheduleComponent implements OnInit {
     if (this.showAll === true) {
       this.dataSource = this._schedule.reservations;
       this.toastr.info('Wszystkie aktywne rezerwacje.');
-      return;
     } else {
       this.dataSource = this.getFilteredReservations(this.dateFilter);
     }
   }
   private getFilteredReservations(selectedDate: Date): ScheduleLookupModel[] {
     // tslint:disable-next-line:prefer-const
-    let reservations = [];
+    let reservations: ScheduleLookupModel[] = [];
     for (const reservation of this._schedule.reservations) {
       // the selected date is within the scope of the booking period and
       // and the day of the week matches
@@ -123,5 +122,12 @@ export class ScheduleComponent implements OnInit {
   }
   ngOnInit() {
   }
+  protected getEndTime(r: ScheduleLookupModel): string {
+    // should use timespan
+    if(moment(r.start).isDST() && moment(r.end).isDST() === false){
+      return moment(r.end).add(1, 'hour').format('HH:mm');
+    }
 
+    return moment(r.end).format('HH:mm');
+  }
 }

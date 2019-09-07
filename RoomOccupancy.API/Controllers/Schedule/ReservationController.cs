@@ -12,6 +12,8 @@ namespace RoomOccupancy.API.Controllers.Schedule
     {
         [HttpPost]
         public async Task<IActionResult> Post(ReservationModel reservation)
-             =>  Created("api/reservation", await Mediator.Send(new CreateReservationCommand() { Reservation = reservation }));
+        {
+            return Created("api/reservation", await Mediator.Send(new CreateReservationCommand() { Reservation = reservation }));
+        }
     }
 }

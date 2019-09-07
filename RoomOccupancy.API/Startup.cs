@@ -74,7 +74,7 @@ namespace RoomOccupancy.API
         private static void AddMvc(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                //.AddJsonOptions(opt => opt.SerializerSettings.DateFormatString = "dd-MM-yyyy HH:mm:ss")
+                .AddJsonOptions(opt => opt.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'")
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateRoomCommandValidator>());
         }
 
