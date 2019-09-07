@@ -1,6 +1,6 @@
 <div class="d-flex flex-column align-items-center">
-  <button mat-raised-button color='primary' (click)="isCollapsed = !isCollapsed"
-    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" class='align-self-start ml-5 mb-5'>
+  <button mat-raised-button color='primary' (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+    aria-controls="collapseExample" class='align-self-start ml-5 mb-5'>
     Dodaj rezerwacje
   </button>
   <div id="collapseExample" [ngbCollapse]="isCollapsed">
@@ -13,9 +13,7 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <mat-checkbox color="primary" [(ngModel)]="showAll" (ngModelChange)="onShowAllClick()">Pokaż wszystkie
-    </mat-checkbox>
-
+    <mat-checkbox color="primary" [(ngModel)]="showAll" (ngModelChange)="onShowAllClick()">Pokaż wszystkie</mat-checkbox>
   </div>
 
 
@@ -24,22 +22,29 @@
       <mat-expansion-panel *ngFor="let item of dataSource; let i = index" [expanded]="rowIndex === i"
         (opened)="setRowIndex(i)">
         <mat-expansion-panel-header>
-          <mat-panel-title>{{item.subject}}</mat-panel-title>
+          <mat-panel-title>
+            {{item.subject}}
+          </mat-panel-title>
           <mat-panel-description>
+
+
             <span *ngIf="item.isCyclical">{{item.reservationDays | daysOfWeek}}&nbsp;</span>
+
             {{!item.isCyclical && showAll ?  (item.start | date:"dd/MM/yyyy HH:mm") : (item.start | date:"HH:mm")}}
             -
             {{item.end | date:"HH:mm"}}
+
+            <mat-icon *ngIf="item.awaitsAcceptance" color="warn" matTooltip="Rezerwacja w trakcie akceptacji."
+              class="material-icons ml-2">error_outline</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <p *ngIf="item.isCyclical">Czas trwania: {{item.start | date:"dd/MM/yyyy"}} - {{item.end | date:"dd/MM/yyyy"}}
         </p>
 
-
-        <p>Utworzył: {{item.createdBy ? item.createdBy : "brak danych"}}</p>
+        <p>Utworzył: {{item.userName ? item.userName : "brak informacji"}}</p>
 
         <mat-action-row>
-          <button mat-raised-button color="primary">Edytuj</button>
+          <button mat-raised-button color="primary">Anuluj</button>
           <button (click)="setRowIndex(i-1)" *ngIf="rowIndex!=0" mat-button color="accent">Poprzedni</button>
           <button (click)="setRowIndex(i+1)" *ngIf="(dataSource.length - 1) != rowIndex" color="primary"
             mat-button>Następny</button>

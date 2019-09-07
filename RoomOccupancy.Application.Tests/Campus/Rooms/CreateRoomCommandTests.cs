@@ -40,7 +40,7 @@ namespace RoomOccupancy.Application.Tests.Campus.Rooms
             Func<Task> func = async () => await handler.Handle(new CreateRoomCommand(), CancellationToken.None);
             //assert 
             await func.Should().ThrowExactlyAsync<NotFoundException>()
-                .WithMessage($@"Entity {typeof(Building)} ({buildingId}) was not found."); 
+                .WithMessage($@"Entity {typeof(Building).Name} ({buildingId}) was not found."); 
         }
 
         [Fact]

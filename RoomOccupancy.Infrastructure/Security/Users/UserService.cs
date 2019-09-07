@@ -30,18 +30,24 @@ namespace RoomOccupancy.Infrastructure.Security.Users
 
         }
 
-        public async Task<ProfileModel> GetUserProfile()
+        public async Task<AppUser> GetUser()
         {
-            // user id claim
             var userId = _caller.Claims.FirstOrDefault(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Id);
-            
-            if(userId == null)
+
+            if (userId == null)
             {
                 throw new InvalidOperationException("Claim not found");
             }
 
             var user = await _context.Users.Include(x => x.Faculty)
-                .FirstOrDefaultAsync(x => x.Id == userId.Value) ?? throw new NotFoundException(typeof(AppUser),userId);
+                .FirstOrDefaultAsync(x => x.Id == userId.Value);
+
+            return user;
+        }
+
+        public async Task<ProfileModel> GetUserProfile()
+        {
+            var user = await GetUser() ?? throw new NotFoundException(typeof(AppUser), "");
 
             return _mapper.Map<ProfileModel>(user);
         }

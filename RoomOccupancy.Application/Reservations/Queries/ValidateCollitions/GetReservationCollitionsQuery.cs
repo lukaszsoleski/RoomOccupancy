@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Reservations.Queries.ValidateCollitions
 {
-    public class GetReservationCollitionsQuery : IRequest<List<ReservationModel>>
+    public class GetReservationConflictsQuery : IRequest<List<ReservationModel>>
     {
         public Reservation Reservation { get; set; }
         public int RoomId { get; set; }
 
-        public class Handler : IRequestHandler<GetReservationCollitionsQuery, List<ReservationModel>>
+        public class Handler : IRequestHandler<GetReservationConflictsQuery, List<ReservationModel>>
         {
             private readonly IMapper _mapper;
             private readonly IReservationDbContext _context;
@@ -31,7 +31,7 @@ namespace RoomOccupancy.Application.Reservations.Queries.ValidateCollitions
                 _context = context;
             }
 
-            public async Task<List<ReservationModel>> Handle(GetReservationCollitionsQuery request, CancellationToken cancellationToken)
+            public async Task<List<ReservationModel>> Handle(GetReservationConflictsQuery request, CancellationToken cancellationToken)
             {
                 var collitions = await _context.Reservations
                     .AsNoTracking()

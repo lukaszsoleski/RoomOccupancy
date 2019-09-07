@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { Reservation } from 'src/app/models/schedule/reservation';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -26,7 +27,8 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private readonly roomsService: RoomsService,
     private toastr: ToastrService,
-    private datepipe: DatePipe) {
+    private datepipe: DatePipe,
+    private spinner: NgxSpinnerService) {
     this.dateFilter = new Date();
   }
   public get roomId(): number {
@@ -42,11 +44,13 @@ export class ScheduleComponent implements OnInit {
   }
 
   private getSchedule() {
+    this.spinner.show();
     this.roomsService.getSchedule(this.roomId)
       .subscribe(x => {
         this._schedule = x;
         this.applyFilter();
-      });
+        this.spinner.hide();
+      }, () => this.spinner.hide());
   }
   public dateFilterChanged(event) {
     if (this.dateFilter == null) {

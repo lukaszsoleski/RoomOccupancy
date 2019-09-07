@@ -9,7 +9,8 @@ export class ScheduleLookupModel {
   isCyclical: boolean;
   roomId: number;
   roomName: string;
-  createdBy: string;
+  awaitsAcceptance: boolean;
+  userName: string;
 }
 
 export class ScheduleViewModel {

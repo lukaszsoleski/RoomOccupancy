@@ -58,7 +58,7 @@ namespace RoomOccupancy.Application.Reservations.Commands.ImportSchedule
                 {
                     var room = GetRoom(rooms, reservation);
 
-                    var collitions = await _mediator.Send(new GetReservationCollitionsQuery() {  RoomId = room.Id, Reservation = reservation });
+                    var collitions = await _mediator.Send(new GetReservationConflictsQuery() {  RoomId = room.Id, Reservation = reservation });
                     if (collitions.Any())
                         throw new ReservationConflictException(collitions.First().ToString(), reservation.ToString());
                     AddReservation(reservation, room);

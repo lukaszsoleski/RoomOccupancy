@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using RoomOccupancy.Application.Exceptions;
 using RoomOccupancy.Application.Interfaces;
+using RoomOccupancy.Application.Interfaces.Users;
 using RoomOccupancy.Application.Notifications;
 using RoomOccupancy.Application.Reservations.Queries.ValidateCollitions;
 using RoomOccupancy.Domain.Entities.Reservation;
+using RoomOccupancy.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,35 +21,43 @@ namespace RoomOccupancy.Application.Reservations.Commands.CreateReservation
     public class CreateReservationCommand : IRequest<int?>
     {
         public ReservationModel Reservation { get; set; }
+        public string UserId { get; set; }
         public class Handler : IRequestHandler<CreateReservationCommand, int?>
         {
             private readonly IReservationDbContext context;
             private readonly IMapper mapper;
             private readonly IMediator mediator;
             private readonly INotificationService notificationService;
+            private readonly IUserService userService;
 
-            public Handler(IReservationDbContext context, IMapper mapper, IMediator mediator, INotificationService notificationService)
+            private AppUser user;
+
+            public Handler(IReservationDbContext context, IMapper mapper, IMediator mediator, INotificationService notificationService, IUserService userService)
             {
                 this.context = context;
                 this.mapper = mapper;
                 this.mediator = mediator;
                 this.notificationService = notificationService;
+                this.userService = userService;
             }
             public async Task<int?> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
             {
                 var reservation = mapper.Map<Reservation>(request.Reservation);
 
-                var collitions = await mediator.Send(new GetReservationCollitionsQuery() { Reservation = reservation, RoomId = reservation.RoomId });
+                user = await userService.GetUser();
 
-                if (collitions.Any())
-                    throw new ReservationConflictException($"{string.Join(", ", collitions.Select(x => x.ToString()))}", $"{reservation}");
+                var conflicts = await mediator.Send(new GetReservationConflictsQuery() { Reservation = reservation, RoomId = reservation.RoomId });
 
-                if (!IsUseAuthorized(reservation))
+                if (conflicts.Any())
+                    throw new ReservationConflictException($"{string.Join(", ", conflicts.Select(x => x.ToString()))}", $"{reservation}");
+
+                if (! await IsUserAuthorized(reservation))
                 {
-                    SendReservationRequest(reservation);
-                    await notificationService.Notify(new Message() { /*TODO*/ });
-                    return default;
+                    reservation.AwaitsAcceptance = true;
+                    await SendReservationRequest(reservation, request.UserId);
                 }
+                if (user != null)
+                    reservation.AppUser = user;
 
                 context.Reservations.Add(reservation);
 
@@ -55,13 +66,27 @@ namespace RoomOccupancy.Application.Reservations.Commands.CreateReservation
                 return reservation.Id;
             }
 
-            private void SendReservationRequest(Reservation reservation)
+
+            private async Task<bool> IsUserAuthorized(Reservation reservation)
             {
+                if (user == null)
+                    return false;
+
+                var userFaculty = user.FacultyId;
+
+                if (!userFaculty.HasValue)
+                    return false;
+
+                var roomFacultyIds = await context.FacultyRooms
+                    .Where(x => x.RoomId == reservation.RoomId)
+                    .Select(x => x.FacultyId)
+                    .ToListAsync();
+
+                return roomFacultyIds.Contains(userFaculty.Value);
             }
 
-            private bool IsUseAuthorized(Reservation reservation)
+            private async Task SendReservationRequest(Reservation reservation, string userId)
             {
-                return true;
             }
         }
     }
