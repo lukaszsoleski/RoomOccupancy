@@ -32,13 +32,13 @@
         <ng-template matStepLabel>Godzina</ng-template>
 
         <div>
-          <mat-form-field class="pr-2">
+          <mat-form-field class="pr-sm-2">
             <input matInput formControlName="start" placeholder="Godz. rozpoczęcia" [format]="24"
               [ngxTimepicker]="startpicker">
           </mat-form-field>
           <ngx-material-timepicker #startpicker></ngx-material-timepicker>
 
-          <mat-form-field class="pl-2">
+          <mat-form-field class="pl-sm-2">
             <input matInput formControlName="end" placeholder="Godz. zakończenia" [format]="24"
               [ngxTimepicker]="endpicker">
           </mat-form-field>

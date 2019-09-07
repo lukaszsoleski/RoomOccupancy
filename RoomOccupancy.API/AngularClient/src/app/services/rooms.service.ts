@@ -30,6 +30,9 @@ export class RoomsService {
     return this.httpService.get<RoomDetailModel>(`room/${id}`);
   }
   public postReservation(reservation: Reservation): Observable<unknown> {
+
+    console.log("Przesyłana rezerwacja: ",reservation);
+
     return this.httpService.post('reservation/', reservation);
   }
   public getFaculties(): Observable<Faculty[]>{

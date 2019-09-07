@@ -36,7 +36,7 @@ namespace RoomOccupancy.Infrastructure.Security.Users
 
             if (userId == null)
             {
-                throw new InvalidOperationException("Claim not found");
+                return null;
             }
 
             var user = await _context.Users.Include(x => x.Faculty)

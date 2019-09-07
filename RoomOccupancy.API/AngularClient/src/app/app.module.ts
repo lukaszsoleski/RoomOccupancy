@@ -13,10 +13,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+// date picker formats
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 // Angular Material Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatCheckboxModule} from '@angular/material';
+import {MatCheckboxModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -61,6 +62,7 @@ import { RegistrationFormComponent } from './users/registration-form/registratio
 import { LoginComponent } from './users/login/login.component';
 import { TokenInterceptor } from './common/interceptors/token.interceptor';
 import { ProfileComponent } from './users/profile/profile.component';
+import { CustomDateAdapter } from './common/adapters/locale-date.adapter';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -145,7 +147,11 @@ import { ProfileComponent } from './users/profile/profile.component';
     },
     AuthGuard,
     DatePipe,
-    DaysOfWeekPipe
+    DaysOfWeekPipe,
+    {
+      provide: MAT_DATE_LOCALE, useValue: 'pl-PL'
+    },
+    {provide: DateAdapter, useClass: CustomDateAdapter },
   ],
   bootstrap: [AppComponent]
 })

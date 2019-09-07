@@ -2,9 +2,9 @@
 
 export class ScheduleLookupModel {
   Id: number;
-  start: string;
+  start: Date;
   end: Date;
-  subject: Date;
+  subject: string;
   reservationDays: number[];
   isCyclical: boolean;
   roomId: number;

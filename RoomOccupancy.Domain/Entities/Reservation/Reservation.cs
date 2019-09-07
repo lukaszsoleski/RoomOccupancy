@@ -1,7 +1,9 @@
-﻿using RoomOccupancy.Common.Extentions;
+﻿using RoomOccupancy.Common;
+using RoomOccupancy.Common.Extentions;
 using RoomOccupancy.Domain.Entities.Campus;
 using RoomOccupancy.Domain.Entities.Users;
 using System;
+using System.Linq;
 
 namespace RoomOccupancy.Domain.Entities.Reservation
 {
@@ -47,7 +49,7 @@ namespace RoomOccupancy.Domain.Entities.Reservation
         public AppUser AppUser { get; set; }
         public override string ToString()
         {
-            return $"{Subject} at {Start} to {End} on days {ReservationDays}";
+            return $"{Subject} at {Start} to {End} on days {string.Join(", ", ReservationDays.GetDays().ToList())}";
         }
     }
 }

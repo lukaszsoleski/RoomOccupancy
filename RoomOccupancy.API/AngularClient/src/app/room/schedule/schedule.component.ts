@@ -28,7 +28,8 @@ export class ScheduleComponent implements OnInit {
     private readonly roomsService: RoomsService,
     private toastr: ToastrService,
     private datepipe: DatePipe,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    ) {
     this.dateFilter = new Date();
   }
   public get roomId(): number {
@@ -102,11 +103,16 @@ export class ScheduleComponent implements OnInit {
   public postReservation(e: Reservation) {
     let reservation = e;
     reservation.roomId = this.roomId;
+    console.log(reservation);
+
+    this.spinner.show();
     this.roomsService.postReservation(reservation).subscribe(x => {
-      this.toastr.success('Dodano rezerwacje!');
       this.getSchedule();
       this.isCollapsed = true;
-    });
+      this.spinner.hide();
+      this.toastr.success('Dodano rezerwacje!');
+
+    }, () => this.spinner.hide());
   }
 
   public onShowAllClick(event) {

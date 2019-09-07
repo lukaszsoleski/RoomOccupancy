@@ -51,36 +51,48 @@ export class ReservationComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.defaultEndTime = moment(this.now).add(3, 'hour').format('HH:mm');
-    this.defaultStartTime = moment(this.now).add(1, 'hour').format('HH:mm');
+    this.defaultEndTime = moment(this.now).add(3, 'hour').set('minutes', 0).format('HH:mm');
+    this.defaultStartTime = moment(this.now).add(1, 'hour').set('minutes', 0).format('HH:mm');
     this.initForm();
   }
   protected publishForm() {
     const formdata = Object.assign({}, this.reservationForm.value);
-    let model = new Reservation();
-    let endDay;
-    if (formdata.repeat.isCyclical === true) {
-      endDay = formdata.repeat.reservationEnd;
-    } else {
-      endDay = formdata.timeframe.day;
-    }
+    const model = new Reservation();
+      // The day the reservation is ended depends on whether it is repeatable or not.
+    const endDay = this.getFormEndDay(formdata);
+
     model.subject = formdata.topic.subject;
     model.start = this.getDateTime(formdata.timeframe.start, formdata.timeframe.day);
     model.end = this.getDateTime(formdata.timeframe.end, endDay);
     model.isCyclical = formdata.repeat.isCyclical;
-    for (let day of formdata.repeat.weekDays) {
-      let val = parseInt(WeekDays[day], 10);
+
+    for (const day of formdata.repeat.weekDays) {
+      const val = parseInt(WeekDays[day], 10);
       if (isNaN(val)) { continue; }
       model.reservationDays.push(val);
     }
+
     this.reservationTime.emit(model);
-    return model;
   }
+
+  // The day the reservation is ended depends on whether it is repeatable or not.
+  private getFormEndDay(formdata: any) {
+    let day;
+    if (formdata.repeat.isCyclical === true) {
+     day = formdata.repeat.reservationEnd;
+    } else {
+     day = formdata.timeframe.day;
+    }
+    return day;
+  }
+
   private getDateTime(time: string, day: Date): Date {
-    let timeArr = time.split(':');
-    let hours = timeArr[0];
-    let minutes = timeArr[1];
-    let date = moment(day).add(hours, 'hours').add(minutes, 'minutes');
-    return date.toDate();
+    const timeArr = time.split(':');
+    const hours = parseInt(timeArr[0], 10);
+    const minutes = parseInt(timeArr[1], 10);
+
+    const date = moment(day).set('hours', hours).set('minutes', minutes).toDate();
+    console.log(date.toISOString());
+    return date;
   }
 }
