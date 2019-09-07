@@ -1,8 +1,16 @@
 <div class="d-flex flex-column align-items-center">
-  <button mat-raised-button color='primary' (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
-    aria-controls="collapseExample" class='align-self-start ml-5 mb-5'>
-    Dodaj rezerwacje
+ <div class='d-flex align-self-end mb-5'>
+  <button mat-fab color='primary' (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+    aria-controls="collapseExample" class=''>
+    <mat-icon *ngIf="isCollapsed"  class="material-icons" style="color:white;">
+      add
+      </mat-icon>
+      <mat-icon *ngIf="!isCollapsed" class="material-icons">
+        remove
+        </mat-icon>
   </button>
+  <span class='d-block ml-3 align-self-center'><strong >{{isCollapsed ? "Dodaj rezerwacje" : "Anuluj"}}</strong> </span>
+</div>
   <div id="collapseExample" [ngbCollapse]="isCollapsed">
     <app-reservation (reservationTime)='postReservation($event)'></app-reservation>
   </div>
