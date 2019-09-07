@@ -11,7 +11,7 @@ namespace RoomOccupancy.Application.Infrastructure.Mapping.Excel
         public EquipmentClassMap()
         {
             Map(x => x.Name)
-                .WithColumnName("Nazwa");
+                .WithColumnNameMatching(x => x.Contains("nazwa",StringComparison.OrdinalIgnoreCase));
         }
     }
 }

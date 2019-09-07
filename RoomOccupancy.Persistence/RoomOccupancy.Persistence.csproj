@@ -42,10 +42,16 @@
     <None Update="Initializer\Files\Wydziały.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Initializer\Files\WyposażeniePomieszczeń.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Initializer\Files\Zajetosc_Sal_do_POLON_budynek_23.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Initializer\Files\Zajętość.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Initializer\Files\ZweryfikowniUżytkownicy.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

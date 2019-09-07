@@ -21,6 +21,8 @@ namespace RoomOccupancy.Application.Interfaces
         DbSet<FacultyRoom> FacultyRooms { get; set; }
         DbSet<AppUser> Users { get; set; }
         DbSet<BuildingFaculty> BuildingFaculties { get; set; }
+        DbSet<RoomEquipment> RoomEquipment { get; set; }
+        DbSet<VerifiedUsersDict> VerifiedUsers { get; set; }
         #endregion
         #region EF Core methods 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));

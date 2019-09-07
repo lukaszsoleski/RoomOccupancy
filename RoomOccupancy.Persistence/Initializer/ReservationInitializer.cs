@@ -1,12 +1,15 @@
 ﻿using ExcelMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RoomOccupancy.Application.Campus.Equipment;
+using RoomOccupancy.Application.Campus.Equipment.Commands.ImportRoomEquipment;
 using RoomOccupancy.Application.Campus.Rooms.Commands.ImportRooms;
 using RoomOccupancy.Application.Infrastructure.Mapping;
 using RoomOccupancy.Application.Infrastructure.Mapping.Excel;
 using RoomOccupancy.Application.Reservations.Commands.ImportSchedule;
 using RoomOccupancy.Domain.Entities.Campus;
 using RoomOccupancy.Domain.Entities.Reservation;
+using RoomOccupancy.Domain.Entities.Users;
 using System;
 using System.IO;
 using System.Linq;
@@ -28,6 +31,8 @@ namespace RoomOccupancy.Persistence
         private readonly string facultiesFileName = "Wydziały.xlsx";
         private readonly string scheduleFileName = "Zajętość.xlsx";
         private readonly string equipmentFileName = "Wyposażenie-słownik.xlsx";
+        private readonly string roomEquipmentFileName = "WyposażeniePomieszczeń.xlsx";
+        private readonly string verifiedUserFileName = "ZweryfikowniUżytkownicy.xlsx";
         #endregion
         public ReservationInitializer(ReservationDbContext context, IMediator mediator)
         {
@@ -55,10 +60,21 @@ namespace RoomOccupancy.Persistence
             await SeedRooms();
             await SeedReservations();
             await SeedEquipment();
+            await SeedRoomEquipment();
+            await SeedVerifiedUsers();
         }
 
-        private async Task SeedEquipment() => await ExcelSeed<Equipment, EquipmentClassMap>(equipmentFileName);
+        private Task SeedVerifiedUsers() => ExcelSeed<VerifiedUsersDict, VerifiedUserClassMap>(verifiedUserFileName);
 
+        private async Task SeedRoomEquipment()
+        {
+            var path = Path.Combine(initializationDir, roomEquipmentFileName);
+            var content = File.ReadAllBytes(path);
+            var equipment = ExcelHelper.Load<EquipmentModel, RoomEquipmentClassMap>(content);
+            await _mediator.Send(new ImportRoomEquipmentCommand() { Equipment = equipment });
+        }
+
+        private Task SeedEquipment() => ExcelSeed<Equipment, EquipmentClassMap>(equipmentFileName);
 
         private async Task SeedReservations()
         {
@@ -67,9 +83,9 @@ namespace RoomOccupancy.Persistence
             await _mediator.Send(new ImportScheduleCommand() { FileContent = content });
         }
 
-        private async Task SeedFaculties() => await ExcelSeed<Faculty, FacultyClassMap>(facultiesFileName);
+        private Task SeedFaculties() => ExcelSeed<Faculty, FacultyClassMap>(facultiesFileName);
 
-        private async Task SeedBuildings() => await ExcelSeed<Building, BuildingClassMap>(buildingsFileName);
+        private Task SeedBuildings() => ExcelSeed<Building, BuildingClassMap>(buildingsFileName);
 
         private async Task SeedRooms()
         {
