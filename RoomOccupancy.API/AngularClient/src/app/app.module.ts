@@ -65,6 +65,8 @@ import { ProfileComponent } from './users/profile/profile.component';
 import { CustomDateAdapter } from './common/adapters/locale-date.adapter';
 import { EquipmentComponent } from './room/components/equipment/equipment.component';
 import { ReservationsComponent } from './users/reservations/reservations.component';
+import { MatBadgeModule} from '@angular/material';
+import { RoomDetailsComponent } from './room/components/room-details/room-details.component';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -83,6 +85,7 @@ import { ReservationsComponent } from './users/reservations/reservations.compone
     ProfileComponent,
     EquipmentComponent,
     ReservationsComponent,
+    RoomDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -96,6 +99,7 @@ import { ReservationsComponent } from './users/reservations/reservations.compone
     NgxSpinnerModule,
     // Angular Material Components
     BrowserAnimationsModule,
+    MatBadgeModule,
     MatCheckboxModule,
     MatCheckboxModule,
     MatButtonModule,

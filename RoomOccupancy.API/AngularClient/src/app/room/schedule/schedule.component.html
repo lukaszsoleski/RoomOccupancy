@@ -1,19 +1,38 @@
 <div class="d-flex flex-column align-items-center">
- <div class='d-flex align-self-end mb-5'>
-  <button mat-fab color='primary' [disabled]='!isloggedIn' (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
-    aria-controls="collapseExample" >
-    <mat-icon *ngIf="isCollapsed"  class="material-icons" style="color:white;">
-      add
-      </mat-icon>
-      <mat-icon *ngIf="!isCollapsed" class="material-icons">
-        remove
-        </mat-icon>
+ <div class='d-flex align-self-end mb-5' >
+
+    <span [matTooltip]="!isloggedIn ? 'Zaloguj się, aby zarezerwować salę 😅': null"
+    class='d-block ml-3 mr-3 align-self-center'
+    >
+    <mat-chip-list aria-label="Fish selection">
+      <mat-chip *ngIf="!isloggedIn">Dodaj rezerwacje</mat-chip>
+      <mat-chip *ngIf="isloggedIn" (click)="isCollapsed = !isCollapsed">{{isCollapsed ? "Dodaj rezerwacje" : "Anuluj"}}</mat-chip>
+   </mat-chip-list>
+    </span>
+
+  <button mat-mini-fab color="primary"
+   [disabled]='!isloggedIn'
+   (click)="isCollapsed = !isCollapsed"
+   [attr.aria-expanded]="!isCollapsed"
+
+    aria-controls="collapseExample">
+    <span *ngIf="isCollapsed" style="color:white;">
+      +
+    </span>
+      <span *ngIf="!isCollapsed">
+        -
+        </span>
   </button>
-  <span [matTooltip]="!isloggedIn ? 'Zaloguj się, aby zarezerwować salę 😅': null" class='d-block ml-3 align-self-center'><strong>{{isCollapsed ? "Dodaj rezerwacje" : "Anuluj"}}</strong> </span>
+
+
 </div>
   <div id="collapseExample" [ngbCollapse]="isCollapsed">
     <app-reservation (reservationTime)='postReservation($event)'></app-reservation>
   </div>
+
+
+
+
   <div class="d-flex justify-content-around align-items-center w-75">
     <mat-form-field>
       <input matInput [(ngModel)]="dateFilter" (dateChange)="dateFilterChanged($event)" [matDatepicker]="picker"
@@ -52,7 +71,8 @@
         <p>Utworzył: {{item.userName ? item.userName : "brak informacji"}}</p>
 
         <mat-action-row>
-          <button mat-raised-button color="warn" [hidden]="item.appUserId !== currUserId" (click)='cancelReservation(item)'>Anuluj</button>
+
+          <button mat-raised-button color="warn" [hidden]="canCancelReservation(item) === false" (click)='cancelReservation(item)'>Anuluj</button>
           <button (click)="setRowIndex(i-1)" *ngIf="rowIndex!=0" mat-button color="accent">Poprzedni</button>
           <button (click)="setRowIndex(i+1)" *ngIf="(dataSource.length - 1) != rowIndex" color="primary"
             mat-button>Następny</button>

@@ -1,3 +1,4 @@
+import { Equipment } from 'src/app/models/equipment.model';
 import { map, tap } from 'rxjs/operators';
 import { Reservation } from './../models/schedule/reservation';
 import { RoomDetailModel } from './../models/campus/room-detail-model';
@@ -30,6 +31,9 @@ export class RoomsService {
         tap(x => console.log(x))
         );
   }
+  public getEquipment(roomId: number): Observable<Equipment[]> {
+    return this.httpService.get(`room/${roomId}/equipment`);
+  }
   public getRoom(id: number): Observable<RoomDetailModel> {
     return this.httpService.get<RoomDetailModel>(`room/${id}`);
   }
@@ -42,7 +46,5 @@ export class RoomsService {
   public cancelReservation(id: number) {
     return this.httpService.delete(`reservation/${id}`);
   }
-  public getUserSchedule() {
-    return this.httpService.get('user/schedule');
-  }
+
 }

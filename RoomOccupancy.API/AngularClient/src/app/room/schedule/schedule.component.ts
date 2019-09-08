@@ -140,4 +140,10 @@ export class ScheduleComponent implements OnInit {
 
     return moment(r.end).format('HH:mm');
   }
+  protected canCancelReservation(r: ScheduleLookupModel): boolean{
+    if(r.appUserId && this.currUserId){
+      return r.appUserId === this.currUserId;
+    }
+    return false;
+  }
 }

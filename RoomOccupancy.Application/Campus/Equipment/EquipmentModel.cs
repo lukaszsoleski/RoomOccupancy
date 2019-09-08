@@ -15,7 +15,7 @@ namespace RoomOccupancy.Application.Campus.Equipment
 
         public string RoomName { get; set; }
         public string EquipmentName { get; set; }
-
+        public bool IsAvailable { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<EquipmentModel,Equipment>()

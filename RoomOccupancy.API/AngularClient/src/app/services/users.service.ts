@@ -34,6 +34,9 @@ export class UsersService {
   public getProfile(){
     return this.httpService.get<UserProfileModel>('user');
   }
+  public getReservations() {
+    return this.httpService.get('user/reservations');
+  }
   public login(userName: string, password: string) {
     return this.httpService.post('login', { userName, password })
       .pipe(

@@ -14,8 +14,14 @@
               <app-schedule [roomId]='routeId'></app-schedule>
             </div>
           </mat-tab>
-          <mat-tab label="Wyposażenie">Wyposażenie</mat-tab>
-          <mat-tab label="Szczegóły">Szczegóły</mat-tab>
+          <mat-tab label="Wyposażenie">
+
+            <app-equipment [roomId]='routeId'></app-equipment>
+
+          </mat-tab>
+          <mat-tab label="Szczegóły">
+            <app-room-details></app-room-details>
+          </mat-tab>
         </mat-tab-group>
       </div>
     </div>
