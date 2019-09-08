@@ -23,7 +23,7 @@ export class RoomComponent implements OnInit {
 
   ) { this.room = new RoomDetailModel(); }
 
-  subscribeRoom() {
+  getRoom() {
     this.route.paramMap.pipe(
       switchMap(params => {
         // (+) converts string into number
@@ -41,7 +41,7 @@ export class RoomComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscribeRoom();
+    this.getRoom();
   }
 
 }

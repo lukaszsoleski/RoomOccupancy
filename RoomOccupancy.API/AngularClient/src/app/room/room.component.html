@@ -15,12 +15,10 @@
             </div>
           </mat-tab>
           <mat-tab label="Wyposażenie">
-
             <app-equipment [roomId]='routeId'></app-equipment>
-
           </mat-tab>
           <mat-tab label="Szczegóły">
-            <app-room-details></app-room-details>
+            <app-room-details [room]='room'></app-room-details>
           </mat-tab>
         </mat-tab-group>
       </div>
