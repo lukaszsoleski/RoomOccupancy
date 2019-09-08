@@ -37,7 +37,7 @@ namespace RoomOccupancy.Application.Reservations
         /// If the user is not authorized to make a reservation, the reservation is awaiting acceptance.
         /// </summary>
         public bool AwaitsAcceptance { get; set; }
-
+        public bool IsCancelled { get; set; }
         /// <summary>
         /// The room where the meeting is to be held.
         /// </summary>

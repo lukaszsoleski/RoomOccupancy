@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RoomOccupancy.Application.Interfaces.Users;
+using RoomOccupancy.Application.Reservations.Queries.GetUserReservations;
 
 namespace RoomOccupancy.API.Controllers.Users
 {
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Policy = "ApiUser")]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private readonly IUserService userService;
 
@@ -25,6 +26,10 @@ namespace RoomOccupancy.API.Controllers.Users
         {
            return Ok(await userService.GetUserProfile());
         }
-
+        [HttpGet("[action]")]
+        public async Task<IActionResult> Reservations()
+        {
+          return Ok(await Mediator.Send(new GetUserReservationsQuery()));
+        }
     }
 }

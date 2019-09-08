@@ -30,7 +30,7 @@ export class RoomsService {
         tap(x => console.log(x))
         );
   }
-  public getRoom(id: number): Observable<RoomDetailModel>{
+  public getRoom(id: number): Observable<RoomDetailModel> {
     return this.httpService.get<RoomDetailModel>(`room/${id}`);
   }
   public postReservation(reservation: Reservation): Observable<unknown> {
@@ -41,5 +41,8 @@ export class RoomsService {
   }
   public cancelReservation(id: number) {
     return this.httpService.delete(`reservation/${id}`);
+  }
+  public getUserSchedule() {
+    return this.httpService.get('user/schedule');
   }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RoomOccupancy.Application.Campus.Buildings.Queries;
+using RoomOccupancy.Application.Campus.Equipment.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries.GetRoom;
 using RoomOccupancy.Domain.Entities.Campus;
@@ -41,7 +42,12 @@ namespace RoomOccupancy.API.Controllers.Campus
 
             return Ok(rooms);
         }
-            
+        // room/{id}/equipment
+        [HttpGet("{id:int:min(1)}/[action]")]    
+        public async Task<IActionResult> Equipment(int id)
+        {
+            return Ok(await Mediator.Send(new GetEquipmentQuery() { RoomId = id }));
+        }
     }
 
 }

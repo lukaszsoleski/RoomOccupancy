@@ -63,6 +63,8 @@ import { LoginComponent } from './users/login/login.component';
 import { TokenInterceptor } from './common/interceptors/token.interceptor';
 import { ProfileComponent } from './users/profile/profile.component';
 import { CustomDateAdapter } from './common/adapters/locale-date.adapter';
+import { EquipmentComponent } from './room/components/equipment/equipment.component';
+import { ReservationsComponent } from './users/reservations/reservations.component';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -79,6 +81,8 @@ import { CustomDateAdapter } from './common/adapters/locale-date.adapter';
     RegistrationFormComponent,
     LoginComponent,
     ProfileComponent,
+    EquipmentComponent,
+    ReservationsComponent,
   ],
   imports: [
     CommonModule,
