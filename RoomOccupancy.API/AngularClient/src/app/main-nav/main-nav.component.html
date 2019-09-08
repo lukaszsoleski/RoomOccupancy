@@ -31,7 +31,7 @@
       <a [routerLink]="['/campus']" class="cursor-link">SGGW SRS</a>
       <span class="spacer"></span>
       <div *ngIf="isLoggedIn; else loggedOut" >
-          <button mat-button class="mr-2">Moje rezerwacje</button>
+          <button mat-button class="mr-2" [routerLink]="['/user/reservations']">Moje rezerwacje</button>
           <button mat-button class="mr-2" (click)="logout()">Wyloguj się</button>
       </div>
       <ng-template #loggedOut>

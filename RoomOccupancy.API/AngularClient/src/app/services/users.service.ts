@@ -5,6 +5,7 @@ import { HttpClientUtilsService } from '../common/http-client-utils.service';
 import { map, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserProfileModel } from '../models/users/user-profile.model';
+import { ScheduleLookupModel } from '../models/schedule/schedule-lookup';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +35,7 @@ export class UsersService {
   public getProfile(){
     return this.httpService.get<UserProfileModel>('user');
   }
-  public getReservations() {
+  public getReservations(): Observable<ScheduleLookupModel[]> {
     return this.httpService.get('user/reservations');
   }
   public login(userName: string, password: string) {

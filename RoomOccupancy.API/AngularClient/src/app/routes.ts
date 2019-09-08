@@ -8,6 +8,7 @@ import { RoomComponent } from './room/room.component';
 import { RegistrationFormComponent } from './users/registration-form/registration-form.component';
 import { LoginComponent } from './users/login/login.component';
 import { AuthGuard } from './common/guard/auth.guard';
+import { ReservationsComponent } from './users/reservations/reservations.component';
 
 export const appRoutes: Routes = [
   {
@@ -30,6 +31,9 @@ export const appRoutes: Routes = [
   },
   {
     path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'user/reservations', component: ReservationsComponent, canActivate: [AuthGuard]
   },
   {
     path: '',

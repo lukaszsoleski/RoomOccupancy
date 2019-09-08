@@ -14,7 +14,7 @@
    [disabled]='!isloggedIn'
    (click)="isCollapsed = !isCollapsed"
    [attr.aria-expanded]="!isCollapsed"
-
+    class='mr-3'
     aria-controls="collapseExample">
     <span *ngIf="isCollapsed" style="color:white;">
       +
@@ -24,14 +24,10 @@
         </span>
   </button>
 
-
 </div>
   <div id="collapseExample" [ngbCollapse]="isCollapsed">
     <app-reservation (reservationTime)='postReservation($event)'></app-reservation>
   </div>
-
-
-
 
   <div class="d-flex justify-content-around align-items-center w-75">
     <mat-form-field>
@@ -42,7 +38,6 @@
     </mat-form-field>
     <mat-checkbox color="primary" [(ngModel)]="showAll" (ngModelChange)="onShowAllClick()">Pokaż wszystkie</mat-checkbox>
   </div>
-
 
   <div class="mat-elevation-z8 m-5 w-90">
     <mat-accordion class="headers-align">
