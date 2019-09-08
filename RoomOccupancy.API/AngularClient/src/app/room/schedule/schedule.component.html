@@ -1,7 +1,7 @@
 <div class="d-flex flex-column align-items-center">
  <div class='d-flex align-self-end mb-5'>
-  <button mat-fab color='primary' (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
-    aria-controls="collapseExample" class=''>
+  <button mat-fab color='primary' [disabled]='!isloggedIn' (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+    aria-controls="collapseExample" >
     <mat-icon *ngIf="isCollapsed"  class="material-icons" style="color:white;">
       add
       </mat-icon>
@@ -9,7 +9,7 @@
         remove
         </mat-icon>
   </button>
-  <span class='d-block ml-3 align-self-center'><strong >{{isCollapsed ? "Dodaj rezerwacje" : "Anuluj"}}</strong> </span>
+  <span [matTooltip]="!isloggedIn ? 'Zaloguj się, aby zarezerwować salę 😅': null" class='d-block ml-3 align-self-center'><strong>{{isCollapsed ? "Dodaj rezerwacje" : "Anuluj"}}</strong> </span>
 </div>
   <div id="collapseExample" [ngbCollapse]="isCollapsed">
     <app-reservation (reservationTime)='postReservation($event)'></app-reservation>

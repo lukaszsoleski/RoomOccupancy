@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { Reservation } from 'src/app/models/schedule/reservation';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UsersService } from 'src/app/services/users.service';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -15,7 +16,7 @@ export class ScheduleComponent implements OnInit {
 
   // tslint:disable-next-line:variable-name
   private _roomId: number;
-
+  protected isloggedIn: boolean;
   // tslint:disable-next-line:variable-name
   private _schedule: ScheduleViewModel;
   protected dataSource: ScheduleLookupModel[] = [];
@@ -26,6 +27,7 @@ export class ScheduleComponent implements OnInit {
   public isCollapsed = true;
   constructor(
     private readonly roomsService: RoomsService,
+    private usersService: UsersService,
     private toastr: ToastrService,
     private datepipe: DatePipe,
     private spinner: NgxSpinnerService,
@@ -121,6 +123,7 @@ export class ScheduleComponent implements OnInit {
     this.rowIndex = i;
   }
   ngOnInit() {
+    this.usersService.isLoggedIn.subscribe(x => this.isloggedIn = x);
   }
   protected getEndTime(r: ScheduleLookupModel): string {
     // should use timespan
