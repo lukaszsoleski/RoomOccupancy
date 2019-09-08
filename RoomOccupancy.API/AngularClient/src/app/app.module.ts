@@ -67,6 +67,8 @@ import { EquipmentComponent } from './room/components/equipment/equipment.compon
 import { ReservationsComponent } from './users/reservations/reservations.component';
 import { MatBadgeModule} from '@angular/material';
 import { RoomDetailsComponent } from './room/components/room-details/room-details.component';
+import { FindRoomFormComponent } from './room/components/find-room-form/find-room-form.component';
+import { FindRoomComponent } from './room/find-room/find-room.component';
 // TODO: add separate file for imports
 @NgModule({
   declarations: [
@@ -86,6 +88,8 @@ import { RoomDetailsComponent } from './room/components/room-details/room-detail
     EquipmentComponent,
     ReservationsComponent,
     RoomDetailsComponent,
+    FindRoomFormComponent,
+    FindRoomComponent,
   ],
   imports: [
     CommonModule,

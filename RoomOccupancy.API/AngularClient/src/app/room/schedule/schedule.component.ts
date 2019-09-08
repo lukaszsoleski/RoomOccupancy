@@ -105,7 +105,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   public postReservation(e: Reservation) {
-    let reservation = e;
+    const reservation = e;
     reservation.roomId = this.roomId;
     this.spinner.show();
     this.roomsService.postReservation(reservation).subscribe(x => {
@@ -116,7 +116,7 @@ export class ScheduleComponent implements OnInit {
 
     }, () => this.spinner.hide());
   }
-  public cancelReservation(r: ScheduleLookupModel){
+  public cancelReservation(r: ScheduleLookupModel) {
     this.spinner.show();
     this.roomsService.cancelReservation(r.id).subscribe(x => {
       this.spinner.hide();
@@ -140,8 +140,8 @@ export class ScheduleComponent implements OnInit {
 
     return moment(r.end).format('HH:mm');
   }
-  protected canCancelReservation(r: ScheduleLookupModel): boolean{
-    if(r.appUserId && this.currUserId){
+  protected canCancelReservation(r: ScheduleLookupModel): boolean {
+    if (r.appUserId && this.currUserId) {
       return r.appUserId === this.currUserId;
     }
     return false;
