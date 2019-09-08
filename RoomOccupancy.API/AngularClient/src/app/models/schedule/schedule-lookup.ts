@@ -1,7 +1,7 @@
 
 
 export class ScheduleLookupModel {
-  Id: number;
+  id: number;
   start: Date;
   end: Date;
   subject: string;
@@ -11,8 +11,10 @@ export class ScheduleLookupModel {
   roomName: string;
   awaitsAcceptance: boolean;
   userName: string;
+  appUserId: string;
 }
 
 export class ScheduleViewModel {
+  public currentUserId: string;
   public reservations: ScheduleLookupModel[];
 }

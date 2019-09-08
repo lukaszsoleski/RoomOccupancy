@@ -67,7 +67,7 @@ namespace RoomOccupancy.Application.Reservations.Commands.CreateReservation
 
             private async Task<bool> IsUserAuthorized(Reservation reservation)
             {
-                if (user == null)
+                if (user == null || !user.IsVerified)
                     return false;
 
                 var userFaculty = user.FacultyId;

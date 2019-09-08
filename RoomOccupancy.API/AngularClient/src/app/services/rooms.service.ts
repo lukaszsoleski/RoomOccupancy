@@ -39,4 +39,7 @@ export class RoomsService {
   public getFaculties(): Observable<Faculty[]>{
     return this.httpService.get('faculty');
   }
+  public cancelReservation(id: number) {
+    return this.httpService.delete(`reservation/${id}`);
+  }
 }

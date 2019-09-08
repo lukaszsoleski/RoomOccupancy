@@ -19,6 +19,9 @@ export class ScheduleComponent implements OnInit {
   protected isloggedIn: boolean;
   // tslint:disable-next-line:variable-name
   private _schedule: ScheduleViewModel;
+  protected get currUserId() {
+    return this._schedule.currentUserId;
+  }
   protected dataSource: ScheduleLookupModel[] = [];
   protected dateFilter: Date;
   protected isDateEmpty: boolean;
@@ -104,8 +107,6 @@ export class ScheduleComponent implements OnInit {
   public postReservation(e: Reservation) {
     let reservation = e;
     reservation.roomId = this.roomId;
-    console.log(reservation);
-
     this.spinner.show();
     this.roomsService.postReservation(reservation).subscribe(x => {
       this.getSchedule();
@@ -115,7 +116,13 @@ export class ScheduleComponent implements OnInit {
 
     }, () => this.spinner.hide());
   }
-
+  public cancelReservation(r: ScheduleLookupModel){
+    this.spinner.show();
+    this.roomsService.cancelReservation(r.id).subscribe(x => {
+      this.spinner.hide();
+      this.getSchedule();
+    }, () => this.spinner.hide());
+  }
   public onShowAllClick(event) {
     this.applyFilter();
   }
@@ -127,7 +134,7 @@ export class ScheduleComponent implements OnInit {
   }
   protected getEndTime(r: ScheduleLookupModel): string {
     // should use timespan
-    if(moment(r.start).isDST() && moment(r.end).isDST() === false){
+    if (moment(r.start).isDST() && moment(r.end).isDST() === false) {
       return moment(r.end).add(1, 'hour').format('HH:mm');
     }
 

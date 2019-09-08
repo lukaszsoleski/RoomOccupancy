@@ -50,13 +50,14 @@ namespace RoomOccupancy.Application.Reservations
 
         public string UserName { get; set; }
 
+        public string AppUserId { get; set; }
+
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Reservation, ReservationModel>()
                 .ForMember(dest => dest.RoomName, opt => opt.MapFrom(src => $"{src.Room}"))
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{(src.AppUser != null ? src.AppUser.FirstName : "")} {(src.AppUser != null ? src.AppUser.LastName : "")}"))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{(src.AppUser != null ? src.AppUser.FirstName + " " + src.AppUser.LastName : null)}"))
                 .ForMember(dest => dest.ReservationDays, opt => opt.MapFrom(src => src.ReservationDays.GetDays()));
-                
             configuration.CreateMap<ReservationModel, Reservation>()
                 .ForMember(dest => dest.ReservationDays, opt => opt.MapFrom(src => src.ReservationDays.GetDays()));
         }

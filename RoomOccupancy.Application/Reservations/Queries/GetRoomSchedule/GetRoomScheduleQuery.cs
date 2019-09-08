@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MoreLinq;
 using RoomOccupancy.Application.Interfaces;
+using RoomOccupancy.Application.Interfaces.Users;
 using RoomOccupancy.Common;
 using System;
 using System.Linq;
@@ -27,11 +28,13 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
         {
             private readonly IMapper _mapper;
             private readonly IReservationDbContext _context;
+            private readonly IUserService _userService;
 
-            public Handler(IMapper mapper, IReservationDbContext context)
+            public Handler(IMapper mapper, IReservationDbContext context, IUserService userService)
             {
                 _mapper = mapper;
                 _context = context;
+                _userService = userService;
             }
 
             public async Task<RoomScheduleViewModel> Handle(GetRoomScheduleQuery request, CancellationToken cancellationToken)
@@ -46,6 +49,11 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
                 schedule.Reservations = reservations.OrderBy(x => x.ReservationDays.FirstOrDefault())
                     .ThenBy(x => x.Start)
                     .ToList();
+                var user = await _userService.GetUser();
+                if(user != null)
+                {
+                    schedule.CurrentUserId = user.Id;
+                }
                 return schedule;
             }
         }

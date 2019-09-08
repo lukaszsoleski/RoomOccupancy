@@ -52,7 +52,7 @@
         <p>Utworzył: {{item.userName ? item.userName : "brak informacji"}}</p>
 
         <mat-action-row>
-          <button mat-raised-button color="primary">Anuluj</button>
+          <button mat-raised-button color="warn" [hidden]="item.appUserId !== currUserId" (click)='cancelReservation(item)'>Anuluj</button>
           <button (click)="setRowIndex(i-1)" *ngIf="rowIndex!=0" mat-button color="accent">Poprzedni</button>
           <button (click)="setRowIndex(i+1)" *ngIf="(dataSource.length - 1) != rowIndex" color="primary"
             mat-button>Następny</button>
