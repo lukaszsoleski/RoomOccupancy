@@ -4,6 +4,7 @@ using RoomOccupancy.Application.Campus.Buildings.Queries;
 using RoomOccupancy.Application.Campus.Equipment.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries.GetRoom;
+using RoomOccupancy.Application.Campus.Rooms.Queries.GetRoomTypes;
 using RoomOccupancy.Domain.Entities.Campus;
 using System;
 using System.Linq.Expressions;
@@ -47,6 +48,12 @@ namespace RoomOccupancy.API.Controllers.Campus
         public async Task<IActionResult> Equipment(int id)
         {
             return Ok(await Mediator.Send(new GetRoomEquipmentQuery() { RoomId = id }));
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> Types()
+        {
+            return Ok(await Mediator.Send(new GetRoomTypesQuery()));
         }
     }
 

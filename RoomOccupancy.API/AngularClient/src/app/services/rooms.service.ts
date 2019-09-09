@@ -20,12 +20,12 @@ export class RoomsService {
 
   public getRooms(buildingNo?: number): Observable<RoomListViewModel> {
     let route = this.roomsRoute;
-    if(buildingNo != null || buildingNo != undefined){
+    if(buildingNo != null || buildingNo !== undefined) {
       route += `?number=${buildingNo}`;
     }
     return this.httpService.get<RoomListViewModel>(route);
   }
-  public getSchedule(roomNo: number): Observable<ScheduleViewModel>{
+  public getSchedule(roomNo: number): Observable<ScheduleViewModel> {
     return this.httpService
       .get<ScheduleViewModel>(`schedule/room/${roomNo}`).pipe(
         tap(x => console.log(x))
@@ -43,11 +43,14 @@ export class RoomsService {
   public postReservation(reservation: Reservation): Observable<unknown> {
     return this.httpService.post('reservation/', reservation);
   }
-  public getFaculties(): Observable<Faculty[]>{
+  public getFaculties(): Observable<Faculty[]> {
     return this.httpService.get('faculty');
   }
   public cancelReservation(id: number) {
     return this.httpService.delete(`reservation/${id}`);
+  }
+  public getRoomTypes(): Observable<string[]> {
+    return this.httpService.get('room/types');
   }
 
 }
