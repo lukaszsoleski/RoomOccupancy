@@ -5,15 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using RoomOccupancy.Application.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RoomOccupancy.Application.Campus.Equipment.Queries
 {
-    public class GetEquipmentQuery : IRequest<List<EquipmentModel>>
+    public class GetRoomEquipmentQuery : IRequest<List<EquipmentModel>>
     {
-        public class Handler : IRequestHandler<GetEquipmentQuery, List<EquipmentModel>>
+        /// <summary>
+        /// if room id is specified the query will return all equipment for this room.
+        /// </summary>
+        public int RoomId { get; set; }
+        public class Handler : IRequestHandler<GetRoomEquipmentQuery, List<EquipmentModel>>
         {
             private readonly IReservationDbContext context;
             private readonly IMapper mapper;
@@ -23,10 +28,12 @@ namespace RoomOccupancy.Application.Campus.Equipment.Queries
                 this.context = context;
                 this.mapper = mapper;
             }
-            public Task<List<EquipmentModel>> Handle(GetEquipmentQuery request, CancellationToken cancellationToken)
+            public Task<List<EquipmentModel>> Handle(GetRoomEquipmentQuery request, CancellationToken cancellationToken)
             {
-                return context.Equipment
+                return context.RoomEquipment
                     .AsNoTracking()
+                    .Include(x => x.Equipment)
+                    .Where(x => x.RoomId == request.RoomId)
                     .ProjectTo<EquipmentModel>(mapper.ConfigurationProvider)
                     .ToListAsync();
             }

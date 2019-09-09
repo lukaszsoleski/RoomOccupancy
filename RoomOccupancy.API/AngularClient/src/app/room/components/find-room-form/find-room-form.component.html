@@ -8,6 +8,16 @@
     <div class="col-md-10 mb-4">
       <mat-card class="center mat-elevation-z15">
 
+        <form>
+            <mat-form-field class="w-100">
+                <mat-select placeholder="Dni tygodnia" formControlName="weekDays" multiple>
+                  <mat-option *ngFor="let eqp  of equipment" [value]="eqp">{{eqp.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+        </form>
 
       </mat-card>
     </div>

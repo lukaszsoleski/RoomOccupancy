@@ -46,7 +46,7 @@ namespace RoomOccupancy.API.Controllers.Campus
         [HttpGet("{id:int:min(1)}/[action]")]    
         public async Task<IActionResult> Equipment(int id)
         {
-            return Ok(await Mediator.Send(new GetEquipmentQuery() { RoomId = id }));
+            return Ok(await Mediator.Send(new GetRoomEquipmentQuery() { RoomId = id }));
         }
     }
 

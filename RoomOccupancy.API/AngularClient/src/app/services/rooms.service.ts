@@ -31,8 +31,11 @@ export class RoomsService {
         tap(x => console.log(x))
         );
   }
-  public getEquipment(roomId: number): Observable<Equipment[]> {
-    return this.httpService.get(`room/${roomId}/equipment`);
+  public getEquipment(roomId?: number): Observable<Equipment[]> {
+    if (roomId) {
+      return this.httpService.get(`room/${roomId}/equipment`);
+    }
+    return this.httpService.get('equipment');
   }
   public getRoom(id: number): Observable<RoomDetailModel> {
     return this.httpService.get<RoomDetailModel>(`room/${id}`);
