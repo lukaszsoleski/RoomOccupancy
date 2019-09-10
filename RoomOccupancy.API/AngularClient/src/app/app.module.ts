@@ -13,6 +13,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgSelectModule } from '@ng-select/ng-select';
 // date picker formats
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 // Angular Material Components
@@ -92,6 +93,7 @@ import { FindRoomComponent } from './room/find-room/find-room.component';
     FindRoomComponent,
   ],
   imports: [
+    NgSelectModule,
     CommonModule,
     BrowserModule,
     HttpClientModule,

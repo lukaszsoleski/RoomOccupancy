@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@ng-select/ng-select/themes/material.theme.css",
               "src/assets/scss/_colors.scss",
               "src/assets/scss/_sizing.scss",
               "src/assets/scss/_table.scss",

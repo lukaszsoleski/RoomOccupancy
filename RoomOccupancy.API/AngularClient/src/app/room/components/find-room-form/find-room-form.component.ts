@@ -23,9 +23,6 @@ export class FindRoomFormComponent implements OnInit {
   protected roomFilterCtrl = new FormControl();
 
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
-  /** Subject that emits when the component has been destroyed. */
-  protected _onDestroy = new Subject<void>();
-
 
   public get f() {
     return this.findRoomForm.controls;
@@ -35,7 +32,6 @@ export class FindRoomFormComponent implements OnInit {
               private spinner: NgxSpinnerService,
               private toastr: ToastrService,
               private fb: FormBuilder) { }
-
 
   public loadFormData() {
     this.spinner.show();
@@ -53,30 +49,15 @@ export class FindRoomFormComponent implements OnInit {
   public buildForm() {
     this.findRoomForm = this.fb.group({
       facultyId: [''],
-      seats: [0],
-      equipment: [[]],
+      seats: [15, Validators.min(0)],
+      selectedEquipment: [[]],
       roomType: ['']
     });
   }
 
-  public filterRoomTypes(){
-
-    let keyword = this.roomFilterCtrl.value;
-    if(!keyword){
-      this
-      return;
-    }
-
-  }
   ngOnInit() {
     this.loadFormData();
     this.buildForm();
 
-    this.roomFilterCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterRoomTypes();
-      });
   }
-
 }

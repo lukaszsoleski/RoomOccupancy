@@ -9,6 +9,7 @@ import { RegistrationFormComponent } from './users/registration-form/registratio
 import { LoginComponent } from './users/login/login.component';
 import { AuthGuard } from './common/guard/auth.guard';
 import { ReservationsComponent } from './users/reservations/reservations.component';
+import { FindRoomComponent } from './room/find-room/find-room.component';
 
 export const appRoutes: Routes = [
   {
@@ -22,6 +23,9 @@ export const appRoutes: Routes = [
   },
   {
     path: 'campus/rooms', component: RoomsComponent
+  },
+  {
+    path: 'find-room', component: FindRoomComponent
   },
   {
     path: 'register', component: RegistrationFormComponent
