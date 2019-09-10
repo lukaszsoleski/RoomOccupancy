@@ -1,6 +1,7 @@
 export class Equipment {
-  public id: number;
-  public name: string;
+  public equipmentId: number;
+  public equipmentName: string;
+  public roomName: string;
   public amount: number;
   public isAvailable: boolean;
 }

@@ -20,6 +20,7 @@ namespace RoomOccupancy.Application.Campus.Equipment
         {
             configuration.CreateMap<EquipmentModel,Equipment>()
                 .ForMember(au => au.Name, map => map.MapFrom(vm => vm.EquipmentName))
+                .ForMember(src => src.Id, map => map.MapFrom(dest => dest.EquipmentId))
                 .ReverseMap();
             configuration.CreateMap<RoomEquipment, EquipmentModel>();
                 

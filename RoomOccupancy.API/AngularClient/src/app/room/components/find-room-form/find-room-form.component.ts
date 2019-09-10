@@ -20,7 +20,7 @@ export class FindRoomFormComponent implements OnInit {
   protected roomTypes: string [];
 
   protected findRoomForm: FormGroup;
-  protected roomFilterCtrl = new FormControl();
+
 
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
 
@@ -48,13 +48,15 @@ export class FindRoomFormComponent implements OnInit {
   }
   public buildForm() {
     this.findRoomForm = this.fb.group({
-      facultyId: [''],
-      seats: [15, Validators.min(0)],
-      selectedEquipment: [[]],
-      roomType: ['']
+      facultyId: [],
+      seats: [15, [ Validators.min(0), Validators.max(500)]],
+      selectedEquipment: [],
+      roomType: []
     });
   }
+  protected onSubmit(){
 
+  }
   ngOnInit() {
     this.loadFormData();
     this.buildForm();

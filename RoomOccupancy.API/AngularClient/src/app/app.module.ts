@@ -169,4 +169,5 @@ import { FindRoomComponent } from './room/find-room/find-room.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+ }

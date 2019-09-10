@@ -1,14 +1,29 @@
 <div>
-  <mat-card class="center mat-elevation-z15">
-
+  <mat-card class="mat-elevation-z15 w-100">
     <form [formGroup]="findRoomForm">
-      <mat-form-field class="w-100">
-        <ng-select placeholder='Wybierz wyposażenie' [multiple]='true' formControlName="selectedEquipment">
-          <ng-option>--</ng-option>
-          <ng-option *ngFor="let item of equipment" [value]='item.id'>{{item.name}}</ng-option>
-        </ng-select>
-      </mat-form-field>
-    </form>
+      <ng-select placeholder='Zastosowanie pomieszczenia' [multiple]='false' formControlName="roomType">
+        <ng-option *ngFor="let roomType of roomTypes" [value]='roomType'>{{roomType}}</ng-option>
+      </ng-select>
 
+      <mat-form-field class="w-100">
+        <input type='number' matInput placeholder="Ilość miejsc" formControlName="seats">
+        <mat-error *ngIf="f['seats'].hasError('max')">
+          Wartość jest zbyt wysoka.
+        </mat-error>
+        <mat-error *ngIf="f['seats'].hasError('min')">
+          Wartość musi być większa od zera.
+        </mat-error>
+      </mat-form-field>
+      <ng-select placeholder='Wybierz wyposażenie' [multiple]='true' formControlName="selectedEquipment">
+        <ng-option *ngFor="let item of equipment" [value]='item.equipmentId'>{{item.equipmentName}}</ng-option>
+      </ng-select>
+
+      <ng-select placeholder='Wydział' [multiple]='false' formControlName="roomType">
+        <ng-option *ngFor="let faculty of faculties" [value]='faculty.id'>{{faculty.name}}</ng-option>
+      </ng-select>
+    </form>
+    <mat-card-actions align='end'>
+        <button mat-raised-button color="primary" (click)='onSubmit()' [disabled]="findRoomForm.invalid">Szukaj</button>
+    </mat-card-actions>
   </mat-card>
 </div>
