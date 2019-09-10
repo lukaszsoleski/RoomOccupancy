@@ -1,25 +1,15 @@
-<div class="container container-md mt-5">
 
-  <div class="row">
-    <h1 class="display-4">Znajdź pomieszczenie</h1>
-  </div>
-
-  <div class="row justify-content-center h-80vh">
-    <div class="col-md-10 mb-4">
       <mat-card class="center mat-elevation-z15">
 
-        <form>
+        <form [formGroup]="findRoomForm">
             <mat-form-field class="w-100">
-                <mat-select placeholder="Dni tygodnia" formControlName="weekDays" multiple>
-                  <mat-option *ngFor="let eqp  of equipment" [value]="eqp">{{eqp.name}}</mat-option>
+                <mat-select placeholder="Rodzaj sali" formControlName="roomType">
+                  <mat-option>
+                    <ngx-mat-select-search [formControl]="bankFilterCtrl"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let room of roomTypes" [value]="room">{{room}}</mat-option>
                 </mat-select>
             </mat-form-field>
-
-
-
         </form>
 
       </mat-card>
-    </div>
-  </div>
-</div>
