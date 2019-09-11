@@ -35,6 +35,7 @@ using RoomOccupancy.Persistence;
 using RoomOccupancy.Application.Infrastructure.Users;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http;
+using RoomOccupancy.Infrastructure.Notifications.Templates;
 
 namespace RoomOccupancy.API
 {
@@ -105,7 +106,7 @@ namespace RoomOccupancy.API
 
         private void RegisterFrameworkServices(IServiceCollection services)
         {
-            services.AddSendGridEmailSender();
+            RegisterEmailServices(services);
             // Add Infrastructure
             services.AddTransient<IDateTime, MachineDateTime>();
 
@@ -113,6 +114,12 @@ namespace RoomOccupancy.API
             services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddTransient<IUserService, UserService>();
+        }
+
+        private static void RegisterEmailServices(IServiceCollection services)
+        {
+            services.AddSendGridEmailSender();
+            services.AddTransient<IEmailTemplateSender, EmailTemplateSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

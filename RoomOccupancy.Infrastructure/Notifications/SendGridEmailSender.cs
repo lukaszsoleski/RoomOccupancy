@@ -53,8 +53,9 @@ namespace RoomOccupancy.Infrastructure.Notifications
 
             if(response.StatusCode != HttpStatusCode.Accepted)
             {
-                result.ErrorMessage = $"There were problems with the delivery of the message. Service returned {response.StatusCode} status code. Find more information at https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html.";
-                logger.LogError(result.ErrorMessage);
+                var body = response.Body.ReadAsStringAsync();
+                result.ErrorMessage = $"There were problems with the delivery of the message. Service returned {response.StatusCode} status code. Find more information at https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html. --response body: {body}";
+                logger.LogError("result.ErrorMessage");
             }
             else
             {
