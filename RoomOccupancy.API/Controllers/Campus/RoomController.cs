@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RoomOccupancy.Application.Campus.Buildings.Queries;
 using RoomOccupancy.Application.Campus.Equipment.Queries;
 using RoomOccupancy.Application.Campus.Rooms.Queries;
+using RoomOccupancy.Application.Campus.Rooms.Queries.FindRooms;
 using RoomOccupancy.Application.Campus.Rooms.Queries.GetRoom;
 using RoomOccupancy.Application.Campus.Rooms.Queries.GetRoomTypes;
 using RoomOccupancy.Domain.Entities.Campus;
@@ -49,11 +50,17 @@ namespace RoomOccupancy.API.Controllers.Campus
         {
             return Ok(await Mediator.Send(new GetRoomEquipmentQuery() { RoomId = id }));
         }
-
+        //room/types
         [HttpGet("[action]")]
         public async Task<IActionResult> Types()
         {
             return Ok(await Mediator.Send(new GetRoomTypesQuery()));
+        }
+        //room/findRoom
+        [HttpPost("[action]")]
+        public async Task<IActionResult> FindRoom(FindRoomsQuery findRooms)
+        {
+            return Ok(await Mediator.Send(findRooms));
         }
     }
 

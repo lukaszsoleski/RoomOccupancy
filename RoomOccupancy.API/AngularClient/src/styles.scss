@@ -34,7 +34,9 @@ body{
 .container-md{
     max-width: 960px;
 }
-
+.footer-margin{
+  margin-bottom: 300px;
+}
 .spacer{
     // takes all empty space between elements
     flex: 1 1 auto;
@@ -70,7 +72,7 @@ body{
     }
   }
 .h-80vh{
-  height: 80vh;
+  min-height: 80vh;
 }
 
 

@@ -8,6 +8,8 @@ import { HttpClientUtilsService } from './../common/http-client-utils.service';
 import { Injectable } from '@angular/core';
 import { ScheduleViewModel } from '../models/schedule/schedule-lookup';
 import { Faculty } from '../models/faculty.model';
+import { IFindRoomParameters } from '../models/campus/find-room-params';
+import { FindRoomResult } from '../models/campus/find-room-result';
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +29,7 @@ export class RoomsService {
   }
   public getSchedule(roomNo: number): Observable<ScheduleViewModel> {
     return this.httpService
-      .get<ScheduleViewModel>(`schedule/room/${roomNo}`).pipe(
-        tap(x => console.log(x))
-        );
+      .get<ScheduleViewModel>(`schedule/room/${roomNo}`);
   }
   public getEquipment(roomId?: number): Observable<Equipment[]> {
     if (roomId) {
@@ -52,5 +52,8 @@ export class RoomsService {
   public getRoomTypes(): Observable<string[]> {
     return this.httpService.get('room/types');
   }
-
+  public findRoom(params: IFindRoomParameters): Observable<FindRoomResult>
+  { // todo: m;ybe use [get] request
+    return this.httpService.post<FindRoomResult>('room/findRoom', params);
+  }
 }

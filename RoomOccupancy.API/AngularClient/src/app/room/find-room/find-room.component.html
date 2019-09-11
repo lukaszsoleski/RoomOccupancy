@@ -1,14 +1,22 @@
-
 <div class="container container-md mt-5">
   <div class="row">
-    <h1 class="display-4">Zajdź pomieszczenie</h1>
+    <h1 class="display-4 mb-5">Znajdź pomieszczenie</h1>
   </div>
-  <div class="row justify-content-center h-80vh">
-      <div class="col">
-        <div class='center w-100'>
-          <app-find-room-form></app-find-room-form>
-        </div>
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class='w-100'>
+        <app-find-room-form (rooms)='onRoomsEmitted($event)'></app-find-room-form>
       </div>
-
     </div>
   </div>
+  <div class="row" *ngIf="rooms.length > 0" class="footer-margin">
+      <div class="col">
+        <h1 class="display-4 mt-5 mb-5">Wybierz pomieszczenie</h1>
+        <div>
+          <div *ngIf="rooms.length > 0" class='row justify-content-center'>
+            <app-room-lookup class="w-100 " [roomsToDisplay]='rooms'></app-room-lookup>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

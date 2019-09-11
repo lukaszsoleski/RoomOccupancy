@@ -18,7 +18,7 @@
         <ng-option *ngFor="let item of equipment" [value]='item.equipmentId'>{{item.equipmentName}}</ng-option>
       </ng-select>
 
-      <ng-select placeholder='Wydział' [multiple]='false' formControlName="roomType">
+      <ng-select placeholder='Wydział' [multiple]='false' formControlName="facultyId">
         <ng-option *ngFor="let faculty of faculties" [value]='faculty.id'>{{faculty.name}}</ng-option>
       </ng-select>
     </form>

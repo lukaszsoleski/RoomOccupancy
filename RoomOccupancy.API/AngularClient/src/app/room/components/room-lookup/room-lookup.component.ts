@@ -1,18 +1,21 @@
 import { IRoomLookupModel, RoomListViewModel } from './../../../models/campus/room-lookup.model';
 import { RoomsService } from './../../../services/rooms.service';
-import { Component, OnInit, ViewChild, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, Input, OnChanges, SimpleChange } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {SimpleChanges} from '@angular/core';
 @Component({
   selector: 'app-room-lookup',
   templateUrl: './room-lookup.component.html',
   styleUrls: ['./room-lookup.component.scss']
 })
-export class RoomLookupComponent implements OnInit {
+export class RoomLookupComponent implements OnInit, OnChanges {
+
+
 
   private rooms: IRoomLookupModel[];
 
@@ -20,7 +23,7 @@ export class RoomLookupComponent implements OnInit {
 
   public dataSource: MatTableDataSource<IRoomLookupModel>;
   public displayedColumns: string[] = ['label', 'actualUse', 'seats', 'facultyLookup'];
-
+  @Input() roomsToDisplay: IRoomLookupModel[];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
@@ -66,9 +69,20 @@ export class RoomLookupComponent implements OnInit {
     this.router.navigate([`/room/${roomId}`]);
   }
   ngOnInit() {
+  // Initialize the component with an input variable or route parameter subscription.
+    if(this.roomsToDisplay && this.roomsToDisplay.length > 0)
+    {
+      this.rooms = this.roomsToDisplay;
+      this.dataSource.data = this.rooms;
+    }else{
     this.subscribeRooms();
+    }
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+   const roomsToDisplayChange: SimpleChange = changes.roomsToDisplay;
+   this.rooms = roomsToDisplayChange.currentValue;
+   this.dataSource.data = this.rooms;
+  }
 }
