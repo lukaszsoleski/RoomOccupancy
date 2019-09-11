@@ -11,17 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0ACA147E-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{429D2EB8-3DDD-4FFE-9C98-6A56B2EDCB44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Common", "RoomOccupancy.Common\RoomOccupancy.Common.csproj", "{F9AA39D3-BAB8-4A1D-8C46-354CA445C9FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomOccupancy.Common", "RoomOccupancy.Common\RoomOccupancy.Common.csproj", "{F9AA39D3-BAB8-4A1D-8C46-354CA445C9FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Application", "RoomOccupancy.Application\RoomOccupancy.Application.csproj", "{F738CBBF-6199-4CE6-B385-22148824E8EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomOccupancy.Application", "RoomOccupancy.Application\RoomOccupancy.Application.csproj", "{F738CBBF-6199-4CE6-B385-22148824E8EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{019CF266-90BF-4BD3-9E46-89E26C4FE959}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Application.Tests", "RoomOccupancy.Application.Tests\RoomOccupancy.Application.Tests.csproj", "{E00FD9EA-4758-4651-B87C-F3367741E4B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomOccupancy.Application.Tests", "RoomOccupancy.Application.Tests\RoomOccupancy.Application.Tests.csproj", "{E00FD9EA-4758-4651-B87C-F3367741E4B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Infrastructure", "RoomOccupancy.Infrastructure\RoomOccupancy.Infrastructure.csproj", "{CBC6A21B-2045-42A8-A405-82F2EFC4B86A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomOccupancy.Infrastructure", "RoomOccupancy.Infrastructure\RoomOccupancy.Infrastructure.csproj", "{CBC6A21B-2045-42A8-A405-82F2EFC4B86A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomOccupancy.Persistence", "RoomOccupancy.Persistence\RoomOccupancy.Persistence.csproj", "{8244B336-FD8D-4261-AAC5-8882DB61EA19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomOccupancy.Persistence", "RoomOccupancy.Persistence\RoomOccupancy.Persistence.csproj", "{8244B336-FD8D-4261-AAC5-8882DB61EA19}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Insfrastructure", "Insfrastructure", "{D00BD985-C184-46C5-AA35-9A759CA51405}"
 EndProject
