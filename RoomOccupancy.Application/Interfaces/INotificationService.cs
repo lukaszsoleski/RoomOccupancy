@@ -1,4 +1,5 @@
-﻿using RoomOccupancy.Application.Notifications;
+﻿using RoomOccupancy.Application.Infrastructure.Email;
+using RoomOccupancy.Application.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,6 @@ namespace RoomOccupancy.Application.Interfaces
 {
     public interface INotificationService
     {
-        Task Notify(Message message);
-        Task Ask(Message message);
+        Task<SendEmailResponse> SendAsync(Message message);
     }
 }

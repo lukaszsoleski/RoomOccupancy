@@ -39,8 +39,8 @@ namespace RoomOccupancy.Application.Campus.Rooms.Commands.CreateRoom
 
             public async Task Handle(RoomCreated notification, CancellationToken cancellationToken)
             {
-                await _notificationService.Notify(
-                    new Message() { Body = $"Room with id {notification.RoomId} has been created"}
+                await _notificationService.SendAsync(
+                new Message() { Content = $"Room with id {notification.RoomId} has been created" }
                     );
 
             }

@@ -105,10 +105,9 @@ namespace RoomOccupancy.API
 
         private void RegisterFrameworkServices(IServiceCollection services)
         {
-
+            services.AddSendGridEmailSender();
             // Add Infrastructure
             services.AddTransient<IDateTime, MachineDateTime>();
-            services.AddTransient<INotificationService, NotificationService>();
 
             services.AddTransient<IAuthenticationService, AuthAuthenticationService>();
             services.AddSingleton<IJwtFactory, JwtFactory>();
