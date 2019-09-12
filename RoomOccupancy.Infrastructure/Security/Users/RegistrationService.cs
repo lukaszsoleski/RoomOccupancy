@@ -28,11 +28,6 @@ namespace RoomOccupancy.Infrastructure.Security.Users
             _context = context;
             _userManager = userManager;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="registrationDTO">Registration data transfer object</param>
-        /// <returns>Created user id.</returns>
 
         public async Task<string> RegisterAsync(RegistrationModel registrationForm)
         {
@@ -48,7 +43,10 @@ namespace RoomOccupancy.Infrastructure.Security.Users
             // If it fails throw an exception
             if (!result.Succeeded)
                 throw new ValidationException(result.ErrorMessage());
-           
+
+            var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+
             // Commit changes to database
             await _context.SaveChangesAsync();
 

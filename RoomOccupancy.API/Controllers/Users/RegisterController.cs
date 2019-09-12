@@ -12,15 +12,30 @@ namespace RoomOccupancy.API.Controllers.Users
 {
     [Route("api/register")]
     [ApiController]
+    [AllowAnonymous]
     public class RegisterController : ControllerBase
     {
+        private readonly IUserService _userService;
+        private readonly IRegistrationService _registrationService;
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Post(RegistrationModel registrationDto, [FromServices] IRegistrationService registrationService)
+        public RegisterController(IUserService userService, IRegistrationService registrationService)
         {
-                var userId = await registrationService.RegisterAsync(registrationDto);
-                return Created("api/register", new { userId });
+            _userService = userService;
+            _registrationService = registrationService;
         }
+        [HttpPost]
+        public async Task<IActionResult> Post(RegistrationModel registrationDto)
+        {
+
+            var userId = await _registrationService.RegisterAsync(registrationDto);
+            return Created("api/register", new { userId });
+        }
+        [HttpPut("/api/verify/{userId}/{userToken}")]
+        public async Task<IActionResult> VerifyEmail(string userId, string userToken)
+        {
+
+            return Ok();
+        }
+
     }
 }
