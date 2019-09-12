@@ -48,7 +48,7 @@ namespace RoomOccupancy.Infrastructure.Notifications
             var from = new EmailAddress(message.FromEmail, message.From);
             var to = new EmailAddress(message.ToEmail,message.To);
             
-            var msg = MailHelper.CreateSingleEmail(from, to,  message.Subject, message.IsHTML ? "" : message.Content, message.IsHTML ? message.Content : null);
+            var msg = MailHelper.CreateSingleEmail(from, to,  message.Subject, !message.IsHTML ? message.Content : null, message.IsHTML ? message.Content : null);
             var response = await client.SendEmailAsync(msg);
 
             if(response.StatusCode != HttpStatusCode.Accepted)

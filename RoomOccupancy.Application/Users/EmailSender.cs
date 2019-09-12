@@ -37,7 +37,7 @@ namespace RoomOccupancy.Application.Users
 
            return _templateSender.SendGeneralEmailAsync(message,
                 "Potwierdź Email",
-                $"Cześć {displayName}",
+                $"Cześć {displayName},",
                 "Klikająć w poniższy link dokończysz proces rejestracji. Pozwoli Ci to na dodawanie nowych rezerwacji w naszym serwisie.",
                 "Potwierdź adres e-mail.",
                 verificationUrl

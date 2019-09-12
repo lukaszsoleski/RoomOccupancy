@@ -10,5 +10,6 @@ namespace RoomOccupancy.Application.Interfaces.Users
     {
         Task<ProfileModel> GetUserProfile();
         Task<AppUser> GetUser();
+        Task<bool> VerifyUser(string userId, string emailToken);
     }
 }

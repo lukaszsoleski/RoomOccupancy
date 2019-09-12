@@ -10,13 +10,12 @@ namespace RoomOccupancy.Application.Exceptions
 #pragma warning restore RCS1194 // Implement exception constructors.
     {
         public ValidationException()
-            : base("One or more validation failures have occurred.")
+            : this("One or more validation failures have occurred.")
         {
-            Failures = new Dictionary<string, string[]>();
         }
         public ValidationException(string failure): base(failure)
         {
-
+            Failures = new Dictionary<string, string[]>();
         }
         public ValidationException(List<ValidationFailure> failures)
             : this()
@@ -36,6 +35,6 @@ namespace RoomOccupancy.Application.Exceptions
             }
         }
 
-        public IDictionary<string, string[]> Failures { get; }
+        public IDictionary<string, string[]> Failures { get; } 
     }
 }

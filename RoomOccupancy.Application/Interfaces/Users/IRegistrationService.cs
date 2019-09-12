@@ -1,5 +1,4 @@
 ﻿using RoomOccupancy.Application.Users;
-using RoomOccupancy.Application.Users.Commands.Create;
 using System;
 using System.Collections.Generic;
 using System.Text;

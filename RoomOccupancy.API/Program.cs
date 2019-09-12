@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RoomOccupancy.Application.Interfaces;
+using RoomOccupancy.Infrastructure.Notifications.Templates;
 using RoomOccupancy.Persistence;
 using System;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 

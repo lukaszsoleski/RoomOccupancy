@@ -36,6 +36,7 @@ using RoomOccupancy.Application.Infrastructure.Users;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http;
 using RoomOccupancy.Infrastructure.Notifications.Templates;
+using RoomOccupancy.Application.Users;
 
 namespace RoomOccupancy.API
 {
@@ -109,7 +110,7 @@ namespace RoomOccupancy.API
             RegisterEmailServices(services);
             // Add Infrastructure
             services.AddTransient<IDateTime, MachineDateTime>();
-
+            services.AddTransient<EmailSender>();
             services.AddTransient<IAuthenticationService, AuthAuthenticationService>();
             services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddTransient<IRegistrationService, RegistrationService>();
