@@ -17,7 +17,7 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
     {
         public RoomScheduleQueryValidator()
         {
-            RuleFor(x => x.RoomId).NotEmpty();
+            RuleFor(x => x.RoomId).NotEmpty().GreaterThan(0);
         }
     }
     public class GetRoomScheduleQuery : IRequest<RoomScheduleViewModel>
@@ -47,7 +47,7 @@ namespace RoomOccupancy.Application.Reservations.Queries.GetRoomSchedule
                     .ToListAsync();
                 var schedule = new RoomScheduleViewModel();
                 schedule.Reservations = reservations.OrderBy(x => x.ReservationDays.FirstOrDefault())
-                    .ThenBy(x => x.Start)
+                    .ThenBy(x => x.Start.TimeOfDay)
                     .ToList();
                 var user = await _userService.GetUser();
                 if(user != null)

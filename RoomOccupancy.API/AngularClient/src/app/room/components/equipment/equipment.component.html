@@ -1,51 +1,49 @@
+<div class="container container-md mt-5">
+  <div class="row justify-content-center">
+
+    <div class="col-md-10 order-md-2 mb-4">
 
 
-    <div class="container container-md mt-5">
-        <div class="row justify-content-center">
+      <div *ngIf="dataSource.length === 0; else equipment">Brak informacji o wyposażeniu</div>
+      <div class="mat-elevation-z8" *ngIf="dataSource.length > 0">
+        <table mat-table #equipment [dataSource]="dataSource">
 
-            <div class="col-md-10 order-md-2 mb-4">
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element; index as i;"> {{i + 1}} </td>
+          </ng-container>
 
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+            <td mat-cell *matCellDef="let element;"> {{element.equipmentName}} </td>
+          </ng-container>
 
-                    <div *ngIf="dataSource.length === 0; else equipment" >Brak informacji o wyposażeniu</div>
+          <!-- Weight Column -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Ilość </th>
+            <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+          </ng-container>
 
-                    <table mat-table #equipment [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource.length > 0" >
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="isAvailable">
+            <th mat-header-cell *matHeaderCellDef> Dostępność </th>
+            <td mat-cell *matCellDef="let element">
+              <div>
+                <mat-icon *ngIf="element.isAvailable === true" color="primary" class="material-icons">
+                  check
+                </mat-icon>
+                <mat-icon *ngIf="element.isAvailable === false" color='warn' class="material-icons">
+                  error_outline
+                </mat-icon>
+              </div>
+            </td>
+          </ng-container>
 
-                            <ng-container matColumnDef="position">
-                              <th mat-header-cell *matHeaderCellDef> No. </th>
-                              <td mat-cell *matCellDef="let element; index as i;"> {{i + 1}} </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="name">
-                              <th mat-header-cell *matHeaderCellDef> Nazwa </th>
-                              <td mat-cell *matCellDef="let element;"> {{element.equipmentName}} </td>
-                            </ng-container>
-
-                            <!-- Weight Column -->
-                            <ng-container matColumnDef="amount">
-                              <th mat-header-cell *matHeaderCellDef> Ilość </th>
-                              <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-                            </ng-container>
-
-                            <!-- Symbol Column -->
-                            <ng-container matColumnDef="isAvailable">
-                              <th mat-header-cell *matHeaderCellDef> Dostępność </th>
-                              <td mat-cell *matCellDef="let element">
-                              <div>
-                                  <mat-icon *ngIf="element.isAvailable === true" color="primary" class="material-icons">
-                                      check
-                                  </mat-icon>
-                                  <mat-icon *ngIf="element.isAvailable === false" color='warn'  class="material-icons">
-                                      error_outline
-                                  </mat-icon>
-                              </div>
-                              </td>
-                            </ng-container>
-
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
-                    </table>
-
-            </div>
-
-        </div>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+        </table>
+      </div>
     </div>
+
+  </div>
+</div>
