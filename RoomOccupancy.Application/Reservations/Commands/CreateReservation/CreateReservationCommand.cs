@@ -42,25 +42,40 @@ namespace RoomOccupancy.Application.Reservations.Commands.CreateReservation
             }
             public async Task<int?> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
             {
+                // Map dto to the entity type
                 var reservation = mapper.Map<Reservation>(request.Reservation);
+
+                // Get current user using http authorization header
                 user = await userService.GetUser();
+                if (user == null)
+                    return default;
+
+                // Check if the reservation does not collide with any other one
                 var conflicts = await mediator.Send(new GetReservationConflictsQuery() { Reservation = reservation, RoomId = reservation.RoomId });
 
+                //  Notify user about reservation conflict
                 if (conflicts.Any())
                     throw new ReservationConflictException($"{string.Join(", ", conflicts.Select(x => x.ToString()))}", $"{reservation}");
-
+               
+                // Verify if the user has the privileges to make a reservation
                 if (! await IsUserAuthorized(reservation))
                 {
+                    // Mark the reservation as unauthorised
                     reservation.AwaitsAcceptance = true;
+                    // Send acceptance request
                     await SendReservationRequest(reservation, request.UserId);
                 }
-                if (user != null)
-                    reservation.AppUser = user;
-
+                
+                // Assign an app user to the reservation
+                reservation.AppUser = user;
+                
+                // Start tracking reservation object
                 context.Reservations.Add(reservation);
-
+                
+                // Save changes to the database
                 await context.SaveChangesAsync();
 
+                // Return new Id
                 return reservation.Id;
             }
 

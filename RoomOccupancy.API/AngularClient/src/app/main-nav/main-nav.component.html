@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'push'">
+    [mode]="(isHandset$ | async) ? 'over' : 'side'">
     <mat-toolbar>
       <span>Menu</span>
       <span class="spacer"></span>

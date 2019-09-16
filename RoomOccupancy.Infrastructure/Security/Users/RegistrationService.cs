@@ -52,19 +52,24 @@ namespace RoomOccupancy.Infrastructure.Security.Users
             // If it fails throw an exception
             if (!result.Succeeded)
                 throw new ValidationException(result.ErrorMessage());
-
+           
+            // generate email confirmation token
             var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
+            
+            // url encode user id and token
             var idEncoded = HttpUtility.UrlEncode(user.Id);
             var tokenEcoded = HttpUtility.UrlEncode(confirmationToken);
-                
+            
+            // build url
             var verificationUrl = $"http://{_httpContextAccessor.HttpContext.Request.Host.Value}/api/user/verify?userid={idEncoded}&token={tokenEcoded}";
-
+            
+            // send email
             _ = await EmailSender.SendEmailVerificationMessage(user.FirstName, user.Email, verificationUrl);
 
             // Commit changes to database
             await _context.SaveChangesAsync();
 
+            // Return new id
             return user.Id;
         }
     }
