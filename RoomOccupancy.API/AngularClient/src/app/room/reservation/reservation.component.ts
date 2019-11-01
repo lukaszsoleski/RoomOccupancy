@@ -7,7 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { WeekDays } from 'src/app/models/WeekDays';
+import { WeekDays } from '../../models/WeekDays';
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
@@ -15,7 +15,9 @@ import { WeekDays } from 'src/app/models/WeekDays';
 })
 export class ReservationComponent implements OnInit {
   protected reservationForm: FormGroup;
-
+  protected get f() {
+    return this.reservationForm.controls;
+  }
   private now = new Date();
   protected defaultEndTime: string;
   protected defaultStartTime: string;
@@ -90,7 +92,7 @@ export class ReservationComponent implements OnInit {
     const timeArr = time.split(':');
     const hours = parseInt(timeArr[0], 10);
     const minutes = parseInt(timeArr[1], 10);
-    
+
     const date = moment(day).set('hours', hours).set('minutes', minutes).toDate();
     return date;
   }

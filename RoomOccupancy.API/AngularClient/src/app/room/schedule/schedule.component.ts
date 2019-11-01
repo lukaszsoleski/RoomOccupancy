@@ -137,7 +137,6 @@ export class ScheduleComponent implements OnInit {
     if (moment(r.start).isDST() && moment(r.end).isDST() === false) {
       return moment(r.end).add(1, 'hour').format('HH:mm');
     }
-
     return moment(r.end).format('HH:mm');
   }
   protected canCancelReservation(r: ScheduleLookupModel): boolean {

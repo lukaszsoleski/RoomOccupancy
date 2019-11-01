@@ -15,7 +15,7 @@ namespace RoomOccupancy.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("hello.friend()");
+            return Ok("hello()");
         }
     }
 }
